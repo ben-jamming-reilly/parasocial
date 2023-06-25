@@ -1,6 +1,18 @@
 import { redirect } from "next/navigation";
+import { SearchClient, YoutubeDocument } from "~/search";
+import { env } from "~/env.mjs";
 
-export default function Home() {
+function Document(doc: YoutubeDocument) {
+  return <div className="">{doc.title}</div>;
+}
+
+export default async function Home() {
+  const client = new SearchClient({
+    BASE: env.PARASOCIAL_API_BASE_URL,
+  });
+
+  const docs = await client.search.allDocuments();
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="flex flex-col">
