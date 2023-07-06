@@ -14,5 +14,8 @@ export type { HTTPValidationError } from './models/HTTPValidationError';
 export type { SearchSegment } from './models/SearchSegment';
 export type { ValidationError } from './models/ValidationError';
 export type { YoutubeDocument } from './models/YoutubeDocument';
+export type { YoutubeProfile } from './models/YoutubeProfile';
 
+export { DefaultService } from './services/DefaultService';
+export { ProfileService } from './services/ProfileService';
 export { SearchService } from './services/SearchService';

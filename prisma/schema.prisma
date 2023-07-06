@@ -15,15 +15,13 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
-model Profile {
-    id   String @id
-    name String
+model SocialProfile {
+    id               String  @id
+    userId           String? @unique
+    //
+    youtubeChannelId String
+    //
+    user             User?   @relation(fields: [userId], references: [id])
 }
 
 // Necessary for Next auth
@@ -54,13 +52,14 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
+    id            String         @id @default(cuid())
     name          String?
-    email         String?   @unique
+    email         String?        @unique
     emailVerified DateTime?
     image         String?
     accounts      Account[]
     sessions      Session[]
+    profile       SocialProfile?
 }
 
 model VerificationToken {

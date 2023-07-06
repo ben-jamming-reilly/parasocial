@@ -1,9 +1,15 @@
 import { redirect } from "next/navigation";
-import { SearchClient, YoutubeDocument } from "~/search";
+import { BaseDocument, SearchClient, YoutubeDocument } from "~/search";
 import { env } from "~/env.mjs";
 
-function Document(doc: YoutubeDocument) {
-  return <div className="">{doc.title}</div>;
+import Profile from "./Profile";
+
+function Masthead() {
+  return (
+    <div className="m-6 flex w-full flex-row justify-start">
+      <h1 className="outline-text-3 text-2xl">parasocial...</h1>
+    </div>
+  );
 }
 
 export default async function Home() {
@@ -13,12 +19,26 @@ export default async function Home() {
 
   const docs = await client.search.allDocuments();
 
+  // Get all unique channels from all documents
+  const channels = Array.from(
+    new Set(
+      docs
+        .filter((doc): doc is YoutubeDocument => doc.url.includes("youtube"))
+        .map((doc) => doc.channel_id)
+    )
+  );
+
+  const profiles = await Promise.all(
+    channels.map((channelId) => client.profile.getYoutube(channelId))
+  );
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="flex flex-col">
-        <div className="flex flex-row justify-end"></div>
-        <h3 className="mb-3 text-center text-2xl font-bold capitalize text-zinc-100"></h3>
-        <div className="grid grid-cols-3 gap-5"></div>
+    <main className="mx-24 mt-6 flex flex-col items-center ">
+      <Masthead />
+      <div className="grid grid-cols-2 justify-around gap-4">
+        {profiles.map((profile) => (
+          <Profile author={profile.channel_name} url={profile.channel_logo!} />
+        ))}
       </div>
     </main>
   );

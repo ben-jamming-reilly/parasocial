@@ -5,12 +5,16 @@ import type { BaseHttpRequest } from './core/BaseHttpRequest';
 import type { OpenAPIConfig } from './core/OpenAPI';
 import { FetchHttpRequest } from './core/FetchHttpRequest';
 
+import { DefaultService } from './services/DefaultService';
+import { ProfileService } from './services/ProfileService';
 import { SearchService } from './services/SearchService';
 
 type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest;
 
 export class SearchClient {
 
+    public readonly default: DefaultService;
+    public readonly profile: ProfileService;
     public readonly search: SearchService;
 
     public readonly request: BaseHttpRequest;
@@ -28,6 +32,8 @@ export class SearchClient {
             ENCODE_PATH: config?.ENCODE_PATH,
         });
 
+        this.default = new DefaultService(this.request);
+        this.profile = new ProfileService(this.request);
         this.search = new SearchService(this.request);
     }
 }
