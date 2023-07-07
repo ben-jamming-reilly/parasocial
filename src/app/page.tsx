@@ -7,9 +7,13 @@ import Profile from "./Profile";
 function Masthead() {
   return (
     <div className="m-6 flex w-full flex-row justify-start">
-      <h1 className="outline-text-3 text-2xl">parasocial...</h1>
+      <h1 className="outline-text-3 text-2xl tracking-widest">parasocial</h1>
     </div>
   );
+}
+
+function Footer() {
+  return <div></div>;
 }
 
 export default async function Home() {

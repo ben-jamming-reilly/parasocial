@@ -17,7 +17,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <title>parasocial</title>
       </head>
-      <body className="bg-slate-800 text-zinc-100">{children}</body>
+      <body className="bg-pink-900 text-zinc-100">{children}</body>
     </html>
   );
 }

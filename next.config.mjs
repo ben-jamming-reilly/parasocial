@@ -24,6 +24,11 @@ const config = {
         hostname: "yt3.googleusercontent.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "i.ytimg.com",
+        port: "",
+      },
     ],
   },
 };
