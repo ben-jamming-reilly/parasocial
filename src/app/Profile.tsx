@@ -1,15 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardFooter,
-  CardTitle,
-} from "~/components/ui/card";
-
 export interface ProfileProps {
   author: string;
   url: string;

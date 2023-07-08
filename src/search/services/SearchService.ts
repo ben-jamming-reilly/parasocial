@@ -2,8 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { BaseDocument } from '../models/BaseDocument';
-import type { SearchSegment } from '../models/SearchSegment';
-import type { YoutubeDocument } from '../models/YoutubeDocument';
+import type { SearchResult } from '../models/SearchResult';
+import type { YoutubeVideo } from '../models/YoutubeVideo';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
@@ -18,7 +18,7 @@ export class SearchService {
      * @param author
      * @param skip
      * @param limit
-     * @returns SearchSegment Successful Response
+     * @returns SearchResult Successful Response
      * @throws ApiError
      */
     public documentSegmentsByQuery(
@@ -26,7 +26,7 @@ export class SearchService {
         author?: string,
         skip?: number,
         limit: number = 100,
-    ): CancelablePromise<Array<SearchSegment>> {
+    ): CancelablePromise<Array<SearchResult>> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/search',
@@ -54,7 +54,7 @@ export class SearchService {
         author?: string,
         skip?: number,
         limit: number = 100,
-    ): CancelablePromise<Array<(YoutubeDocument | BaseDocument)>> {
+    ): CancelablePromise<Array<(YoutubeVideo | BaseDocument)>> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/documents',

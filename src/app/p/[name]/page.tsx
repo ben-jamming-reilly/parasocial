@@ -1,9 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { SearchClient, YoutubeDocument } from "~/search";
+import { SearchClient, YoutubeVideo } from "~/search";
 import { env } from "~/env.mjs";
 import { ScrollArea } from "~/components/ui/scroll-area";
+
+import SearchPage from "./SearchPage";
 
 function msDate(date: string): number {
   const ms = new Date(date);
@@ -15,38 +17,62 @@ function displayDate(dateString: string) {
   return date.toLocaleDateString();
 }
 
-export default async function Page({ params }: { params: { name: string } }) {
-  const author = decodeURI(params.name);
+type SearchParamType = string | string[] | undefined;
+
+function parseQueryParam(param: SearchParamType): string | undefined {
+  if (Array.isArray(param)) return param[0];
+  else return param;
+}
+
+interface PageProps {
+  params: { name: string };
+  searchParams: { [key: string]: SearchParamType };
+}
+
+export default async function Page({ params, searchParams }: PageProps) {
   const client = new SearchClient({
     BASE: env.PARASOCIAL_API_BASE_URL,
   });
 
+  const author = decodeURI(params.name);
   const profile = await client.profile.getYoutube(author);
 
   const documents = (await client.search.allDocuments(author))
-    .filter((doc): doc is YoutubeDocument => doc.url.includes("youtube"))
+    .filter((doc): doc is YoutubeVideo => doc.url.includes("youtube"))
     .sort(
       (lDoc, rDoc) => msDate(rDoc.publish_date) - msDate(lDoc.publish_date)
     );
 
-  // Just for testing rn
-  for (let i = 0; i < 5; i++) {
+  // Just populating data for testing
+  for (let i = 0; i < 8; i++) {
     documents.push(documents[0]!);
     documents.push(documents[1]!);
   }
+
+  const query = parseQueryParam(searchParams.q);
+  const searchResults = query
+    ? await client.search.documentSegmentsByQuery(query, author)
+    : [];
 
   return (
     <main className="mx-24 mt-6 flex flex-col items-center ">
       <div className="flex flex-row justify-between">
         <div className="flex max-w-lg flex-col gap-2">
-          <div className="relative ">
-            <Image
-              src={profile.channel_logo!}
-              height={250}
-              width={250}
-              className="mx-auto border-4 border-black font-bold"
-              alt={`Youtube profile pic for ${author}`}
-            />
+          <div className="relative">
+            <div className="relative mx-auto w-fit">
+              <Image
+                src={profile.channel_logo!}
+                height={250}
+                width={250}
+                className="mx-auto border-4 border-black font-bold"
+                alt={`Youtube profile pic for ${author}`}
+              />
+              <div className="absolute bottom-0 z-20 mb-4 ml-4 ">
+                <div className="bg-black px-3 font-bold">
+                  <h1 className="tracking-widest text-white">{author}</h1>
+                </div>
+              </div>
+            </div>
             <Link
               href="/"
               className="absolute left-0 top-0 ml-3 max-h-fit max-w-fit border-4 border-black bg-black font-bold shadow-[8px_8px_0_0_#000] transition hover:shadow-none focus:outline-none focus:ring"
@@ -91,7 +117,12 @@ export default async function Page({ params }: { params: { name: string } }) {
             </div>
           </ScrollArea>
         </div>
-        <div className="flex flex-1">a</div>
+        <div className="flex flex-1">
+          <SearchPage
+            initQuery={parseQueryParam(query)}
+            initResults={searchResults}
+          />
+        </div>
       </div>
     </main>
   );

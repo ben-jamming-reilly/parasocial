@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type SearchSegment = {
+export type SearchResult = {
     url: string;
     text: string;
     score: number;

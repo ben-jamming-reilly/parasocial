@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type YoutubeDocument = {
+export type YoutubeVideo = {
     url: string;
     author: string;
     channel_id: string;

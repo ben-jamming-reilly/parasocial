@@ -12,18 +12,18 @@ export class ProfileService {
 
     /**
      * Get Youtube Profile
-     * @param channelId
+     * @param channel
      * @returns YoutubeProfile Successful Response
      * @throws ApiError
      */
     public getYoutube(
-        channelId: string,
+        channel: string,
     ): CancelablePromise<YoutubeProfile> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/youtube/{channel_id}',
+            url: '/youtube/{channel}',
             path: {
-                'channel_id': channelId,
+                'channel': channel,
             },
             errors: {
                 422: `Validation Error`,
