@@ -43,15 +43,9 @@ export default async function Page({ params, searchParams }: PageProps) {
       (lDoc, rDoc) => msDate(rDoc.publish_date) - msDate(lDoc.publish_date)
     );
 
-  // Just populating data for testing
-  for (let i = 0; i < 8; i++) {
-    documents.push(documents[0]!);
-    documents.push(documents[1]!);
-  }
-
   const query = parseQueryParam(searchParams.q);
   const searchResults = query
-    ? await client.search.documentSegmentsByQuery(query, author)
+    ? await client.search.documentSegmentsByQuery(query, author, 0, 20)
     : [];
 
   return (
