@@ -1,7 +1,16 @@
+import Link from "next/link";
+
 export default function Page() {
   return (
-    <main className="tracking-wider">
-      <div className="outline-text-3 mx-auto max-w-prose p-3 text-sm leading-7">
+    <main className="mx-24 mt-6 flex min-h-screen flex-col items-center">
+      <div className=" flex w-full flex-row justify-start">
+        <Link href="/">
+          <h1 className="outline-text-3 text-2xl tracking-widest">
+            parasocial
+          </h1>
+        </Link>
+      </div>
+      <div className="outline-text-3 mx-auto mb-6 max-w-prose p-3 text-sm leading-7 tracking-wider">
         <h1 className="text-center">Terms and Conditions</h1>
         <h2>1. Acceptance of Terms</h2>
         <p className="mb-2 ml-4">
@@ -110,15 +119,6 @@ export default function Page() {
           and ownership rights.
         </p>
 
-        {/* <h2>9. Governing Law and Jurisdiction</h2>
-        <p className="ml-4 mb-2 ">
-          These Terms shall be governed by and construed in accordance with the
-          laws of [Your Jurisdiction]. Any legal action or proceeding arising
-          out of or relating to these Terms or the use of Parasocial shall be
-          exclusively brought in the courts of [Your Jurisdiction], and you
-          consent to the personal jurisdiction of such courts.
-        </p> */}
-
         <h2>9. Entire Agreement</h2>
         <p className="mb-2 ml-4 ">
           These Terms constitute the entire agreement between you and us
@@ -128,7 +128,7 @@ export default function Page() {
         </p>
         <p className="mb-2 ml-4 ">
           If you have any questions or concerns regarding these Terms, please
-          contact us <a>here</a>.
+          contact us <a href="mailto:benreilly0809@gmail.com">here</a>.
         </p>
 
         <p>Last updated: 7/10/23</p>

@@ -113,6 +113,7 @@ export default async function Page({ params, searchParams }: PageProps) {
         </div>
         <div className="flex flex-1">
           <SearchPage
+            author={author}
             initQuery={parseQueryParam(query)}
             initResults={searchResults}
           />

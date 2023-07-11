@@ -66,11 +66,16 @@ function SearchItem({
 }
 
 interface SearchProps {
+  author: string;
   initQuery?: string;
   initResults: SearchResult[];
 }
 
-export default function Search({ initQuery, initResults }: SearchProps) {
+export default function Search({
+  author,
+  initQuery,
+  initResults,
+}: SearchProps) {
   const [results, setResults] = useState(initResults);
   const [query, onQueryChange, setQuery] = useInput(initQuery || "");
 
@@ -95,8 +100,8 @@ export default function Search({ initQuery, initResults }: SearchProps) {
       <div className="ml-2 mt-4 flex flex-col gap-2">
         {(!initQuery || results.length === 0) && (
           <div className="h-[75vh] w-full">
-            <p className="outline-text-3 m-auto w-fit italic">
-              Search all th {}
+            <p className="outline-text-3 m-auto w-fit italic tracking-widest">
+              "Search all of {author}'s content with a query"
             </p>
           </div>
         )}
