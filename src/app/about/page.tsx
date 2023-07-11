@@ -10,28 +10,15 @@ export default function Page() {
           </h1>
         </Link>
       </div>
-      <div className="outline-text-3 mx-auto max-w-prose p-3  leading-7">
+      <div className="outline-text-3 mx-auto max-w-prose p-3 text-justify leading-7">
         <p className="mb-2 ">
-          Parasocial, lets you share your favorite moments of your beloved live
-          streamers and content creators. There's a certain joy of capturing and
-          reliving those special moments that bring us closer to our online
-          idols.
+          Parasocial, lets share your favorite moments of your beloved live
+          streamers and content creators. The goal is to provide a place where
+          fans can easily find and showcase those memorable clips and share
+          them.
         </p>
-        <br />
-        <p className="mb-2 ">
-          The goal is to provide a place where you can easily find and showcase
-          those memorable clips that resonate with you. Whether it's a hilarious
-          reaction, an epic gaming moment, or an insightful discussion,
-          parasocial allows you to capture those gems and share them with fellow
-          fans.
-        </p>
+        <p className="mb-2 ">Thank you for visiting :^)</p>
 
-        <br />
-        <p className="mb-2 ">
-          Thank you for joining us on this exciting journey.
-        </p>
-
-        <br />
         <p>Sincerely,</p>
         <p>Ben</p>
       </div>

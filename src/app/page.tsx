@@ -35,7 +35,10 @@ export default async function Home() {
           </h1>
         </Link>
       </div>
-      <div className="grid grid-cols-2 justify-around gap-4">
+      <div className="mb-12 grid grid-cols-2 justify-around gap-4">
+        <p className="col-span-2 text-justify font-semibold  leading-6 tracking-widest text-black">
+          find your favorite moments from...
+        </p>
         {profiles.map((profile) => (
           <Profile author={profile.channel_name} url={profile.channel_logo!} />
         ))}

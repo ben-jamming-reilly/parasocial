@@ -10,7 +10,7 @@ export default function Footer() {
               href="/about"
               className="text-base leading-6 text-white underline-offset-4 hover:underline"
             >
-              About
+              about
             </Link>
           </div>
           <div className="px-5 py-2">
@@ -18,7 +18,7 @@ export default function Footer() {
               href="mailto:benreilly0809@gmail.com"
               className="text-base leading-6 text-white underline-offset-4 hover:underline"
             >
-              Contact
+              contact
             </a>
           </div>
           <div className="px-5 py-2">
@@ -26,7 +26,7 @@ export default function Footer() {
               href="/terms"
               className="text-base leading-6 text-white underline-offset-4 hover:underline"
             >
-              Terms
+              terms
             </Link>
           </div>
         </nav>
@@ -83,7 +83,7 @@ export default function Footer() {
           </a>
         </div>
         <p className="mt-8 text-center text-base leading-6 tracking-widest text-gray-400">
-          2023 Parasocial Project
+          2023 parasocial project
         </p>
       </div>
     </footer>
