@@ -49,7 +49,7 @@ export default async function Page({ params, searchParams }: PageProps) {
     : [];
 
   return (
-    <main className="mx-24 mt-6 flex flex-col items-center ">
+    <main className="mx-24 my-6  flex flex-col items-center">
       <div className="flex flex-row justify-between">
         <div className="flex max-w-lg flex-col gap-2">
           <div className="relative">
@@ -89,7 +89,7 @@ export default async function Page({ params, searchParams }: PageProps) {
             <div className="flex flex-col gap-3 px-3 text-white">
               {documents.map((doc) => (
                 <Link
-                  href={`#${doc.url}`}
+                  href={doc.url}
                   className="text flex flex-row gap-2 border-4 border-black bg-black px-4 hover:underline"
                 >
                   <Image

@@ -56,7 +56,7 @@ function SearchItem({
       </div>
       {play && (
         <Modal close={() => setPlay(false)}>
-          <div className="flex h-full flex-col flex-col justify-center">
+          <div className="flex h-full flex-col justify-center">
             <Player url={video.url} start_ms={start_ms} />
           </div>
         </Modal>
@@ -93,6 +93,13 @@ export default function Search({ initQuery, initResults }: SearchProps) {
         />
       </form>
       <div className="ml-2 mt-4 flex flex-col gap-2">
+        {(!initQuery || results.length === 0) && (
+          <div className="h-[75vh] w-full">
+            <p className="outline-text-3 m-auto w-fit italic">
+              Search all th {}
+            </p>
+          </div>
+        )}
         {results.map((result) => (
           <SearchItem result={result} />
         ))}
