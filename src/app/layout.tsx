@@ -1,6 +1,7 @@
 // import "~/styles/globals.css";
 import "./global.css";
 import Footer from "./Footer";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
   title: "parasocial",
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body className="relative bg-pink-900 text-zinc-100">
         {children}
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
