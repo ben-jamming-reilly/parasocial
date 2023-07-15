@@ -1,9 +1,7 @@
-import { redirect } from "next/navigation";
-import { BaseDocument, SearchClient, YoutubeVideo } from "~/search";
+import { SearchClient, YoutubeVideo } from "~/search";
 import { env } from "~/env.mjs";
 
 import Profile from "./Profile";
-import Footer from "./Footer";
 import Link from "next/link";
 
 export default async function Home() {

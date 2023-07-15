@@ -9,6 +9,9 @@ export const metadata = {
     "Discover and relive the most memorable moments of your favorite streamers",
 };
 
+// Regenerate Every 10 minutes
+export const revalidate = 10 * 60;
+
 export default function RootLayout({
   children,
 }: {
