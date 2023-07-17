@@ -35,26 +35,15 @@ export default function Page() {
 
         <h2>3. Privacy</h2>
         <p className="mb-2 ml-4 ">
-          b. You agree to use Parasocial in compliance with all applicable laws
-          a. We respect your privacy and currently do not collect any personally
+          a. You agree to use Parasocial in compliance with all applicable laws.
+          We respect your privacy and currently do not collect any personally
           identifiable information (PII) through Parasocial. However,
           non-personally identifiable information may be collected and used.
-        </p>
-        <p className="mb-2 ml-4 ">
-          b. Our Privacy Policy explains how we handle your information when you
-          use Parasocial. Please review the Privacy Policy to understand our
-          practices.
         </p>
 
         <h2>4. Intellectual Property</h2>
         <p className="mb-2 ml-4 ">
-          a. All intellectual property rights, including but not limited to
-          copyrights, trademarks, and logos, related to Parasocial are owned by
-          us or our licensors. You may not use, reproduce, or distribute any
-          content from Parasocial without our prior written permission.
-        </p>
-        <p className="mb-2 ml-4 ">
-          b. The source code of Parasocial is open source and is licensed under
+          a. The source code of Parasocial is open source and is licensed under
           the MIT License. You may find the full text of the MIT License at{" "}
           <a href="https://github.com/ben-jamming-reilly/parasocial/blob/main/LICENSE">
             https://github.com/ben-jamming-reilly/parasocial/blob/main/LICENSE
@@ -71,8 +60,7 @@ export default function Page() {
           providing and promoting Parasocial.
         </p>
         <p className="mb-2 ml-4 ">
-          a. Parasocial may allow you to submit content, such as prompts or b.
-          You are solely responsible for the content you submit through
+          b. You are solely responsible for the content you submit through
           Parasocial. You represent and warrant that you have all necessary
           rights and permissions to submit such content, and that it does not
           violate any third-party rights or applicable laws.
@@ -106,20 +94,18 @@ export default function Page() {
 
         <h2>8. Modifications and Termination</h2>
         <p className="mb-2 ml-4 ">
-          You agree to indemnify, defend, and hold harmless us and our officers,
           a. We reserve the right to modify, suspend, or terminate Parasocial or
           these Terms at any time without prior notice. We may also impose
           limits on certain features or restrict your access to parts or all of
           Parasocial without notice or liability.
         </p>
         <p className="mb-2 ml-4 ">
-          You agree to indemnify, defend, and hold harmless us and our officers,
           b. If any content creator requests to be delisted from Parasocial, we
           will promptly remove their content upon verification of their identity
           and ownership rights.
         </p>
 
-        <h2>9. Entire Agreement</h2>
+        <h2>8. Entire Agreement</h2>
         <p className="mb-2 ml-4 ">
           These Terms constitute the entire agreement between you and us
           regarding the use of Parasocial and supersede any prior or
@@ -131,7 +117,7 @@ export default function Page() {
           contact us <a href="mailto:benreilly0809@gmail.com">here</a>.
         </p>
 
-        <p>Last updated: 7/10/23</p>
+        <p>Last updated: 7/17/23</p>
       </div>
     </main>
   );
