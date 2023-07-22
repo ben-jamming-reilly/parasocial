@@ -9,20 +9,7 @@ export default async function Home() {
     BASE: env.PARASOCIAL_API_BASE_URL,
   });
 
-  const docs = await client.search.allDocuments();
-
-  // Get all unique channels from all documents
-  const channels = Array.from(
-    new Set(
-      docs
-        .filter((doc): doc is YoutubeVideo => doc.url.includes("youtube"))
-        .map((doc) => doc.channel_id)
-    )
-  );
-
-  const profiles = await Promise.all(
-    channels.map((channelId) => client.profile.getYoutube(channelId))
-  );
+  const profiles = await client.profile.getAllProfiles();
 
   return (
     <main className="mx-24 mt-6 flex min-h-screen flex-col items-center">

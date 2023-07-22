@@ -26,11 +26,8 @@ interface ResultProps {
 }
 
 function SearchItem({
-  result: { document: doc, start_ms, end_ms, text },
+  result: { document: video, start_ms, end_ms, text },
 }: ResultProps) {
-  if (!doc.url.includes("youtube")) return <div />;
-  const video = doc as YoutubeVideo;
-
   const [play, setPlay] = useState(false);
 
   return (
@@ -101,7 +98,7 @@ export default function Search({
         {(!initQuery || results.length === 0) && (
           <div className="h-[75vh] w-full">
             <p className="outline-text-3 m-auto w-fit italic tracking-widest">
-              "Search all of {author}'s content with a query"
+              search all of {author}'s content with a query
             </p>
           </div>
         )}

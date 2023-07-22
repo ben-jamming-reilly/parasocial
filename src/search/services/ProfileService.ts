@@ -31,4 +31,16 @@ export class ProfileService {
         });
     }
 
+    /**
+     * Get Profiles
+     * @returns YoutubeProfile Successful Response
+     * @throws ApiError
+     */
+    public getAllProfiles(): CancelablePromise<Array<YoutubeProfile>> {
+        return this.httpRequest.request({
+            method: 'GET',
+            url: '/profiles',
+        });
+    }
+
 }

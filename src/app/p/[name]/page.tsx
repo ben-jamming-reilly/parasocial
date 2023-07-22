@@ -37,11 +37,9 @@ export default async function Page({ params, searchParams }: PageProps) {
   const author = decodeURI(params.name);
   const profile = await client.profile.getYoutube(author);
 
-  const documents = (await client.search.allDocuments(author))
-    .filter((doc): doc is YoutubeVideo => doc.url.includes("youtube"))
-    .sort(
-      (lDoc, rDoc) => msDate(rDoc.publish_date) - msDate(lDoc.publish_date)
-    );
+  const documents = (await client.search.allDocuments(author)).sort(
+    (lDoc, rDoc) => msDate(rDoc.publish_date) - msDate(lDoc.publish_date)
+  );
 
   const query = parseQueryParam(searchParams.q);
   const searchResults = query
@@ -82,7 +80,7 @@ export default async function Page({ params, searchParams }: PageProps) {
           </div>
           <div className="px-3">
             <h3 className="max-w-fit bg-black px-3 font-bold tracking-widest text-white">
-              Uploads
+              uploads
             </h3>
           </div>
           <ScrollArea className="h-[50vh] w-[30rem]">
@@ -114,7 +112,7 @@ export default async function Page({ params, searchParams }: PageProps) {
         <div className="flex flex-1">
           <SearchPage
             author={author}
-            initQuery={parseQueryParam(query)}
+            initQuery={query}
             initResults={searchResults}
           />
         </div>

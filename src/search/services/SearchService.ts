@@ -1,7 +1,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { BaseDocument } from '../models/BaseDocument';
 import type { SearchResult } from '../models/SearchResult';
 import type { YoutubeVideo } from '../models/YoutubeVideo';
 
@@ -47,14 +46,14 @@ export class SearchService {
      * @param author
      * @param skip
      * @param limit
-     * @returns any Successful Response
+     * @returns YoutubeVideo Successful Response
      * @throws ApiError
      */
     public allDocuments(
         author?: string,
         skip?: number,
         limit: number = 100,
-    ): CancelablePromise<Array<(YoutubeVideo | BaseDocument)>> {
+    ): CancelablePromise<Array<YoutubeVideo>> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/documents',
