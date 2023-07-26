@@ -12,7 +12,7 @@ export default async function Home() {
   const profiles = await client.profile.getAllProfiles();
 
   return (
-    <main className="mx-24 mt-6 flex min-h-screen flex-col items-center">
+    <main className="container mt-4 flex min-h-screen flex-col items-center">
       <div className="mb-6 flex w-full flex-row justify-start">
         <Link href="/">
           <h1 className="outline-text-3 text-2xl tracking-widest">
@@ -20,8 +20,8 @@ export default async function Home() {
           </h1>
         </Link>
       </div>
-      <div className="mb-12 grid grid-cols-2 justify-around gap-4">
-        <p className="col-span-2 text-justify font-semibold  leading-6 tracking-widest text-black">
+      <div className="mb-12 grid grid-cols-1 justify-around gap-4 sm:grid-cols-2">
+        <p className="col-span-1 text-justify font-semibold leading-6 tracking-normal text-black sm:col-span-2 sm:tracking-widest">
           find your favorite moments from...
         </p>
         {profiles.map((profile) => (
