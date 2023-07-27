@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 
 import useInput from "~/hooks/useInput";
@@ -77,7 +77,7 @@ export default function Search({
   const [query, onQueryChange, setQuery] = useInput(initQuery || "");
 
   return (
-    <div className="w-[38rem]">
+    <div className="mt-4 w-full sm:w-[38rem]">
       <form className="flex h-fit flex-row gap-1">
         <button>
           <Image
@@ -87,12 +87,14 @@ export default function Search({
             alt="Magnifying Glass"
           />
         </button>
-        <input
-          className="outline-text-3 flex w-full flex-row border-b-4 border-black bg-transparent  text-sm tracking-widest caret-white focus:outline-none"
-          name="q"
-          onChange={onQueryChange}
-          value={query}
-        />
+        <div className="flex flex-1">
+          <input
+            className="outline-text-3 flex w-full flex-row border-b-4 border-black bg-transparent text-sm tracking-widest caret-white focus:outline-none"
+            name="q"
+            onChange={onQueryChange}
+            value={query}
+          />
+        </div>
       </form>
       <div className="ml-2 mt-4 flex flex-col gap-2">
         {(!initQuery || results.length === 0) && (
