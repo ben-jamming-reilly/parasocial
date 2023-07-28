@@ -24,7 +24,7 @@ export default function RootLayout({
         <title>parasocial</title>
         <meta
           name="twitter:card"
-          content="Discover and relive the most memorable moments of your favorite streamers"
+          content="Discover and relive the most memorable moments of your favorite content creators"
         />
       </head>
       <body className="relative h-full min-h-screen bg-pink-900 text-zinc-100">
