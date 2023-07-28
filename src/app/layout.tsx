@@ -27,7 +27,7 @@ export default function RootLayout({
           content="Discover and relive the most memorable moments of your favorite streamers"
         />
       </head>
-      <body className="relative bg-pink-900 text-zinc-100">
+      <body className="relative h-full min-h-screen bg-pink-900 text-zinc-100">
         {children}
         <Footer />
         <Analytics />

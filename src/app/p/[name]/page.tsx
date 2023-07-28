@@ -81,13 +81,13 @@ export default async function Page({ params, searchParams }: PageProps) {
     : [];
 
   return (
-    <main className="container my-4 flex flex-col items-center">
+    <main className="my-4 flex flex-col items-center sm:container">
       <div className="flex w-full flex-col justify-between sm:w-fit sm:flex-row">
-        <div className="flex max-w-lg flex-col gap-2">
+        <div className="container flex max-w-lg flex-col gap-2 sm:w-max">
           <ProfileHeader profile={profile} />
           <UploadList documents={documents} />
         </div>
-        <div className="flex flex-1">
+        <div className="flex flex-grow flex-row justify-center">
           <SearchPage
             author={author}
             initQuery={query}

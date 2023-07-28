@@ -50,6 +50,7 @@ interface UploadListProps {
 export default function UploadList({ documents }: UploadListProps) {
   return (
     <>
+      {/* Mobile View */}
       <Accordion className="sm:hidden" type="single" collapsible>
         <AccordionItem className="border-none" value="item-1">
           <AccordionTrigger className="flex flex-1 flex-row bg-black px-3 py-1 font-bold tracking-widest text-white">
@@ -67,6 +68,7 @@ export default function UploadList({ documents }: UploadListProps) {
         </AccordionItem>
       </Accordion>
 
+      {/* Desktop View */}
       <div className="hidden sm:block">
         <div className="mb-3 px-3">
           <h3 className="max-w-fit bg-black px-3 font-bold tracking-widest text-white">

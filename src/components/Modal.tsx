@@ -16,7 +16,7 @@ export default function Modal({ children, close }: ModalProps) {
   return mounted
     ? createPortal(
         <div
-          className="fixed top-0 z-20 flex min-h-screen w-full flex-col justify-center bg-black bg-opacity-50"
+          className="fixed top-0 z-20 flex min-h-screen  w-screen flex-col justify-center bg-black bg-opacity-50"
           onClick={close}
         >
           {children}
