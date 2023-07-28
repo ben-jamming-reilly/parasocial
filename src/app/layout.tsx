@@ -6,7 +6,7 @@ import { Analytics } from "@vercel/analytics/react";
 export const metadata = {
   title: "parasocial",
   description:
-    "Discover and relive the most memorable moments of your favorite streamers",
+    "Discover and relive the most memorable moments of your favorite content creators",
 };
 
 // Regenerate Every 10 minutes
