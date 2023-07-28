@@ -29,21 +29,13 @@ function SearchItem({
   result: { document: video, start_ms, end_ms, text },
 }: ResultProps) {
   const [play, setPlay] = useState(false);
-  const [mobileHeight, setWindowHeight] = useState("");
-  const [mobileWidth, setWindowWidth] = useState("");
-
-  useEffect(() => {
-    if (!window) return;
-    setWindowWidth(`${window.innerWidth}px`);
-    setWindowHeight(`${Math.round((window.innerWidth / 853) * 480)}px`);
-    console.log(window.innerWidth);
-  }, [play]);
+  const [playMobile, setPlayMobile] = useState(false);
 
   return (
     <>
       {/* Mobile */}
       <div
-        onClick={() => setPlay(!play)}
+        onClick={() => setPlayMobile(!playMobile)}
         className="flex w-full flex-row gap-2 sm:hidden"
       >
         <img
@@ -63,15 +55,10 @@ function SearchItem({
             [{timestamp(start_ms)} - {timestamp(end_ms)}]
           </p>
         </div>
-        {play && (
-          <Modal close={() => setPlay(false)}>
+        {playMobile && (
+          <Modal close={() => setPlayMobile(false)}>
             <div className="flex h-full flex-col justify-center">
-              <Player
-                url={video.url}
-                start_ms={start_ms}
-                height={mobileHeight}
-                width={mobileWidth}
-              />
+              <Player url={video.url} start_ms={start_ms} isMobile={true} />
             </div>
           </Modal>
         )}
@@ -100,7 +87,7 @@ function SearchItem({
         {play && (
           <Modal close={() => setPlay(false)}>
             <div className="flex h-full flex-col justify-center">
-              <Player url={video.url} start_ms={start_ms} />
+              <Player url={video.url} start_ms={start_ms} isMobile={false} />
             </div>
           </Modal>
         )}
