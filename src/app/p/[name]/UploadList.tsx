@@ -1,5 +1,7 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 
 import { YoutubeVideo } from "~/search";
 import { ScrollArea } from "~/components/ui/scroll-area";
@@ -9,6 +11,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "~/components/ui/accordion";
+import Youtube from "~/components/Youtube";
 
 function displayDate(dateString: string) {
   const date = new Date(dateString);
@@ -20,26 +23,43 @@ interface UploadItemProps {
 }
 
 function UploadItem({ doc }: UploadItemProps) {
+  const [play, setPlay] = useState(false);
+  const [isMobile, setIsMobile] = useState<boolean>();
+
   return (
-    <Link
-      href={doc.url}
-      className="text flex flex-row gap-2 border-4 border-black bg-black px-4 hover:underline"
-    >
-      <Image
-        src={doc.thumbnail_url}
-        width={80}
-        height={80}
-        alt={`Thumbnail for ${doc.title}`}
-      />
-      <div className="flex-1 flex-col-reverse">
-        <p className="line-clamp-2 flex-1 text-justify tracking-wider text-white">
-          {doc.title}
-        </p>
-        <p className="text-xs text-neutral-400">
-          {displayDate(doc.publish_date)}
-        </p>
+    <>
+      {/*  */}
+      <div
+        className="text flex flex-row gap-2 border-4 border-black bg-black px-4 hover:underline"
+        onClick={() => {
+          setIsMobile(false);
+          setPlay(true);
+        }}
+      >
+        <Image
+          src={doc.thumbnail_url}
+          width={80}
+          height={80}
+          alt={`Thumbnail for ${doc.title}`}
+        />
+        <div className="flex-1 flex-col-reverse">
+          <p className="line-clamp-2 flex-1 text-justify tracking-wider text-white">
+            {doc.title}
+          </p>
+          <p className="text-xs text-neutral-400">
+            {displayDate(doc.publish_date)}
+          </p>
+        </div>
       </div>
-    </Link>
+      {play && (
+        <Youtube
+          close={() => setPlay(false)}
+          url={doc.url}
+          start_ms={0}
+          isMobile={!!isMobile}
+        />
+      )}
+    </>
   );
 }
 

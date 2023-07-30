@@ -5,8 +5,7 @@ import Image from "next/image";
 import useInput from "~/hooks/useInput";
 import { SearchResult, YoutubeVideo } from "~/search";
 import { timestamp, truncate } from "~/utils/util";
-import Player from "~/components/Player";
-import Modal from "~/components/Modal";
+import Player from "~/components/Youtube";
 
 function progressThumbnail(
   video_url: string,
@@ -56,13 +55,15 @@ function SearchItem({
           </p>
         </div>
         {playMobile && (
-          <Modal close={() => setPlayMobile(false)}>
-            <div className="flex h-full flex-col justify-center">
-              <Player url={video.url} start_ms={start_ms} isMobile={true} />
-            </div>
-          </Modal>
+          <Player
+            close={() => setPlayMobile(false)}
+            url={video.url}
+            start_ms={start_ms}
+            isMobile={true}
+          />
         )}
       </div>
+
       {/* Desktop */}
       <div
         onClick={() => setPlay(!play)}
@@ -85,11 +86,12 @@ function SearchItem({
           </p>
         </div>
         {play && (
-          <Modal close={() => setPlay(false)}>
-            <div className="flex h-full flex-col justify-center">
-              <Player url={video.url} start_ms={start_ms} isMobile={false} />
-            </div>
-          </Modal>
+          <Player
+            close={() => setPlay(false)}
+            url={video.url}
+            start_ms={start_ms}
+            isMobile={false}
+          />
         )}
       </div>
     </>
