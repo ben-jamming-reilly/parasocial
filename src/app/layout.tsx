@@ -3,10 +3,12 @@ import "./global.css";
 import Footer from "./Footer";
 import { Analytics } from "@vercel/analytics/react";
 
+const description =
+  "Discover and relive memorable moments from your favorite content creators";
+
 export const metadata = {
   title: "parasocial",
-  description:
-    "Discover and relive the most memorable moments of your favorite content creators",
+  description: description,
 };
 
 // Regenerate Every 10 minutes
@@ -22,10 +24,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <title>parasocial</title>
-        <meta
-          name="twitter:card"
-          content="Discover and relive the most memorable moments of your favorite content creators"
-        />
+        <meta name="twitter:card" content={description} />
       </head>
       <body className="relative h-full min-h-screen bg-pink-900 text-zinc-100">
         {children}
