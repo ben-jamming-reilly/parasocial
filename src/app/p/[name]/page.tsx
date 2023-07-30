@@ -32,13 +32,13 @@ async function getLatestSearches(query: string | undefined, author: string) {
     take: 100,
   });
 
-  const queries = new Set(searches.map((search) => search.query));
+  const queries = new Set(searches.map((search) => search.query.toLowerCase()));
   let uniqueSearches: SearchQuery[] = [];
 
   searches.forEach((search) => {
-    if (queries.has(search.query)) {
+    if (queries.has(search.query.toLowerCase())) {
       uniqueSearches.push(search);
-      queries.delete(search.query);
+      queries.delete(search.query.toLowerCase());
     }
   });
 
