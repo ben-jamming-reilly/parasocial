@@ -1,11 +1,11 @@
-import Link from "next/link";
-import Image from "next/image";
-
-import { SearchClient, YoutubeProfile } from "~/search";
+import { SearchClient } from "~/search";
+import { prisma } from "~/server/db";
 import { env } from "~/env.mjs";
 
 import SearchPage from "./SearchPage";
 import UploadList from "./UploadList";
+import ProfileHeader from "./ProfileHeader";
+import { SearchQuery } from "@prisma/client";
 
 function msDate(date: string): number {
   const ms = new Date(date);
@@ -14,9 +14,44 @@ function msDate(date: string): number {
 
 type SearchParamType = string | string[] | undefined;
 
-function parseQueryParam(param: SearchParamType): string | undefined {
+function parseSearchQuery(param: SearchParamType): string | undefined {
   if (Array.isArray(param)) return param[0];
   else return param;
+}
+
+async function getLatestSearches(query: string | undefined, author: string) {
+  if (query) return [];
+
+  const searches = await prisma.searchQuery.findMany({
+    where: {
+      author: author,
+    },
+    orderBy: {
+      create_date: "desc",
+    },
+    take: 100,
+  });
+
+  const queries = new Set(searches.map((search) => search.query));
+  let uniqueSearches: SearchQuery[] = [];
+
+  searches.forEach((search) => {
+    if (queries.has(search.query)) {
+      uniqueSearches.push(search);
+      queries.delete(search.query);
+    }
+  });
+
+  return uniqueSearches;
+}
+
+async function getSearchResults(
+  client: SearchClient,
+  query: string | undefined,
+  author: string
+) {
+  if (!query) return [];
+  return client.search.documentSegmentsByQuery(query, author, 0, 20);
 }
 
 interface PageProps {
@@ -24,74 +59,50 @@ interface PageProps {
   searchParams: { [key: string]: SearchParamType };
 }
 
-interface ProfileHeaderProps {
-  profile: YoutubeProfile;
-}
-
-function ProfileHeader({ profile }: ProfileHeaderProps) {
-  return (
-    <div className="relative">
-      <div className="relative mx-auto w-fit">
-        <Image
-          src={profile.channel_logo!}
-          height={250}
-          width={250}
-          className="mx-auto border-4 border-black font-bold"
-          alt={`Youtube profile pic for ${profile.channel_name}`}
-        />
-        <div className="absolute bottom-0 z-20 mb-4 ml-4">
-          <div className="bg-black px-3 font-bold">
-            <h1 className="tracking-widest text-white">
-              {profile.channel_name}
-            </h1>
-          </div>
-        </div>
-      </div>
-      <Link
-        href="/"
-        className="absolute left-0 top-0 max-h-fit max-w-fit border-4 border-black bg-black font-bold shadow-[8px_8px_0_0_#000] transition hover:shadow-none focus:outline-none focus:ring sm:ml-3"
-      >
-        <Image
-          className="m-1"
-          src="/icons/left-arrow.svg"
-          height={32}
-          width={32}
-          alt="left arrow"
-        />
-      </Link>
-    </div>
-  );
-}
-
 export default async function Page({ params, searchParams }: PageProps) {
   const client = new SearchClient({
     BASE: env.PARASOCIAL_API_BASE_URL,
   });
-
   const author = decodeURI(params.name);
-  const profile = await client.profile.getYoutube(author);
+  const query = parseSearchQuery(searchParams.q);
 
-  const documents = (await client.search.allDocuments(author)).sort(
-    (lDoc, rDoc) => msDate(rDoc.publish_date) - msDate(lDoc.publish_date)
+  const [profile, documents, searchResults, latestSearches] = await Promise.all(
+    [
+      client.profile.getYoutube(author),
+      client.search.allDocuments(author),
+      getSearchResults(client, query, author),
+      getLatestSearches(query, author),
+    ]
   );
 
-  const query = parseQueryParam(searchParams.q);
-  const searchResults = query
-    ? await client.search.documentSegmentsByQuery(query, author, 0, 20)
-    : [];
+  if (query) {
+    // log the search query
+    await prisma.searchQuery.create({
+      data: {
+        query: query,
+        author: author,
+      },
+    });
+  }
 
   return (
     <main className="my-4 flex flex-col items-center sm:container">
       <div className="flex w-full flex-col justify-between sm:w-fit sm:flex-row">
         <div className="container flex max-w-lg flex-col gap-2 sm:w-max">
           <ProfileHeader profile={profile} />
-          <UploadList documents={documents} />
+          <UploadList
+            documents={documents.sort(
+              (lDoc, rDoc) =>
+                msDate(rDoc.publish_date) - msDate(lDoc.publish_date)
+            )}
+          />
         </div>
         <div className="flex flex-grow flex-row justify-center">
           <SearchPage
             author={author}
             initQuery={query}
-            initResults={searchResults}
+            searchResults={searchResults}
+            prevSearches={latestSearches}
           />
         </div>
       </div>

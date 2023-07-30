@@ -2,12 +2,11 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider        = "prisma-client-js"
-    previewFeatures = ["jsonProtocol"]
+    provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "sqlite"
+    provider = "postgresql"
     // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
     // Further reading:
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
@@ -22,6 +21,15 @@ model SocialProfile {
     youtubeChannelId String
     //
     user             User?   @relation(fields: [userId], references: [id])
+}
+
+model SearchQuery {
+    id          String   @id @default(uuid())
+    query       String
+    author      String?
+    create_date DateTime @default(now())
+    user_id     String?
+    user        User?    @relation(fields: [user_id], references: [id])
 }
 
 // Necessary for Next auth
@@ -60,6 +68,7 @@ model User {
     accounts      Account[]
     sessions      Session[]
     profile       SocialProfile?
+    queries       SearchQuery[]
 }
 
 model VerificationToken {
