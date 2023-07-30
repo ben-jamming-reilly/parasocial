@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -19,22 +18,18 @@ function displayDate(dateString: string) {
 }
 
 interface UploadItemProps {
+  mobile: boolean;
   doc: YoutubeVideo;
 }
 
-function UploadItem({ doc }: UploadItemProps) {
+function UploadItem({ doc, mobile }: UploadItemProps) {
   const [play, setPlay] = useState(false);
-  const [isMobile, setIsMobile] = useState<boolean>();
 
   return (
     <>
-      {/*  */}
       <div
         className="text flex flex-row gap-2 border-4 border-black bg-black px-4 hover:underline"
-        onClick={() => {
-          setIsMobile(false);
-          setPlay(true);
-        }}
+        onClick={() => setPlay(!play)}
       >
         <Image
           src={doc.thumbnail_url}
@@ -50,15 +45,15 @@ function UploadItem({ doc }: UploadItemProps) {
             {displayDate(doc.publish_date)}
           </p>
         </div>
+        {play && (
+          <Youtube
+            close={() => setPlay(false)}
+            url={doc.url}
+            start_ms={0}
+            isMobile={mobile}
+          />
+        )}
       </div>
-      {play && (
-        <Youtube
-          close={() => setPlay(false)}
-          url={doc.url}
-          start_ms={0}
-          isMobile={!!isMobile}
-        />
-      )}
     </>
   );
 }
@@ -71,7 +66,7 @@ export default function UploadList({ documents }: UploadListProps) {
   return (
     <>
       {/* Mobile View */}
-      <Accordion className="sm:hidden" type="single" collapsible>
+      <Accordion className="block sm:hidden" type="single" collapsible>
         <AccordionItem className="border-none" value="item-1">
           <AccordionTrigger className="flex flex-1 flex-row bg-black px-3 py-1 font-bold tracking-widest text-white">
             uploads
@@ -80,7 +75,7 @@ export default function UploadList({ documents }: UploadListProps) {
             <ScrollArea className="gap-3 ">
               <div className="flex flex-col gap-3  text-white">
                 {documents.map((doc) => (
-                  <UploadItem doc={doc} />
+                  <UploadItem mobile={true} doc={doc} />
                 ))}
               </div>
             </ScrollArea>
@@ -98,7 +93,7 @@ export default function UploadList({ documents }: UploadListProps) {
         <ScrollArea className="h-[50vh] w-[30rem] ">
           <div className="flex flex-col gap-3 px-3 text-white">
             {documents.map((doc) => (
-              <UploadItem doc={doc} />
+              <UploadItem mobile={false} doc={doc} />
             ))}
           </div>
         </ScrollArea>
