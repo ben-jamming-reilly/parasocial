@@ -25,7 +25,11 @@ export default async function Home() {
           find your favorite moments from...
         </p>
         {profiles.map((profile) => (
-          <Profile author={profile.channel_name} url={profile.channel_logo!} />
+          <Profile
+            key={profile.channel_id}
+            author={profile.channel_name}
+            url={profile.channel_logo!}
+          />
         ))}
       </div>
     </main>

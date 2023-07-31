@@ -49,7 +49,7 @@ export default function SearchPage({
         {(!initQuery || results.length === 0) && (
           <div className="flex h-[75vh] w-full flex-col gap-2">
             <p className="text-center font-semibold leading-6 tracking-normal text-black sm:tracking-widest">
-              previous searches...
+              latest searches...
             </p>
             {prevSearches.map((prevQuery) => (
               <PreviousSearch search={prevQuery} />

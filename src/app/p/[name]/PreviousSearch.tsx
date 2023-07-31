@@ -51,7 +51,7 @@ export default function PreviousSearch({ search }: PreviousQueryProps) {
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [search.create_date]);
+  }, [date.getTime()]);
 
   return (
     <a
@@ -59,7 +59,10 @@ export default function PreviousSearch({ search }: PreviousQueryProps) {
       href={`/p/${encodeURIComponent(search.author!)}?${params.toString()}`}
     >
       <h4 className="line-clamp-2 text-justify text-sm">{search.query}</h4>
-      <p className=" my-auto h-fit align-bottom text-xs text-neutral-400">
+      <p
+        className=" my-auto h-fit align-bottom text-xs text-neutral-400"
+        suppressHydrationWarning
+      >
         {elapsedTimeString}
       </p>
     </a>
