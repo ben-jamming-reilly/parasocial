@@ -85,8 +85,6 @@ export default async function Page({ params, searchParams }: PageProps) {
     });
   }
 
-  console.log(query);
-
   return (
     <main className="my-4 flex flex-col items-center sm:container">
       <div className="flex w-full flex-col justify-between sm:w-fit sm:flex-row">
