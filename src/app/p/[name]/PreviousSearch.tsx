@@ -55,7 +55,7 @@ export default function PreviousSearch({ search }: PreviousQueryProps) {
 
   return (
     <a
-      className="mx-auto flex flex-row flex-wrap gap-x-2 bg-black px-4 tracking-widest hover:underline"
+      className="mx-auto flex w-full flex-col flex-wrap gap-x-2 bg-black px-4 tracking-widest hover:underline sm:w-auto sm:flex-row"
       href={`/p/${encodeURIComponent(search.author!)}?${params.toString()}`}
     >
       <h4 className="line-clamp-2 text-justify text-sm">{search.query}</h4>

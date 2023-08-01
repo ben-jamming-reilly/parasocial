@@ -49,8 +49,8 @@ export default function SearchPage({
       </form>
       <div className="mx-2 mt-2 flex flex-col gap-2 sm:mx-4 sm:mt-4">
         {(!initQuery || results.length === 0) && (
-          <div className="flex h-[75vh] w-full flex-col gap-2">
-            <p className="text-center font-semibold leading-6 tracking-normal text-black sm:tracking-widest">
+          <div className="flex h-[75vh] w-full flex-col gap-2 overflow-hidden">
+            <p className="text-center font-semibold  leading-6 tracking-normal text-black sm:tracking-widest">
               latest searches...
             </p>
             {prevSearches.map((prevQuery) => (
