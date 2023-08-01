@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 
 import { SearchQuery } from "@prisma/client";
 import useInput from "~/hooks/useInput";
@@ -23,6 +24,7 @@ export default function SearchPage({
 }: SearchPageProps) {
   const [results, setResults] = useState(searchResults);
   const [query, onQueryChange, setQuery] = useInput(initQuery || "");
+  const params = useSearchParams();
 
   return (
     <div className="mt-4 w-full sm:w-[38rem]">
@@ -56,9 +58,8 @@ export default function SearchPage({
             ))}
           </div>
         )}
-        {results.map((result) => (
-          <SearchItem result={result} />
-        ))}
+        {params.has("q") &&
+          results.map((result) => <SearchItem result={result} />)}
       </div>
     </div>
   );

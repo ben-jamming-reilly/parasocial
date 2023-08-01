@@ -5,8 +5,12 @@ import { YoutubeProfile } from "~/search";
 
 interface ProfileHeaderProps {
   profile: YoutubeProfile;
+  backHref: string;
 }
-export default function ProfileHeader({ profile }: ProfileHeaderProps) {
+export default function ProfileHeader({
+  profile,
+  backHref,
+}: ProfileHeaderProps) {
   return (
     <div className="relative">
       <div className="relative mx-auto w-fit">
@@ -33,7 +37,7 @@ export default function ProfileHeader({ profile }: ProfileHeaderProps) {
         </div>
       </div>
       <Link
-        href="/"
+        href={backHref}
         className="absolute left-0 top-0 max-h-fit max-w-fit border-4 border-black bg-black font-bold shadow-[8px_8px_0_0_#000] transition hover:shadow-none focus:outline-none focus:ring sm:ml-3"
       >
         <Image

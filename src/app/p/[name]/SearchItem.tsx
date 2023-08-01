@@ -43,10 +43,10 @@ export default function SearchItem({
           alt={`A youtube thumbnail for ${video.title}`}
         />
         <div className="my-2 flex flex-grow flex-col justify-center gap-2 text-sm text-white">
-          <h3 className="hyphens-auto bg-black px-3 text-justify text-xs tracking-widest">
+          <h3 className="line-clamp-3 hyphens-auto bg-black px-3 text-xs tracking-widest sm:text-justify">
             {video.title}
           </h3>
-          <p className="line-clamp-3 w-fit hyphens-auto bg-black px-3 text-xs italic">
+          <p className="line-clamp-2 w-fit hyphens-auto bg-black px-3 text-xs italic">
             "{truncate(text, 120)}"
           </p>
           <p className="w-fit bg-black px-3">
