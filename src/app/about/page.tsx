@@ -12,14 +12,14 @@ export default function Page() {
       </div>
       <div className="outline-text-3 mx-auto max-w-prose p-3 text-justify leading-7">
         <p className="mb-2 ">
-          Parasocial lets you share your favorite moments of your content
-          creators. The goal is to provide a place where fans can easily find
-          and showcase those memorable clips and share them.
+          parasocial lets you find and share moments from your favorite content
+          creators. there's a certain kind of magic that happens when we get to
+          share moments with each other.
         </p>
-        <p className="mb-2 ">Thank you for visiting :^)</p>
+        <p className="mb-2 ">thank you for visiting :^)</p>
 
-        <p>Sincerely,</p>
-        <p>Ben</p>
+        <p>sincerely,</p>
+        <p>ben</p>
       </div>
     </main>
   );
