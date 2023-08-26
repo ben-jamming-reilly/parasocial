@@ -42,6 +42,10 @@ async function getLatestSearches(query: string | undefined, author: string) {
     }
   });
 
+  if (uniqueSearches.length > 30) {
+    return uniqueSearches.splice(0, 30);
+  }
+
   return uniqueSearches;
 }
 
