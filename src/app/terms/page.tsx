@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <main className="mx-24 mt-6 flex min-h-screen flex-col items-center">
+    <main className="mx-2 mt-6 flex min-h-screen flex-col items-center sm:mx-24">
       <div className=" flex w-full flex-row justify-start">
         <Link href="/">
           <h1 className="outline-text-3 text-2xl tracking-widest">
@@ -34,11 +34,16 @@ export default function Page() {
         </p>
 
         <h2>3. Privacy</h2>
-        <p className="mb-2 ml-4 ">
+        <p className="mb-2 ml-4">
           a. You agree to use Parasocial in compliance with all applicable laws.
-          We respect your privacy and currently do not collect any personally
-          identifiable information (PII) through Parasocial. However,
-          non-personally identifiable information may be collected and used.
+          We respect your privacy and strive to maintain the security of your
+          data. We collect and handle OAuth data during the login process to
+          enhance your experience on Parasocial. Non-personally identifiable
+          information may also be collected and used.
+        </p>
+        <p className="mb-2 ml-4">
+          For a detailed understanding of how we collect, use, and protect your
+          information, please review our <a href="/privacy">Privacy Policy</a>.
         </p>
 
         <h2>4. Intellectual Property</h2>

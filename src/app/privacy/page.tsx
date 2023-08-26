@@ -10,7 +10,7 @@ export default function Page() {
           </h1>
         </Link>
       </div>
-      <div className="outline-text-3 mx-auto mb-6 max-w-prose space-y-4 p-3 text-sm leading-7 tracking-widest">
+      <div className="outline-text-3 mx-auto mb-6 max-w-prose space-y-4 p-3 text-sm leading-7 tracking-wider">
         <h1>Privacy Policy</h1>
 
         <p>

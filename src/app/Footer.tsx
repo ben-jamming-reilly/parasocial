@@ -29,6 +29,14 @@ export default function Footer() {
               terms
             </Link>
           </div>
+          <div className="px-5 py-2">
+            <Link
+              href="/privacy"
+              className="text-base leading-6 text-white underline-offset-4 hover:underline"
+            >
+              privacy
+            </Link>
+          </div>
         </nav>
         <div className="mt-8 flex justify-center space-x-6">
           <a
