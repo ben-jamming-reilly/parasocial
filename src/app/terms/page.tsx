@@ -119,10 +119,11 @@ export default function Page() {
         </p>
         <p className="mb-2 ml-4 ">
           If you have any questions or concerns regarding these Terms, please
-          contact us <a href="mailto:benreilly0809@gmail.com">here</a>.
+          contact us at
+          <a href="mailto:benreilly0809@gmail.com">[benreilly0809@gmail.com]</a>
         </p>
 
-        <p>Last updated: 7/17/23</p>
+        <p>Last updated: 8/25/23</p>
       </div>
     </main>
   );

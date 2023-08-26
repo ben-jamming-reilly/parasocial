@@ -126,10 +126,11 @@ export default function Page() {
         <p>
           If you have any questions or concerns about this Privacy Policy,
           please contact us at{" "}
-          <a href="mailto:[Your Contact Email]">[Your Contact Email]</a>.
+          <a href="mailto:benreilly0809@gmail.com">[benreilly0809@gmail.com]</a>
+          .
         </p>
 
-        <p>Last updated: 7/17/23</p>
+        <p>Last updated: 8/25/23</p>
       </div>
     </main>
   );
