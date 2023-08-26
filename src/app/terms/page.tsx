@@ -10,7 +10,7 @@ export default function Page() {
           </h1>
         </Link>
       </div>
-      <div className="outline-text-3 mx-auto mb-6 max-w-prose p-3 text-sm leading-7 tracking-wider">
+      <div className="outline-text-3 mx-auto mb-6 max-w-prose space-y-4 p-3 text-sm leading-7 tracking-wider">
         <h1 className="text-center">Terms and Conditions</h1>
         <h2>1. Acceptance of Terms</h2>
         <p className="mb-2 ml-4">
@@ -119,7 +119,7 @@ export default function Page() {
         </p>
         <p className="mb-2 ml-4 ">
           If you have any questions or concerns regarding these Terms, please
-          contact us at
+          contact us at{" "}
           <a href="mailto:benreilly0809@gmail.com">[benreilly0809@gmail.com]</a>
         </p>
 
