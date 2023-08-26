@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useState } from "react";
 
-import { YoutubeVideo } from "~/search";
+import { YoutubeVideo } from "~/lib/search";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import {
   Accordion,

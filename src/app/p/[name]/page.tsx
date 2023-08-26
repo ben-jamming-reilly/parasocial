@@ -1,4 +1,4 @@
-import { SearchClient } from "~/search";
+import { SearchClient } from "~/lib/search";
 import { prisma } from "~/server/db";
 import { env } from "~/env.mjs";
 

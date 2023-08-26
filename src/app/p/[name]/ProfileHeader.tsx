@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { YoutubeProfile } from "~/search";
+import { YoutubeProfile } from "~/lib/search";
 
 interface ProfileHeaderProps {
   profile: YoutubeProfile;

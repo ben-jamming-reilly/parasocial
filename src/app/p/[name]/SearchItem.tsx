@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 
-import { SearchResult } from "~/search";
+import { SearchResult } from "~/lib/search";
 import { timestamp, truncate } from "~/utils/util";
 import Player from "~/components/Youtube";
 

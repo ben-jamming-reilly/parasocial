@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 
 import { SearchQuery } from "@prisma/client";
 import useInput from "~/hooks/useInput";
-import { SearchResult } from "~/search";
+import { SearchResult } from "~/lib/search";
 import PreviousSearch from "./PreviousSearch";
 import SearchItem from "./SearchItem";
 
