@@ -21,9 +21,9 @@ export default function LogoutBtn({ user, ...props }: AuthBtnProps) {
         props.className
       )}
     >
-      <div className="flex flex-row gap-2 bg-black px-3">
+      <div className="flex flex-row gap-1 bg-black px-3">
         <p className="tracking-widest text-white">sign out</p>
-        <Image src="icons/eye.svg" height="20" width="20" alt="an eye" />
+        {/* <Image src="icons/eye.svg" height="20" width="20" alt="an eye" /> */}
       </div>
     </button>
   );

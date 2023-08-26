@@ -1,16 +1,21 @@
 import Link from "next/link";
 import Image from "next/image";
 
+import { getServerAuthSession } from "~/server/auth";
+import LogoutBtn from "~/components/LogoutBtn";
+import SignInBtn from "~/components/SignInBtn";
 import { YoutubeProfile } from "~/lib/search";
 
 interface ProfileHeaderProps {
   profile: YoutubeProfile;
   backHref: string;
 }
-export default function ProfileHeader({
+export default async function ProfileHeader({
   profile,
   backHref,
 }: ProfileHeaderProps) {
+  const session = await getServerAuthSession();
+
   return (
     <div className="relative">
       <div className="relative mx-auto w-fit">
@@ -23,8 +28,8 @@ export default function ProfileHeader({
         />
         <Image
           src={profile.channel_logo!}
-          height={175}
-          width={175}
+          height={155}
+          width={155}
           className="mx-auto border-4 border-black font-bold sm:hidden"
           alt={`Youtube profile pic for ${profile.channel_name}`}
         />
@@ -48,6 +53,15 @@ export default function ProfileHeader({
           alt="left arrow"
         />
       </Link>
+
+      {!session ? (
+        <SignInBtn className="absolute right-0 top-0 max-h-fit max-w-fit" />
+      ) : (
+        <LogoutBtn
+          user=""
+          className="absolute right-0 top-0 max-h-fit max-w-fit "
+        />
+      )}
     </div>
   );
 }

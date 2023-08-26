@@ -1,6 +1,8 @@
 "use client";
 import { DetailedHTMLProps, ButtonHTMLAttributes } from "react";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
+
 import { cn } from "~/lib/utils";
 
 type AuthBtnProps = DetailedHTMLProps<
@@ -20,17 +22,7 @@ export default function AuthBtn(props: AuthBtnProps) {
     >
       <div className="flex flex-row bg-black px-3">
         <p className="tracking-widest text-white">sign in</p>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5"
-          viewBox="0 0 20 20"
-          fill="white"
-        >
-          <path
-            fillRule="evenodd"
-            d="M12.293 5.293a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L14.586 11H4a1 1 0 0 1 0-2h10.586l-2.293-2.293a1 1 0 0 1 0-1.414z"
-          />
-        </svg>
+        {/* <Image src="/icons/eye.svg" height="20" width="20" alt="an eye" /> */}
       </div>
     </button>
   );

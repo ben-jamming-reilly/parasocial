@@ -88,7 +88,7 @@ export default async function Page({ params, searchParams }: PageProps) {
   return (
     <main className="my-4 flex flex-col items-center sm:container">
       <div className="flex w-full flex-col justify-between sm:w-fit sm:flex-row">
-        <div className="container flex max-w-lg flex-col gap-2 sm:w-max">
+        <div className="container flex max-w-lg flex-col gap-2  px-3 sm:mr-4 sm:w-max">
           <ProfileHeader
             backHref={query ? `/p/${author}` : "/"}
             profile={profile}
