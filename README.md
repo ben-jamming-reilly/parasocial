@@ -22,7 +22,7 @@ If you are not familiar with the different technologies used in this project, pl
 interested in contributing? pls, reach out to me via:
 
 - email: benreilly0809@gmail.com
-- twitter: [@benjamin_really]("https://twitter.com/benjamin_really"):
-- discord: [benreally]("https://discordapp.com/users/555243102718263298")
+- twitter: [@benjamin_really](https://twitter.com/benjamin_really)
+- discord: [benreally](https://discordapp.com/users/555243102718263298)
 
 feel free to reach out with any questions or contributions.
