@@ -1,8 +1,8 @@
-// import "~/styles/globals.css";
 import "./global.css";
 import Footer from "./Footer";
 import { Analytics } from "@vercel/analytics/react";
-import { NextAuthProvider } from "./provider";
+import AuthProvider from "./AuthProvider";
+import TRPCProvider from "./TRPCProvider";
 
 const description =
   "Discover and relive memorable moments from your favorite content creators";
@@ -28,7 +28,9 @@ export default function RootLayout({
         <meta name="twitter:card" content={description} />
       </head>
       <body className="relative h-full min-h-screen bg-pink-900 text-zinc-100">
-        <NextAuthProvider>{children}</NextAuthProvider>
+        <AuthProvider>
+          <TRPCProvider>{children}</TRPCProvider>
+        </AuthProvider>
         <Footer />
         <Analytics />
       </body>

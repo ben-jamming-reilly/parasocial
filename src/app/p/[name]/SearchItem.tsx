@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 
 import { SearchResult } from "~/lib/search";
-import { timestamp, truncate } from "~/utils/util";
+import { timestamp, truncate } from "~/lib/utils";
 import Player from "~/components/Youtube";
 
 function progressThumbnailUrl(

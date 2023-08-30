@@ -7,6 +7,8 @@ import Link from "next/link";
 import AuthBtn from "../components/SignInBtn";
 import LogoutBtn from "../components/LogoutBtn";
 
+import { trpcServer } from "~/lib/trpc-server";
+
 export default async function Home() {
   const client = new SearchClient({
     BASE: env.PARASOCIAL_API_BASE_URL,
