@@ -23,6 +23,20 @@ model SocialProfile {
     user             User?   @relation(fields: [userId], references: [id])
 }
 
+model Clip {
+    id       String  @id @default(cuid())
+    //
+    user_id  String?
+    url      String
+    query    String?
+    title    String
+    body     String?
+    start_ms Int
+    end_ms   Int
+    //
+    user     User?   @relation(fields: [user_id], references: [id])
+}
+
 model SearchQuery {
     id          String   @id @default(uuid())
     query       String
@@ -69,6 +83,7 @@ model User {
     sessions      Session[]
     profile       SocialProfile?
     queries       SearchQuery[]
+    clips         Clip[]
 }
 
 model VerificationToken {

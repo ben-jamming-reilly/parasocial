@@ -1,21 +1,15 @@
-import { SearchClient } from "~/lib/search";
-import { getServerAuthSession } from "~/server/auth";
-import { env } from "~/env.mjs";
-
-import Profile from "./Profile";
 import Link from "next/link";
-import AuthBtn from "../components/SignInBtn";
-import LogoutBtn from "../components/LogoutBtn";
 
+import AuthBtn from "~/components/SignInBtn";
+import LogoutBtn from "~/components/LogoutBtn";
+import { getServerAuthSession } from "~/server/auth";
 import { trpcServer } from "~/lib/trpc-server";
 
-export default async function Home() {
-  const client = new SearchClient({
-    BASE: env.PARASOCIAL_API_BASE_URL,
-  });
+import Profile from "./Profile";
 
-  const profiles = await client.profile.getAllProfiles();
+export default async function Home() {
   const session = await getServerAuthSession();
+  const profiles = await trpcServer.profile.getAll({});
 
   return (
     <main className="container mt-4 flex min-h-screen flex-col items-center">

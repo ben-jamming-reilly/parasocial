@@ -24,9 +24,9 @@ import { getServerAuthSession } from "~/server/auth";
  * These allow you to access things when processing a request, like the database, the session, etc.
  */
 
-// type CreateContextOptions = {
-//   session: Session | null;
-// };
+type CreateContextOptions = {
+  session: Session | null;
+};
 
 /**
  * This helper generates the "internals" for a tRPC context. If you need to use it, you can export
@@ -38,11 +38,11 @@ import { getServerAuthSession } from "~/server/auth";
  *
  * @see https://create.t3.gg/en/usage/trpc#-serverapitrpcts
  */
-// const createInnerTRPCContext = (opts: CreateContextOptions) => {
-//   return {
-//     session: opts.session,
-//   };
-// };
+const createInnerTRPCContext = (opts: CreateContextOptions) => {
+  return {
+    session: opts.session,
+  };
+};
 
 /**
  * This is the actual context you will use in your router. It will be used to process every request
@@ -50,16 +50,16 @@ import { getServerAuthSession } from "~/server/auth";
  *
  * @see https://trpc.io/docs/context
  */
-// export const createTRPCContext = async (opts: CreateNextContextOptions) => {
-//   const { req, res } = opts;
+export const createTRPCContext = async (opts: CreateNextContextOptions) => {
+  const { req, res } = opts;
 
-//   // Get the session from the server using the getServerSession wrapper function
-//   const session = await getServerAuthSession();
+  // Get the session from the server using the getServerSession wrapper function
+  const session = await getServerAuthSession();
 
-//   return createInnerTRPCContext({
-//     session,
-//   });
-// };
+  return createInnerTRPCContext({
+    session,
+  });
+};
 
 /**
  * 2. INITIALIZATION
@@ -68,7 +68,7 @@ import { getServerAuthSession } from "~/server/auth";
  * ZodErrors so that you get typesafety on the frontend if your procedure fails due to validation
  * errors on the backend.
  */
-
+// .context<typeof createTRPCContext>()
 const t = initTRPC.create({
   transformer: superjson,
   errorFormatter({ shape, error }) {
