@@ -1,8 +1,8 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export function timestamp(ms: number) {
@@ -18,7 +18,7 @@ export function timestamp(ms: number) {
     )}`;
   }
 
-  return `${String(hours).padStart(2, "0")}.${String(minutes).padStart(
+  return `${String(hours).padStart(1, "0")}.${String(minutes).padStart(
     2,
     "0"
   )}:${String(seconds).padStart(2, "0")}`;

@@ -7,6 +7,7 @@ import {
 } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import DiscordProvider from "next-auth/providers/discord";
+import RedditProvider from "next-auth/providers/reddit";
 import { env } from "~/env.mjs";
 import { prisma } from "~/server/db";
 
@@ -56,10 +57,20 @@ export const authOptions: NextAuthOptions = {
         params: {
           prompt: "consent",
           access_type: "offline",
-          response_type: "code"
-        }
-      }
-    })
+          response_type: "code",
+        },
+      },
+    }),
+    RedditProvider({
+      clientId: env.REDDIT_CLIENT_ID,
+      clientSecret: env.REDDIT_CLIENT_SECRET,
+      authorization: {
+        params: {
+          duration: "permanent",
+        },
+      },
+    }),
+
     /**
      * ...add more providers here.
      *
@@ -86,7 +97,6 @@ export const authOptions: NextAuthOptions = {
  *
  * @see https://next-auth.js.org/configuration/nextjs
  */
-export const getServerAuthSession = (
-) => {
+export const getServerAuthSession = () => {
   return getServerSession(authOptions);
 };

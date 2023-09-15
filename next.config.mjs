@@ -29,6 +29,11 @@ const config = {
         hostname: "i.ytimg.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.discordapp.com",
+        port: "",
+      },
     ],
   },
 };

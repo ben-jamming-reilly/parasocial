@@ -38,7 +38,7 @@ model Clip {
 }
 
 model SearchQuery {
-    id          String   @id @default(uuid())
+    id          String   @id @default(cuid())
     query       String
     author      String?
     create_date DateTime @default(now())

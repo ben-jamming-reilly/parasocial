@@ -3,17 +3,18 @@
 /* eslint-disable */
 
 export type YoutubeVideo = {
-    url: string;
-    author: string;
-    channel_id: string;
-    channel_url: string;
-    description?: string;
-    keywords: Array<string>;
-    length: number;
-    publish_date: string;
-    rating?: number;
-    thumbnail_url: string;
-    title: string;
-    views: number;
+  id: string;
+  url: string;
+  author: string;
+  channel_id: string;
+  channel_url: string;
+  description: (string | null);
+  keywords: Array<string>;
+  length: number;
+  publish_date: string;
+  rating: (number | null);
+  thumbnail_url: string;
+  title: string;
+  views: number;
 };
 

@@ -15,5 +15,6 @@ export type { ValidationError } from './models/ValidationError';
 export type { YoutubeProfile } from './models/YoutubeProfile';
 export type { YoutubeVideo } from './models/YoutubeVideo';
 
+export { DocumentsService } from './services/DocumentsService';
 export { ProfileService } from './services/ProfileService';
 export { SearchService } from './services/SearchService';

@@ -8,39 +8,62 @@ import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class ProfileService {
 
-    constructor(public readonly httpRequest: BaseHttpRequest) {}
+  constructor(public readonly httpRequest: BaseHttpRequest) {}
 
-    /**
-     * Get Youtube Profile
-     * @param channel
-     * @returns YoutubeProfile Successful Response
-     * @throws ApiError
-     */
-    public getYoutube(
-        channel: string,
-    ): CancelablePromise<YoutubeProfile> {
-        return this.httpRequest.request({
-            method: 'GET',
-            url: '/youtube/{channel}',
-            path: {
-                'channel': channel,
-            },
-            errors: {
-                422: `Validation Error`,
-            },
-        });
-    }
+  /**
+   * Get All Profiles
+   * @returns YoutubeProfile Successful Response
+   * @throws ApiError
+   */
+  public getAllProfiles(): CancelablePromise<Array<YoutubeProfile>> {
+    return this.httpRequest.request({
+      method: 'GET',
+      url: '/profiles',
+    });
+  }
 
-    /**
-     * Get Profiles
-     * @returns YoutubeProfile Successful Response
-     * @throws ApiError
-     */
-    public getAllProfiles(): CancelablePromise<Array<YoutubeProfile>> {
-        return this.httpRequest.request({
-            method: 'GET',
-            url: '/profiles',
-        });
-    }
+  /**
+   * Get Profile
+   * @returns YoutubeProfile Successful Response
+   * @throws ApiError
+   */
+  public getProfile({
+    author,
+  }: {
+    author: string,
+  }): CancelablePromise<YoutubeProfile> {
+    return this.httpRequest.request({
+      method: 'GET',
+      url: '/profiles/{author}',
+      path: {
+        'author': author,
+      },
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+
+  /**
+   * Get Youtube Profile
+   * @returns YoutubeProfile Successful Response
+   * @throws ApiError
+   */
+  public getYoutube({
+    author,
+  }: {
+    author: string,
+  }): CancelablePromise<YoutubeProfile> {
+    return this.httpRequest.request({
+      method: 'GET',
+      url: '/youtube/{channel}',
+      query: {
+        'author': author,
+      },
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
 
 }

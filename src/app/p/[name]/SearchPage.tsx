@@ -1,66 +1,51 @@
-"use client";
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import { useSearchParams } from "next/navigation";
-
-import { SearchQuery } from "@prisma/client";
-import useInput from "~/hooks/useInput";
-import { SearchResult } from "~/lib/search";
-import PreviousSearch from "./PreviousSearch";
+import { trpcServer } from "~/lib/trpc-server";
 import SearchItem from "./SearchItem";
 
-interface SearchPageProps {
-  author: string;
-  initQuery?: string;
-  searchResults: SearchResult[];
-  prevSearches: SearchQuery[];
+export function DummyPage() {
+  const dummies = [...Array(16).keys()];
+  return (
+    <div className="grid gap-3 px-2 py-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+      {dummies.map((dummy) => (
+        <div
+          key={dummy}
+          className="min-w-[200px] max-w-[300px] animate-pulse flex-col gap-2 text-xs tracking-wider hover:underline sm:flex"
+        >
+          <div className=" mx-auto h-[250px] w-[250px] border-4 border-black bg-black" />
+          <div className="w-full bg-slate-900">
+            <h3 className="line-clamp-2 w-full bg-black px-2 text-xs tracking-wider">
+              <div className="bg-black p-1">
+                <br />
+              </div>
+              <br />
+            </h3>
+            <p className="px-2"></p>
+            <p className="line-clamp-2 w-full bg-black px-2 text-xs italic">
+              <br />
+              <br />
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 }
 
-export default function SearchPage({
-  author,
-  initQuery,
-  searchResults,
-  prevSearches,
-}: SearchPageProps) {
-  const [results, setResults] = useState(searchResults);
-  const [query, onQueryChange, setQuery] = useInput(initQuery || "");
-  const params = useSearchParams();
+type SearchPageProps = {
+  author: string;
+  query: string;
+};
+
+export async function SearchPage({ author, query }: SearchPageProps) {
+  const results = await trpcServer.search.queryAuthor({
+    author,
+    query,
+  });
 
   return (
-    <div className="mt-4 w-full sm:w-[38rem]">
-      <form className="mx-2 mb-4 flex flex-row gap-1 sm:mx-0">
-        <button>
-          <Image
-            src="/icons/search.svg"
-            width="25"
-            height="25"
-            alt="Magnifying Glass"
-          />
-        </button>
-        <div className="flex flex-1 flex-col">
-          <input
-            className="outline-text-3 flex w-full flex-row border-b-4 border-black bg-transparent px-1 text-xs tracking-widest caret-white focus:outline-none sm:text-sm"
-            name="q"
-            onChange={onQueryChange}
-            value={query}
-            placeholder={`search for moments from ${author}`}
-          />
-        </div>
-      </form>
-      <div className="mx-2 mt-2 flex flex-col gap-2 sm:mx-4 sm:mt-4">
-        {(!initQuery || results.length === 0) && (
-          <div className="flex  w-full flex-col gap-2 ">
-            <p className="text-center font-semibold  leading-6 tracking-normal text-black sm:tracking-widest">
-              latest searches...
-            </p>
-            {prevSearches.map((prevQuery) => (
-              <PreviousSearch search={prevQuery} />
-            ))}
-          </div>
-        )}
-        {params.has("q") &&
-          results.map((result) => <SearchItem result={result} />)}
-      </div>
+    <div className="grid items-center justify-center gap-x-2 gap-y-6 px-4 py-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+      {results.map((result) => (
+        <SearchItem result={result} />
+      ))}
     </div>
   );
 }
