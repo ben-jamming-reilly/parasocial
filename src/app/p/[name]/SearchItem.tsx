@@ -1,9 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { useSearchParams, useRouter } from "next/navigation";
 
 import { SearchResult } from "~/lib/search";
-import { timestamp, truncate } from "~/lib/utils";
+import { timestamp } from "~/lib/utils";
 import Player from "~/components/Youtube";
 
 function thumbnailUrl(video_url: string, curr_ms: number, length_ms: number) {
@@ -20,8 +22,23 @@ interface SearchItemProps {
 export default function SearchItem({
   result: { document: video, start_ms, end_ms, text },
 }: SearchItemProps) {
-  const [play, setPlay] = useState(false);
   const [playMobile, setPlayMobile] = useState(false);
+
+  const [watchUrl, setWatchUrl] = useState("");
+
+  useEffect(() => {
+    if (window) {
+      const url = new URL(window.location.href);
+
+      const start = Math.round(start_ms / 1000);
+      const end = Math.round(end_ms / 1000);
+
+      url.searchParams.set("v", video.id);
+      url.searchParams.set("start", start.toString());
+      url.searchParams.set("end", end.toString());
+      setWatchUrl(url.toString());
+    }
+  }, []);
 
   return (
     <>
@@ -41,7 +58,7 @@ export default function SearchItem({
             {video.title}
           </h3>
           <p className="line-clamp-2 w-fit hyphens-auto bg-black px-3 text-xs italic">
-            "{truncate(text, 120)}"
+            {text}
           </p>
           <p className="w-fit bg-black px-3">
             [{timestamp(start_ms)} - {timestamp(end_ms)}]
@@ -58,9 +75,9 @@ export default function SearchItem({
       </div>
 
       {/* Desktop */}
-      <div
-        onClick={() => setPlay(!play)}
-        className="mx-auto hidden max-w-[250px] flex-col items-center justify-center gap-2 text-xs tracking-wider hover:underline sm:flex"
+      <Link
+        href={watchUrl}
+        className="hidden min-w-[190px] max-w-[250px] flex-col gap-2 text-xs tracking-wider hover:underline sm:flex"
       >
         <div className="relative mx-auto">
           <Image
@@ -85,18 +102,10 @@ export default function SearchItem({
           </h3>
           <p className="px-2">-</p>
           <p className="line-clamp-2 w-full bg-black px-2 text-xs italic">
-            "{truncate(text, 80)}"
+            "{text}"
           </p>
         </div>
-        {play && (
-          <Player
-            close={() => setPlay(false)}
-            url={video.url}
-            start_ms={start_ms}
-            isMobile={false}
-          />
-        )}
-      </div>
+      </Link>
     </>
   );
 }

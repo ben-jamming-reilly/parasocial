@@ -28,7 +28,7 @@ function UploadItem({ doc, mobile }: UploadItemProps) {
   return (
     <>
       <div
-        className="text flex flex-row gap-2 border-4 border-black bg-black px-4 hover:underline"
+        className="text flex flex-row gap-2 border-4 border-black bg-black px-3 hover:underline"
         onClick={() => setPlay(!play)}
       >
         <Image
@@ -90,8 +90,8 @@ export function UploadList({ documents }: UploadListProps) {
             recent uploads
           </h3>
         </div>
-        <ScrollArea className="h-[50vh] max-w-[27rem] ">
-          <div className="flex flex-col gap-3 px-3 text-white">
+        <ScrollArea className="h-[50vh] w-[24rem] ">
+          <div className="flex flex-col gap-3  text-white">
             {documents.map((doc) => (
               <UploadItem key={doc.url} mobile={false} doc={doc} />
             ))}

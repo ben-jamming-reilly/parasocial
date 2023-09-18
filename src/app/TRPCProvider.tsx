@@ -4,7 +4,7 @@ import { httpBatchLink } from "@trpc/client";
 import React, { useState } from "react";
 import superjson from "superjson";
 
-import { trpc } from "~/lib/trpc-client";
+import { trpcClient } from "~/lib/trpc-client";
 
 export const getBaseUrl = () => {
   if (typeof window !== "undefined") return ""; // browser should use relative url
@@ -14,8 +14,8 @@ export const getBaseUrl = () => {
 
 export default function Provider({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient({}));
-  const [trpcClient] = useState(() =>
-    trpc.createClient({
+  const [client] = useState(() =>
+    trpcClient.createClient({
       transformer: superjson,
       links: [
         httpBatchLink({
@@ -25,8 +25,8 @@ export default function Provider({ children }: { children: React.ReactNode }) {
     })
   );
   return (
-    <trpc.Provider client={trpcClient} queryClient={queryClient}>
+    <trpcClient.Provider client={client} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    </trpc.Provider>
+    </trpcClient.Provider>
   );
 }

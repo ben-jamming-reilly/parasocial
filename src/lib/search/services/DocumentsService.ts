@@ -40,14 +40,14 @@ export class DocumentsService {
 
   /**
    * Get Document
-   * @returns any Successful Response
+   * @returns YoutubeVideo Successful Response
    * @throws ApiError
    */
   public getDocument({
     id,
   }: {
     id: string,
-  }): CancelablePromise<any> {
+  }): CancelablePromise<YoutubeVideo> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/documents/{id}',

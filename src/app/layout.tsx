@@ -27,7 +27,7 @@ export default function RootLayout({
         <title>parasocial</title>
         <meta name="twitter:card" content={description} />
       </head>
-      <body className="relative h-full min-h-screen bg-pink-900 text-zinc-100">
+      <body className="relative h-full min-h-screen bg-rose-900		 text-zinc-100">
         <AuthProvider>
           <TRPCProvider>{children}</TRPCProvider>
         </AuthProvider>

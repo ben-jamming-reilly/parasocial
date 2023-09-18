@@ -1,10 +1,15 @@
-import { trpcServer } from "~/lib/trpc-server";
+"use client";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+
+import { SearchResult } from "~/lib/search";
+import { trpcClient } from "~/lib/trpc-client";
 import SearchItem from "./SearchItem";
 
 export function DummyPage() {
   const dummies = [...Array(16).keys()];
   return (
-    <div className="grid gap-3 px-2 py-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+    <div className="mx-auto flex min-w-[550px] flex-1 flex-wrap justify-around gap-2 overflow-scroll pb-4">
       {dummies.map((dummy) => (
         <div
           key={dummy}
@@ -32,20 +37,26 @@ export function DummyPage() {
 
 type SearchPageProps = {
   author: string;
-  query: string;
+  initResults?: SearchResult[];
 };
 
-export async function SearchPage({ author, query }: SearchPageProps) {
-  const results = await trpcServer.search.queryAuthor({
-    author,
-    query,
-  });
+export async function SearchPage({ author, initResults }: SearchPageProps) {
+  const [results, setResults] = useState(initResults);
+  const [query, setQuery] = useState<string>();
+  const params = useSearchParams();
+
+  // const { data, isLoading } = trpcClient.search.queryAuthor.useQuery({
+  //   author,
+  //   query: query!,
+  // });
+
+  useEffect(() => {
+    setQuery(params.get("q") ?? undefined);
+  }, [params]);
 
   return (
-    <div className="grid items-center justify-center gap-x-2 gap-y-6 px-4 py-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-      {results.map((result) => (
-        <SearchItem result={result} />
-      ))}
+    <div className="mx-auto flex h-full min-w-[550px] flex-1 flex-wrap justify-around gap-2 overflow-scroll pb-4">
+      {results && results.map((result) => <SearchItem result={result} />)}
     </div>
   );
 }

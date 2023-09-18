@@ -1,19 +1,39 @@
+"use client";
+import { FormEvent, ReactNode, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
-import { ReactNode } from "react";
+
+import useInput from "~/hooks/useInput";
 
 type SearchBarProps = {
   placeholder: string;
-  children: ReactNode;
+  initQuery?: string;
+  children?: ReactNode;
 };
 
-export function SearchBar({ placeholder, children }: SearchBarProps) {
+export function SearchBar({
+  placeholder,
+  children,
+  initQuery,
+}: SearchBarProps) {
+  const [query, onQueryChange, setQuery] = useInput(initQuery);
+  const router = useRouter();
+
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    router.push(`?q=${encodeURIComponent(query)}`);
+  };
+
   return (
-    <form className="mb-4 flex flex-row gap-1 sm:mx-0">
+    <form
+      onSubmit={onSubmit}
+      className="mb-4 flex w-full flex-row justify-between gap-3 sm:mx-0"
+    >
       <button className="mt-auto">
         <Image
           src="/icons/search.svg"
-          width="40"
-          height="40"
+          width="35"
+          height="35"
           alt="Magnifying Glass"
         />
       </button>
@@ -21,6 +41,8 @@ export function SearchBar({ placeholder, children }: SearchBarProps) {
         <input
           className="outline-text-3 mt-auto flex w-full flex-row border-b-4 border-black bg-transparent px-1 text-base tracking-widest caret-white focus:outline-none "
           name="q"
+          value={query}
+          onChange={onQueryChange}
           placeholder={placeholder}
         />
       </div>

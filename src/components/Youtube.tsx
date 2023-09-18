@@ -54,8 +54,10 @@ export default function Player({
           <iframe
             className="m-auto border-4 border-black"
             src={iframeUrl}
-            width="853"
-            height="480"
+            width="682"
+            height="384"
+            // width="853"
+            // height="480"
           />
         )}
       </div>

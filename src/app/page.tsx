@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-import AuthBtn from "~/components/SignInBtn";
-import LogoutBtn from "~/components/LogoutBtn";
 import { searchInstance } from "~/lib/search/instance";
 
 import Profile from "./Profile";

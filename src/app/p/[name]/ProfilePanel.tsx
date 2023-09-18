@@ -3,11 +3,8 @@ import Image from "next/image";
 
 import { searchInstance } from "~/lib/search/instance";
 import { YoutubeProfile } from "~/lib/search";
-import { getServerAuthSession } from "~/server/auth";
-import { trpcServer } from "~/lib/trpc-server";
-import LogoutBtn from "~/components/LogoutBtn";
 import SignInBtn from "~/components/SignInBtn";
-import { UploadList } from "./UploadList";
+import { getServerAuthSession } from "~/server/auth";
 
 type ProfileImageProps = {
   profile: YoutubeProfile;
@@ -18,8 +15,8 @@ export async function ProfileImage({ profile }: ProfileImageProps) {
     <>
       <Image
         src={profile.channel_logo!}
-        height={250}
-        width={250}
+        height="200"
+        width="200"
         className="mx-auto hidden border-4 border-black font-bold sm:block"
         alt={`Youtube profile pic for ${profile.channel_name}`}
       />
@@ -40,53 +37,34 @@ type ProfileHeaderProps = {
 };
 
 export async function ProfilePanel({ author, backHref }: ProfileHeaderProps) {
-  const session = await getServerAuthSession();
-  const [profile, documents] = await Promise.all([
+  const [profile] = await Promise.all([
     searchInstance.profile.getProfile({ author }),
-    searchInstance.documents.allDocuments({ author }),
   ]);
 
   return (
-    <>
-      <div className="mb-2 flex flex-row justify-around gap-4">
-        <div className="flex flex-col justify-between">
-          {session?.user && (
-            <div className="flex-grow-1 focus:rin flex flex-row gap-2 bg-black p-2 shadow-[8px_8px_0_0_#000] transition hover:shadow-none focus:outline-none">
-              <Image
-                src={session?.user.image!}
-                width="30"
-                height="30"
-                alt={`Profile picture for ${session.user.name}`}
-              />
-              <Link href="#" className="tracking-wider hover:underline">
-                {session.user.name}
-              </Link>
-            </div>
-          )}
-          <Link
-            href={backHref}
-            className="mt-auto h-fit max-w-fit border-4 border-black bg-black font-bold shadow-[8px_8px_0_0_#000] transition hover:shadow-none focus:outline-none focus:ring "
-          >
-            <Image
-              className="m-1"
-              src="/icons/left-arrow.svg"
-              height={32}
-              width={32}
-              alt="left arrow"
-            />
-          </Link>
-        </div>
-        <div className="relative w-fit">
-          <ProfileImage profile={profile} />
-          <div className="absolute bottom-0 z-20 mb-4 ml-4">
-            <div className="bg-black px-1 font-bold">
-              <h1 className="tracking-widest text-white">
-                {profile.channel_name}
-              </h1>
-            </div>
-          </div>
+    <div className="gap-4">
+      <div className="absolute flex flex-row justify-between">
+        <Link
+          href={backHref}
+          className=" h-fit  border-4 border-black bg-black font-bold shadow-[8px_8px_0_0_#000] transition hover:shadow-none focus:outline-none focus:ring "
+        >
+          <Image
+            className="m-1"
+            src="/icons/left-arrow.svg"
+            height={32}
+            width={32}
+            alt="left arrow"
+          />
+        </Link>
+      </div>
+      <div className="relative mx-auto w-fit">
+        <ProfileImage profile={profile} />
+        <div className="absolute bottom-4 left-4 z-20">
+          <h1 className="bg-black px-1 font-bold tracking-widest text-white">
+            {profile.channel_name}
+          </h1>
         </div>
       </div>
-    </>
+    </div>
   );
 }

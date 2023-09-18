@@ -1,17 +1,13 @@
 import { Suspense } from "react";
 
 import { searchInstance } from "~/lib/search/instance";
+import SignInBtn from "~/components/SignInBtn";
 import { SearchPage, DummyPage } from "./SearchPage";
 import RecommendPage from "./RecommendPage";
 import { UploadList } from "./UploadList";
 import { ProfilePanel } from "./ProfilePanel";
 import { SearchBar } from "./SearchBar";
-import { getServerAuthSession } from "~/server/auth";
-
-function msDate(date: string): number {
-  const ms = new Date(date);
-  return ms.getTime();
-}
+import { Player } from "./Player";
 
 type SearchParamType = string | string[] | undefined;
 
@@ -27,29 +23,58 @@ function parseSearchQuery(param: SearchParamType): string | undefined {
 
 export default async function Page({ params, searchParams }: PageProps) {
   const author = decodeURI(params.name);
-  const documents = await searchInstance.documents.allDocuments({ author });
-  const session = await getServerAuthSession();
+
   const query = parseSearchQuery(searchParams.q);
+  const documentId = parseSearchQuery(searchParams.v);
+  const start = parseSearchQuery(searchParams.start);
+  const end = parseSearchQuery(searchParams.end);
+
+  const [documents, results, currDocument] = await Promise.all([
+    searchInstance.documents.allDocuments({ author }),
+    query
+      ? searchInstance.search.querySegmentsFromProfile({
+          author: author,
+          query: query!,
+        })
+      : undefined,
+    documentId
+      ? searchInstance.documents.getDocument({ id: documentId })
+      : undefined,
+  ]);
 
   return (
-    <main className="mx-8 flex min-h-screen flex-col gap-3 pt-2 sm:flex-row">
+    <main className="flex min-h-screen w-screen flex-col gap-3 px-4 pt-2 sm:flex-row">
       <section className="flex w-full flex-col gap-2 sm:w-fit sm:flex-col">
         <ProfilePanel backHref={query ? `/p/${author}` : "/"} author={author} />
         <UploadList documents={documents} />
       </section>
 
-      <div className="flex flex-grow flex-col">
-        <SearchBar placeholder={`find a moment from ${author}`}>
-          <div />
+      <section className="flex h-screen flex-col">
+        <SearchBar
+          initQuery={query}
+          placeholder={`find a moment from ${author}`}
+        >
+          <SignInBtn />
         </SearchBar>
-        {query ? (
-          <Suspense fallback={<DummyPage />}>
-            <SearchPage author={author} query={query} />
-          </Suspense>
-        ) : (
-          <RecommendPage />
-        )}
-      </div>
+        <div className="flex h-full flex-row">
+          {query ? (
+            <Suspense fallback={<DummyPage />}>
+              <SearchPage author={author} initResults={results} />
+            </Suspense>
+          ) : (
+            <RecommendPage />
+          )}
+          {currDocument && (
+            <Suspense fallback={<div />}>
+              <Player
+                video={currDocument}
+                start={start ? parseInt(start) : undefined}
+                end={end ? parseInt(end) : undefined}
+              />
+            </Suspense>
+          )}
+        </div>
+      </section>
     </main>
   );
 }
