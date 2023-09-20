@@ -36,7 +36,12 @@ export default function AuthBtn(props: AuthBtnProps) {
       <div className="flex flex-row gap-1 bg-black px-2 text-xs tracking-wider">
         {status === "authenticated" ? (
           <>
-            <Image src={session?.user.image!} width="30" height="30" alt="" />
+            {session?.user.image ? (
+              <Image src={session?.user.image!} width="30" height="30" alt="" />
+            ) : (
+              <div className="h-[30px] w-[30px] bg-neutral-400" />
+            )}
+
             <p className="my-auto line-clamp-1 h-fit">{session?.user.name}</p>
           </>
         ) : status === "unauthenticated" ? (
