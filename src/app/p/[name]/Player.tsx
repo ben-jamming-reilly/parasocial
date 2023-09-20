@@ -1,6 +1,8 @@
 "use client";
-
-import YouTube, { YouTubeProps } from "react-youtube";
+import { useState } from "react";
+import Image from "next/image";
+import YouTube from "react-youtube";
+import { useRouter } from "next/navigation";
 
 import { useParentSizeObserver } from "~/hooks/useParentSize";
 import { YoutubeVideo } from "~/lib/search";
@@ -20,13 +22,32 @@ export function Player({ video, start, end }: PlayerProps) {
   const videoId = documentUrl.searchParams.get("v");
 
   const { parentRef, parentSize } = useParentSizeObserver();
+  const router = useRouter();
+
+  const back = () => {
+    //
+    const url = new URL(window.location.href);
+    url.searchParams.delete("v");
+    url.searchParams.delete("start");
+    url.searchParams.delete("end");
+    router.push(url.toString());
+  };
 
   return (
     <div
-      className="flex w-96 flex-col border-4 border-r-0 border-black bg-inherit"
+      className="flex flex-1 flex-col border-4 border-b-0 border-r-0 border-black bg-inherit"
       ref={parentRef}
     >
       <div className="justify-center bg-black">
+        <button onClick={back}>
+          <Image
+            className="m-2 hover:underline"
+            src="/icons/x.svg"
+            width="20"
+            height="20"
+            alt="x"
+          />
+        </button>
         <YouTube
           className="mx-auto"
           videoId={videoId!}

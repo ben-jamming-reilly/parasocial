@@ -43,20 +43,21 @@ export default async function Page({ params, searchParams }: PageProps) {
   ]);
 
   return (
-    <main className="flex min-h-screen w-screen flex-col gap-3 px-4 pt-2 sm:flex-row">
+    <main className="flex min-h-screen w-screen flex-row gap-3 pl-4 pt-2">
       <section className="flex w-full flex-col gap-2 sm:w-fit sm:flex-col">
         <ProfilePanel backHref={query ? `/p/${author}` : "/"} author={author} />
         <UploadList documents={documents} />
       </section>
 
-      <section className="flex h-screen flex-col">
+      <section className="flex h-screen flex-1 flex-col">
         <SearchBar
+          className="mt-auto pr-4"
           initQuery={query}
           placeholder={`find a moment from ${author}`}
         >
           <SignInBtn />
         </SearchBar>
-        <div className="flex h-full flex-row">
+        <div className="flex h-[93vh] flex-row">
           {query ? (
             <Suspense fallback={<DummyPage />}>
               <SearchPage author={author} initResults={results} />
@@ -65,13 +66,11 @@ export default async function Page({ params, searchParams }: PageProps) {
             <RecommendPage />
           )}
           {currDocument && (
-            <Suspense fallback={<div />}>
-              <Player
-                video={currDocument}
-                start={start ? parseInt(start) : undefined}
-                end={end ? parseInt(end) : undefined}
-              />
-            </Suspense>
+            <Player
+              video={currDocument}
+              start={start ? parseInt(start) : undefined}
+              end={end ? parseInt(end) : undefined}
+            />
           )}
         </div>
       </section>

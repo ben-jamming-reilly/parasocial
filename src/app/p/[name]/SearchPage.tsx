@@ -55,7 +55,7 @@ export async function SearchPage({ author, initResults }: SearchPageProps) {
   }, [params]);
 
   return (
-    <div className="mx-auto flex h-full min-w-[550px] flex-1 flex-wrap justify-around gap-2 overflow-scroll pb-4">
+    <div className="z-0 mx-auto flex h-full min-w-[550px] flex-1 flex-wrap justify-around gap-2 overflow-scroll pb-4">
       {results && results.map((result) => <SearchItem result={result} />)}
     </div>
   );

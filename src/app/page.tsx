@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SignInBtn from "~/components/SignInBtn";
 
 import { searchInstance } from "~/lib/search/instance";
 
@@ -15,6 +16,7 @@ export default async function Home() {
             parasocial
           </h1>
         </Link>
+        <SignInBtn />
       </div>
       <div className="mb-12 grid grid-cols-1 justify-around gap-4 sm:grid-cols-2">
         <p className="col-span-1 text-justify font-semibold leading-6 tracking-normal text-black sm:col-span-2 sm:tracking-widest">

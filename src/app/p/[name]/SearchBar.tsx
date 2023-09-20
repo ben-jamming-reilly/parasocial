@@ -1,20 +1,23 @@
 "use client";
-import { FormEvent, ReactNode, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { FormEvent, ReactNode } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
+import { cn } from "~/lib/utils";
 import useInput from "~/hooks/useInput";
 
 type SearchBarProps = {
   placeholder: string;
   initQuery?: string;
   children?: ReactNode;
+  className?: string;
 };
 
 export function SearchBar({
   placeholder,
   children,
   initQuery,
+  className,
 }: SearchBarProps) {
   const [query, onQueryChange, setQuery] = useInput(initQuery);
   const router = useRouter();
@@ -27,7 +30,10 @@ export function SearchBar({
   return (
     <form
       onSubmit={onSubmit}
-      className="mb-4 flex w-full flex-row justify-between gap-3 sm:mx-0"
+      className={cn(
+        "mb-4 flex w-full flex-row justify-between gap-3 sm:mx-0",
+        className
+      )}
     >
       <button className="mt-auto">
         <Image
