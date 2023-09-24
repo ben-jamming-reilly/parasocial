@@ -38,7 +38,7 @@ export function Player({ video, start, end }: PlayerProps) {
       className="flex flex-1 flex-col border-4 border-b-0 border-r-0 border-black bg-inherit"
       ref={parentRef}
     >
-      <div className="justify-center bg-black">
+      <div className="justify-center border-b-4 border-black bg-black">
         <div className="flex flex-row justify-between gap-2">
           <button onClick={back}>
             <Image
