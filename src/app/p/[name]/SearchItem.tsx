@@ -77,12 +77,12 @@ export default function SearchItem({
       {/* Desktop */}
       <Link
         href={watchUrl}
-        className="hidden min-w-[190px] max-w-[250px] flex-col gap-2 text-xs tracking-wider hover:underline sm:flex"
+        className="hidden min-w-[190px] max-w-[250px] flex-col gap-2 border-4 border-black bg-black text-xs tracking-wider hover:underline sm:flex"
       >
         <div className="relative mx-auto">
           <Image
             src={thumbnailUrl(video.url, start_ms, video.length * 1000)}
-            className=" mx-auto border-4 border-black"
+            className=" mx-auto "
             height="250"
             width="250"
             alt={`A youtube thumbnail wor ${video.title}`}
@@ -96,15 +96,7 @@ export default function SearchItem({
             </p>
           </div>
         </div>
-        <div className="w-250 bg-black">
-          <h3 className="line-clamp-2 w-full bg-black px-2 text-xs tracking-wider">
-            {video.title}
-          </h3>
-          <p className="px-2">-</p>
-          <p className="line-clamp-2 w-full bg-black px-2 text-xs italic">
-            "{text}"
-          </p>
-        </div>
+        <p className="line-clamp-3 w-full px-2 text-xs italic">"{text}"</p>
       </Link>
     </>
   );

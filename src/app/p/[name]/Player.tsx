@@ -39,15 +39,18 @@ export function Player({ video, start, end }: PlayerProps) {
       ref={parentRef}
     >
       <div className="justify-center bg-black">
-        <button onClick={back}>
-          <Image
-            className="m-2 hover:underline"
-            src="/icons/x.svg"
-            width="20"
-            height="20"
-            alt="x"
-          />
-        </button>
+        <div className="flex flex-row justify-between gap-2">
+          <button onClick={back}>
+            <Image
+              className="m-2 hover:underline"
+              src="/icons/x.svg"
+              width="20"
+              height="20"
+              alt="x"
+            />
+          </button>
+          <p className="my-auto line-clamp-1 ">{video.title}</p>
+        </div>
         <YouTube
           className="mx-auto"
           videoId={videoId!}
