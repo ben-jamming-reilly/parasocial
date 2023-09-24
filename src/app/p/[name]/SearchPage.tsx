@@ -40,23 +40,45 @@ type SearchPageProps = {
   initResults?: SearchResult[];
 };
 
-export async function SearchPage({ author, initResults }: SearchPageProps) {
+export function SearchPage({ author, initResults }: SearchPageProps) {
   const [results, setResults] = useState(initResults);
   const [query, setQuery] = useState<string>();
   const params = useSearchParams();
 
-  // const { data, isLoading } = trpcClient.search.queryAuthor.useQuery({
-  //   author,
-  //   query: query!,
-  // });
+  const { data, isLoading } = trpcClient.search.queryAuthor.useQuery(
+    {
+      author,
+      query: query!,
+    },
+    {
+      enabled: !!query,
+      queryHash: [query, author].join("|"),
+    }
+  );
 
   useEffect(() => {
     setQuery(params.get("q") ?? undefined);
   }, [params]);
 
+  useEffect(() => {
+    if (data) setResults(data);
+  }, [data]);
+
   return (
-    <div className="z-0 mx-auto flex h-full min-w-[550px] flex-1 flex-wrap justify-around gap-2 overflow-scroll pb-4">
-      {results && results.map((result) => <SearchItem result={result} />)}
-    </div>
+    <>
+      {isLoading ? (
+        <DummyPage />
+      ) : (
+        <div className="z-0 mx-auto flex h-full min-w-[550px] flex-1 flex-wrap justify-around gap-2 overflow-scroll pb-4">
+          {results &&
+            results.map((result) => (
+              <SearchItem
+                key={result.document.id + result.start_ms}
+                result={result}
+              />
+            ))}
+        </div>
+      )}
+    </>
   );
 }
