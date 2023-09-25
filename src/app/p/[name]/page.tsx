@@ -52,6 +52,7 @@ export default async function Page({ params, searchParams }: PageProps) {
       <section className="flex h-screen flex-1 flex-col">
         <SearchBar
           className="mt-auto pr-4"
+          author={author}
           initQuery={query}
           placeholder={`find a moment from ${author}`}
         >

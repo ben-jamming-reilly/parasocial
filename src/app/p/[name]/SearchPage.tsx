@@ -7,7 +7,7 @@ import { trpcClient } from "~/lib/trpc-client";
 import SearchItem from "./SearchItem";
 
 export function DummyPage() {
-  const dummies = [...Array(16).keys()];
+  const dummies = [...Array(20).keys()];
   return (
     <div className="mx-auto flex min-w-[550px] flex-1 flex-wrap justify-around gap-2 overflow-scroll  pb-4">
       {dummies.map((dummy) => (

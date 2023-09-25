@@ -25,7 +25,6 @@ export function Player({ video, start, end }: PlayerProps) {
   const router = useRouter();
 
   const back = () => {
-    //
     const url = new URL(window.location.href);
     url.searchParams.delete("v");
     url.searchParams.delete("start");
@@ -49,7 +48,7 @@ export function Player({ video, start, end }: PlayerProps) {
               alt="x"
             />
           </button>
-          <p className="my-auto line-clamp-1 ">{video.title}</p>
+          <p className="my-auto line-clamp-1 flex-1 ">{video.title}</p>
         </div>
         <YouTube
           className="mx-auto"
@@ -72,6 +71,3 @@ export function Player({ video, start, end }: PlayerProps) {
     </div>
   );
 }
-
-// width="853"
-// height="480"
