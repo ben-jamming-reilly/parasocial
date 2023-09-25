@@ -32,7 +32,10 @@ function QuerySuggestion({ author, query }: QuerySuggestionProps) {
   }, []);
 
   return (
-    <Link href={queryUrl} className="underline-white hover:underline ">
+    <Link
+      href={queryUrl}
+      className="underline-white line-clamp-1 hover:underline"
+    >
       {query}
     </Link>
   );
@@ -137,7 +140,7 @@ export function SearchBar({
           debounceSuggestions.length > 0 &&
           suggestions && (
             <div className="relative h-0 w-full">
-              <div className="absolute top-0 z-30 flex flex-col gap-1 bg-black bg-opacity-100 px-2 tracking-wider">
+              <div className="absolute top-0 z-30 flex flex-col gap-1 bg-black bg-opacity-70 px-2 tracking-wider">
                 {debounceSuggestions.map(({ id, query, author }) => (
                   <QuerySuggestion key={id} query={query} author={author!} />
                 ))}
