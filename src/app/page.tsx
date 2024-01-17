@@ -1,5 +1,5 @@
 import Link from "next/link";
-import SignInBtn from "~/components/SignInBtn";
+import SignInBtn from "~/components/UserButton";
 
 import { searchInstance } from "~/lib/search/instance";
 

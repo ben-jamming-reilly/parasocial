@@ -2,8 +2,10 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-import { SearchResult } from "~/lib/search";
-import { trpcClient } from "~/lib/trpc-client";
+// import { SearchResult } from "~/lib/search";
+import { SearchResult } from "~/server/video-query";
+// import { trpcClient } from "~/lib/trpc-client";
+import { api as trpcClient } from "~/trpc/react";
 import SearchItem from "./SearchItem";
 
 export function DummyPage() {
@@ -35,7 +37,7 @@ export function SearchPage({ author, initResults }: SearchPageProps) {
   const [query, setQuery] = useState<string>();
   const params = useSearchParams();
 
-  const { data, isLoading } = trpcClient.search.queryAuthor.useQuery(
+  const { data, isLoading } = trpcClient.video.search.useQuery(
     {
       author,
       query: query!,
@@ -63,7 +65,7 @@ export function SearchPage({ author, initResults }: SearchPageProps) {
           {results &&
             results.map((result) => (
               <SearchItem
-                key={result.document.id + result.start_ms}
+                key={result.video.id + result.start_ms}
                 result={result}
               />
             ))}

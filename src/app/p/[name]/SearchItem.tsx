@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 
-import { SearchResult } from "~/lib/search";
+import { SearchResult } from "~/server/video-query";
 import { timestamp } from "~/lib/utils";
 import Player from "~/components/Youtube";
 
@@ -20,7 +20,7 @@ interface SearchItemProps {
 }
 
 export default function SearchItem({
-  result: { document: video, start_ms, end_ms, text },
+  result: { video: video, start_ms, end_ms, text },
 }: SearchItemProps) {
   const [playMobile, setPlayMobile] = useState(false);
 

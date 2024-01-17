@@ -1,10 +1,26 @@
+import {} from "react";
 import Link from "next/link";
 import Image from "next/image";
 
 import { searchInstance } from "~/lib/search/instance";
 import { YoutubeProfile } from "~/lib/search";
-import SignInBtn from "~/components/SignInBtn";
-import { getServerAuthSession } from "~/server/auth";
+
+export function BackButton({ backHref }: { backHref: string }) {
+  return (
+    <Link
+      href={backHref}
+      className=" h-fit border-4 border-black bg-black font-bold shadow-[8px_8px_0_0_#000] transition hover:shadow-none focus:outline-none focus:ring "
+    >
+      <Image
+        className="m-1"
+        src="/icons/left-arrow.svg"
+        height={32}
+        width={32}
+        alt="left arrow"
+      />
+    </Link>
+  );
+}
 
 type ProfileImageProps = {
   profile: YoutubeProfile;
@@ -44,18 +60,7 @@ export async function ProfilePanel({ author, backHref }: ProfileHeaderProps) {
   return (
     <div className="gap-4">
       <div className="absolute flex flex-row justify-between">
-        <Link
-          href={backHref}
-          className=" h-fit  border-4 border-black bg-black font-bold shadow-[8px_8px_0_0_#000] transition hover:shadow-none focus:outline-none focus:ring "
-        >
-          <Image
-            className="m-1"
-            src="/icons/left-arrow.svg"
-            height={32}
-            width={32}
-            alt="left arrow"
-          />
-        </Link>
+        <BackButton backHref={backHref} />
       </div>
       <div className="relative mx-auto w-fit">
         <ProfileImage profile={profile} />

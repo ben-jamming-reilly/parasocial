@@ -9,7 +9,8 @@ import useInput from "~/hooks/useInput";
 import { useClickOutside } from "~/hooks/useClickOutside";
 
 import { useDebounce } from "~/hooks/useDebounce";
-import { trpcClient } from "~/lib/trpc-client";
+import { api as trpcClient } from "~/trpc/react";
+// import { trpcClient } from "~/lib/trpc-client";
 import { getBaseUrl } from "~/lib/utils";
 
 type QuerySuggestionProps = {

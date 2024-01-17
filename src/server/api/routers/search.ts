@@ -6,7 +6,7 @@ import {
   // protectedProcedure,
 } from "~/server/api/trpc";
 import { searchInstance } from "~/lib/search/instance";
-import { prisma } from "~/server/db";
+import { db } from "~/server/db";
 import { getServerAuthSession } from "~/server/auth";
 
 export const searchRouter = createTRPCRouter({
@@ -18,7 +18,7 @@ export const searchRouter = createTRPCRouter({
       })
     )
     .query(async ({ input }) => {
-      const searches: SearchQuery[] = await prisma.$queryRaw`
+      const searches: SearchQuery[] = await db.$queryRaw`
         SELECT  *
         FROM "SearchQuery"
         WHERE "SearchQuery".author = ${input.author} 
@@ -52,7 +52,7 @@ export const searchRouter = createTRPCRouter({
 
       const [results] = await Promise.all([
         searchInstance.search.querySegmentsFromProfile(input),
-        prisma.searchQuery.create({
+        db.searchQuery.create({
           data: {
             user_id: session?.user.id ?? undefined,
             query: input.query,

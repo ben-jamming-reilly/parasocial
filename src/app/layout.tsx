@@ -1,8 +1,9 @@
 import "./global.css";
 import Footer from "./Footer";
 import { Analytics } from "@vercel/analytics/react";
+import { cookies } from "next/headers";
 import AuthProvider from "./AuthProvider";
-import TRPCProvider from "./TRPCProvider";
+import { TRPCReactProvider } from "~/trpc/react";
 
 const description =
   "Discover and relive memorable moments from your favorite content creators";
@@ -27,9 +28,11 @@ export default function RootLayout({
         <title>parasocial</title>
         <meta name="twitter:card" content={description} />
       </head>
-      <body className="relative h-full min-h-screen bg-rose-900		 text-zinc-100">
+      <body className="relative h-full min-h-screen bg-rose-900 text-zinc-100">
         <AuthProvider>
-          <TRPCProvider>{children}</TRPCProvider>
+          <TRPCReactProvider cookies={cookies().toString()}>
+            {children}
+          </TRPCReactProvider>
         </AuthProvider>
         <Footer />
         <Analytics />
