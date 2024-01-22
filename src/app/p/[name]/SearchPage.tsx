@@ -1,11 +1,6 @@
-"use client";
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+// "use client";
 
-// import { SearchResult } from "~/lib/search";
 import { SearchResult } from "~/server/video-query";
-// import { trpcClient } from "~/lib/trpc-client";
-import { api as trpcClient } from "~/trpc/react";
 import SearchItem from "./SearchItem";
 
 export function DummyPage() {
@@ -33,44 +28,15 @@ type SearchPageProps = {
 };
 
 export function SearchPage({ author, initResults }: SearchPageProps) {
-  const [results, setResults] = useState(initResults);
-  const [query, setQuery] = useState<string>();
-  const params = useSearchParams();
-
-  const { data, isLoading } = trpcClient.video.search.useQuery(
-    {
-      author,
-      query: query!,
-    },
-    {
-      enabled: !!query,
-      queryHash: [query, author].join("|"),
-    }
-  );
-
-  useEffect(() => {
-    setQuery(params.get("q") ?? undefined);
-  }, [params]);
-
-  useEffect(() => {
-    if (data) setResults(data);
-  }, [data]);
-
   return (
-    <>
-      {isLoading ? (
-        <DummyPage />
-      ) : (
-        <div className="z-0 mx-auto flex h-full min-w-[550px] flex-1 flex-wrap justify-around gap-2 overflow-scroll pb-4">
-          {results &&
-            results.map((result) => (
-              <SearchItem
-                key={result.video.id + result.start_ms}
-                result={result}
-              />
-            ))}
-        </div>
-      )}
-    </>
+    <div className="z-0 mx-auto flex h-full min-w-[550px] flex-1 flex-wrap justify-around gap-2 overflow-scroll pb-4">
+      {initResults &&
+        initResults.map((result) => (
+          <SearchItem
+            key={result.video.id + result.start_ms + result.end_ms}
+            result={result}
+          />
+        ))}
+    </div>
   );
 }

@@ -36,8 +36,8 @@ export default async function Page({ params, searchParams }: PageProps) {
   ]);
 
   return (
-    <main className="flex min-h-screen w-screen flex-row gap-3 pl-4 pt-2">
-      <section className="flex w-full flex-col gap-2 sm:w-fit sm:flex-col">
+    <main className="flex min-h-screen flex-row gap-3 pt-2">
+      <section className="flex w-full flex-col gap-2 pl-3 sm:w-fit sm:flex-col">
         <ProfilePanel backHref={query ? `/p/${author}` : "/"} author={author} />
         <UploadList documents={documents} />
       </section>

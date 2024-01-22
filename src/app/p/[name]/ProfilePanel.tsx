@@ -1,6 +1,7 @@
 import {} from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { api } from "~/trpc/server";
 
 import { searchInstance } from "~/lib/search/instance";
 import { YoutubeProfile } from "~/lib/search";
@@ -53,9 +54,7 @@ type ProfileHeaderProps = {
 };
 
 export async function ProfilePanel({ author, backHref }: ProfileHeaderProps) {
-  const [profile] = await Promise.all([
-    searchInstance.profile.getProfile({ author }),
-  ]);
+  const profile = await api.profile.getYoutubeProfile.query({ author });
 
   return (
     <div className="gap-4">

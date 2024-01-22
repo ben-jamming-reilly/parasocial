@@ -1,3 +1,22 @@
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { z } from "zod";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 
-export const userRouter = createTRPCRouter({});
+export const userRouter = createTRPCRouter({
+  searchHistory: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.db.searchQuery.findMany({
+      where: {
+        user_id: ctx.session.user.id,
+      },
+      orderBy: {
+        create_date: "desc",
+      },
+      distinct: "query",
+      take: 50,
+    });
+    //
+  }),
+});

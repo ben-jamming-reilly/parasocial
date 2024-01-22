@@ -2,16 +2,27 @@ import { z } from "zod";
 import {
   createTRPCRouter,
   publicProcedure,
-  // protectedProcedure,
+  protectedProcedure,
 } from "~/server/api/trpc";
 import { VideoQuery } from "../../video-query";
 import { env } from "~/env.mjs";
 
 const videoQuery = new VideoQuery({
-  BASE: env.PARASOCIAL_API_BASE_URL,
+  BASE: env.VIDEO_QUERY_API_BASE_URL,
+  HEADERS: {
+    Authorization: env.VIDEO_QUERY_API_KEY,
+  },
 });
 
 export const videoRouter = createTRPCRouter({
+  upload: protectedProcedure
+    .input(z.object({ url: z.string().url() }))
+    .mutation(async ({ input, ctx }) => {
+      ctx.session.user.id;
+      const upload = await videoQuery.videos.upload({ requestBody: input });
+      return upload;
+    }),
+
   get: publicProcedure
     .input(
       z.object({
@@ -32,6 +43,16 @@ export const videoRouter = createTRPCRouter({
     )
     .query(async ({ input }) => {
       return await videoQuery.videos.getAllVideos(input);
+    }),
+
+  summary: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .query(async ({ input }) => {
+      return await videoQuery.videos.summaryVideo(input);
     }),
 
   search: publicProcedure

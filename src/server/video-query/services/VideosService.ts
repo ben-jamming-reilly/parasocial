@@ -3,6 +3,7 @@
 /* eslint-disable */
 import type { BaseVideo } from '../models/BaseVideo';
 import type { CreateVideo } from '../models/CreateVideo';
+import type { SummaryResult } from '../models/SummaryResult';
 import type { YoutubeVideo } from '../models/YoutubeVideo';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -74,6 +75,28 @@ export class VideosService {
     return this.httpRequest.request({
       method: 'GET',
       url: '/videos/{id}',
+      path: {
+        'id': id,
+      },
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+
+  /**
+   * Summarize Video
+   * @returns SummaryResult Successful Response
+   * @throws ApiError
+   */
+  public summaryVideo({
+    id,
+  }: {
+    id: string,
+  }): CancelablePromise<Array<SummaryResult>> {
+    return this.httpRequest.request({
+      method: 'GET',
+      url: '/videos/{id}/summary',
       path: {
         'id': id,
       },

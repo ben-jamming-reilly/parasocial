@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import YouTube from "react-youtube";
+import YouTube, { YouTubeProps } from "react-youtube";
 import { useRouter } from "next/navigation";
 
 import { useParentSizeObserver } from "~/hooks/useParentSize";
@@ -57,6 +57,7 @@ export function Player({ video, start, end }: PlayerProps) {
   const videoId = documentUrl.searchParams.get("v");
 
   const { parentRef, parentSize } = useParentSizeObserver();
+  const [unloaded, setUnloaded] = useState(false);
   const router = useRouter();
 
   const back = () => {
@@ -65,6 +66,16 @@ export function Player({ video, start, end }: PlayerProps) {
     url.searchParams.delete("start");
     url.searchParams.delete("end");
     router.push(url.toString());
+  };
+
+  const onStateChange: YouTubeProps["onStateChange"] = (event) => {
+    console.log(event.data);
+    if (Number(event.data) === -1) {
+      // this is jank and should be replaced lmao
+      setTimeout(() => {
+        event.target.seekTo(start, true);
+      }, 1000);
+    }
   };
 
   return (
@@ -86,17 +97,22 @@ export function Player({ video, start, end }: PlayerProps) {
           <p className="my-auto line-clamp-1 flex-1 ">{video.title}</p>
         </div>
         <YouTube
+          key={`${video.id}-${start}-${end}`}
           className="mx-auto"
           videoId={videoId!}
+          id={`${video.id}-${start}-${end}`}
+          loading="lazy"
+          onStateChange={onStateChange}
           opts={{
             width: parentSize.width - 2,
             height: hwRatio * (parentSize.width - 2),
             playerVars: {
               // https://developers.google.com/youtube/player_parameters#Parameters
               color: "white",
-              autoplay: 1,
               rel: 0,
-              start: start,
+              autoplay: 0,
+              start: Number(start),
+              end: Number(end),
               controls: 1, // 0 - no controls
             },
           }}

@@ -20,7 +20,7 @@ interface SearchItemProps {
 }
 
 export default function SearchItem({
-  result: { video: video, start_ms, end_ms, text },
+  result: { video: video, start_ms, end_ms, text, score },
 }: SearchItemProps) {
   const [playMobile, setPlayMobile] = useState(false);
 
@@ -63,6 +63,7 @@ export default function SearchItem({
           <p className="w-fit bg-black px-3">
             [{timestamp(start_ms)} - {timestamp(end_ms)}]
           </p>
+          <p>{score}</p>
         </div>
         {playMobile && (
           <Player
@@ -96,7 +97,9 @@ export default function SearchItem({
             </p>
           </div>
         </div>
-        <p className="line-clamp-3 w-full px-2 text-xs italic">"{text}"</p>
+        <p className="line-clamp-3 w-full px-2 text-xs italic">
+          <span>{score.toFixed(3)}</span> - "{text}"
+        </p>
       </Link>
     </>
   );

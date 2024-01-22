@@ -32,9 +32,18 @@ model SearchQuery {
   id          String   @id @default(cuid())
   query       String
   author      String?
-  create_date DateTime @default(now())
   user_id     String?
+  video_id    String?
+  create_date DateTime @default(now())
   user        User?    @relation(fields: [user_id], references: [id])
+}
+
+model VideoUpload {
+  id          String   @id @default(cuid())
+  url         String
+  user_id     String
+  create_date DateTime @default(now())
+  user        User     @relation(fields: [user_id], references: [id])
 }
 
 model Account {
@@ -74,6 +83,7 @@ model User {
   queries       SearchQuery[]
   sessions      Session[]
   profile       SocialProfile?
+  uploads       VideoUpload[]
 }
 
 model VerificationToken {

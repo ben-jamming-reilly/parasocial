@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { cookies } from "next/headers";
 import AuthProvider from "./AuthProvider";
 import { TRPCReactProvider } from "~/trpc/react";
+import { Toaster } from "~/components/ui/toaster";
 
 const description =
   "Discover and relive memorable moments from your favorite content creators";
@@ -14,7 +15,7 @@ export const metadata = {
 };
 
 // Regenerate Every 10 minutes
-export const revalidate = 10 * 60;
+// export const revalidate = 10 * 60;
 
 export default function RootLayout({
   children,
@@ -32,6 +33,7 @@ export default function RootLayout({
         <AuthProvider>
           <TRPCReactProvider cookies={cookies().toString()}>
             {children}
+            <Toaster />
           </TRPCReactProvider>
         </AuthProvider>
         <Footer />

@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -23,38 +24,26 @@ interface UploadItemProps {
 }
 
 function UploadItem({ doc, mobile }: UploadItemProps) {
-  const [play, setPlay] = useState(false);
-
   return (
-    <>
-      <div
-        className="text flex flex-row gap-2 border-4 border-black bg-black px-3 hover:underline"
-        onClick={() => setPlay(!play)}
-      >
-        <Image
-          src={doc.thumbnail_url}
-          width={80}
-          height={80}
-          alt={`Thumbnail for ${doc.title}`}
-        />
-        <div className="flex-1 flex-col-reverse">
-          <p className="line-clamp-2 flex-1 text-justify tracking-wider text-white">
-            {doc.title}
-          </p>
-          <p className="text-xs text-neutral-400">
-            {displayDate(doc.publish_date)}
-          </p>
-        </div>
-        {play && (
-          <Youtube
-            close={() => setPlay(false)}
-            url={doc.url}
-            start_ms={0}
-            isMobile={mobile}
-          />
-        )}
+    <Link
+      href={`/v/${doc.id}`}
+      className="text flex flex-row gap-2 border-4 border-black bg-black px-3 hover:underline"
+    >
+      <Image
+        src={doc.thumbnail_url}
+        width={80}
+        height={80}
+        alt={`Thumbnail for ${doc.title}`}
+      />
+      <div className="flex-1 flex-col-reverse">
+        <p className="line-clamp-2 flex-1 text-justify tracking-wider text-white">
+          {doc.title}
+        </p>
+        <p className="text-xs text-neutral-400">
+          {displayDate(doc.publish_date)}
+        </p>
       </div>
-    </>
+    </Link>
   );
 }
 
@@ -73,7 +62,7 @@ export function UploadList({ documents }: UploadListProps) {
           </AccordionTrigger>
           <AccordionContent className="mt-2">
             <ScrollArea className="h-[40vh] gap-3 ">
-              <div className="flex flex-col gap-3  text-white">
+              <div className="flex flex-col gap-3 text-white">
                 {documents.map((doc) => (
                   <UploadItem key={doc.url} mobile={true} doc={doc} />
                 ))}

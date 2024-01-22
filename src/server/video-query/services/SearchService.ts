@@ -11,7 +11,7 @@ export class SearchService {
   constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
-   * Search Videos
+   * Search All Videos
    * @returns SearchResult Successful Response
    * @throws ApiError
    */
@@ -25,31 +25,6 @@ export class SearchService {
     return this.httpRequest.request({
       method: 'GET',
       url: '/search',
-      query: {
-        'query': query,
-        'author': author,
-      },
-      errors: {
-        422: `Validation Error`,
-      },
-    });
-  }
-
-  /**
-   * Similar Videos
-   * @returns any Successful Response
-   * @throws ApiError
-   */
-  public allSimilarVideos({
-    query,
-    author,
-  }: {
-    query: string,
-    author: string,
-  }): CancelablePromise<any> {
-    return this.httpRequest.request({
-      method: 'GET',
-      url: '/similar',
       query: {
         'query': query,
         'author': author,
@@ -75,33 +50,6 @@ export class SearchService {
     return this.httpRequest.request({
       method: 'GET',
       url: '/videos/{id}/search',
-      path: {
-        'id': id,
-      },
-      query: {
-        'query': query,
-      },
-      errors: {
-        422: `Validation Error`,
-      },
-    });
-  }
-
-  /**
-   * Summarize Video
-   * @returns any Successful Response
-   * @throws ApiError
-   */
-  public summaryVideo({
-    id,
-    query,
-  }: {
-    id: string,
-    query: string,
-  }): CancelablePromise<any> {
-    return this.httpRequest.request({
-      method: 'GET',
-      url: '/videos/{id}/summary',
       path: {
         'id': id,
       },

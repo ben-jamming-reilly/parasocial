@@ -13,6 +13,7 @@ export type { BaseVideo } from './models/BaseVideo';
 export type { CreateVideo } from './models/CreateVideo';
 export type { HTTPValidationError } from './models/HTTPValidationError';
 export type { SearchResult } from './models/SearchResult';
+export type { SummaryResult } from './models/SummaryResult';
 export type { ValidationError } from './models/ValidationError';
 export type { YoutubeProfile } from './models/YoutubeProfile';
 export type { YoutubeVideo } from './models/YoutubeVideo';

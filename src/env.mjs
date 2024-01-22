@@ -28,7 +28,8 @@ export const env = createEnv({
     REDDIT_CLIENT_ID: z.string().min(1),
     REDDIT_CLIENT_SECRET: z.string().min(1),
     //
-    PARASOCIAL_API_BASE_URL: z.string().url(),
+    VIDEO_QUERY_API_BASE_URL: z.string().url(),
+    VIDEO_QUERY_API_KEY: z.string().min(1),
   },
 
   /**
@@ -55,7 +56,8 @@ export const env = createEnv({
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     REDDIT_CLIENT_ID: process.env.REDDIT_CLIENT_ID,
     REDDIT_CLIENT_SECRET: process.env.REDDIT_CLIENT_SECRET,
-    PARASOCIAL_API_BASE_URL: process.env.PARASOCIAL_API_BASE_URL,
+    VIDEO_QUERY_API_BASE_URL: process.env.VIDEO_QUERY_API_BASE_URL,
+    VIDEO_QUERY_API_KEY: process.env.VIDEO_QUERY_API_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
