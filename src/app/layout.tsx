@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import AuthProvider from "./AuthProvider";
 import { TRPCReactProvider } from "~/trpc/react";
 import { Toaster } from "~/components/ui/toaster";
+import { Navbar } from "~/components/Navbar";
 
 const description =
   "Discover and relive memorable moments from your favorite content creators";
@@ -29,11 +30,14 @@ export default function RootLayout({
         <title>parasocial</title>
         <meta name="twitter:card" content={description} />
       </head>
-      <body className="relative h-full min-h-screen bg-rose-900 text-zinc-100">
+      <body className="relative flex min-h-screen flex-grow flex-col bg-rose-900 text-zinc-100">
         <AuthProvider>
           <TRPCReactProvider cookies={cookies().toString()}>
-            {children}
-            <Toaster />
+            <main className="flex flex-1 flex-col space-y-4 p-4">
+              <Navbar />
+              {children}
+              <Toaster />
+            </main>
           </TRPCReactProvider>
         </AuthProvider>
         <Footer />

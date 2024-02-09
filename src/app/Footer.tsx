@@ -91,7 +91,7 @@ export default function Footer() {
           </a>
         </div>
         <p className="mt-8 text-center text-base leading-6 tracking-widest text-gray-400">
-          2023 parasocial online
+          2024 parasocial online
         </p>
       </div>
     </footer>

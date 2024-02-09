@@ -2,11 +2,12 @@
 
 import { SearchResult } from "~/server/video-query";
 import SearchItem from "./SearchItem";
+import { api } from "~/trpc/server";
 
 export function DummyPage() {
   const dummies = [...Array(20).keys()];
   return (
-    <div className="mx-auto flex min-w-[550px] flex-1 flex-wrap justify-around gap-2 overflow-scroll  pb-4">
+    <div className="mx-auto flex flex-1 flex-wrap justify-around gap-2 overflow-scroll pb-4  sm:min-w-[550px]">
       {dummies.map((dummy) => (
         <div
           key={dummy}
@@ -24,14 +25,16 @@ export function DummyPage() {
 
 type SearchPageProps = {
   author: string;
-  initResults?: SearchResult[];
+  query: string;
 };
 
-export function SearchPage({ author, initResults }: SearchPageProps) {
+export async function SearchPage({ author, query }: SearchPageProps) {
+  const results = await api.video.search.query({ author, query });
+
   return (
-    <div className="z-0 mx-auto flex h-full min-w-[550px] flex-1 flex-wrap justify-around gap-2 overflow-scroll pb-4">
-      {initResults &&
-        initResults.map((result) => (
+    <div className="z-0 mx-auto flex h-full flex-1 flex-wrap justify-around gap-2 overflow-scroll pb-4 sm:min-w-[550px]">
+      {results &&
+        results.map((result) => (
           <SearchItem
             key={result.video.id + result.start_ms + result.end_ms}
             result={result}

@@ -37,7 +37,7 @@ export class SearchService {
 
   /**
    * Search Video
-   * @returns any Successful Response
+   * @returns SearchResult Successful Response
    * @throws ApiError
    */
   public searchVideo({
@@ -46,7 +46,7 @@ export class SearchService {
   }: {
     id: string,
     query: string,
-  }): CancelablePromise<any> {
+  }): CancelablePromise<Array<SearchResult>> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/videos/{id}/search',

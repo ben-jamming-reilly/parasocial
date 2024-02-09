@@ -4,22 +4,12 @@ import {
   publicProcedure,
   protectedProcedure,
 } from "~/server/api/trpc";
-import { VideoQuery } from "../../video-query";
-import { env } from "~/env.mjs";
-
-const videoQuery = new VideoQuery({
-  BASE: env.VIDEO_QUERY_API_BASE_URL,
-  HEADERS: {
-    Authorization: env.VIDEO_QUERY_API_KEY,
-  },
-});
 
 export const videoRouter = createTRPCRouter({
   upload: protectedProcedure
     .input(z.object({ url: z.string().url() }))
     .mutation(async ({ input, ctx }) => {
-      ctx.session.user.id;
-      const upload = await videoQuery.videos.upload({ requestBody: input });
+      const upload = await ctx.videoQuery.videos.upload({ requestBody: input });
       return upload;
     }),
 
@@ -29,8 +19,8 @@ export const videoRouter = createTRPCRouter({
         id: z.string(),
       })
     )
-    .query(async ({ input }) => {
-      return await videoQuery.videos.getVideo(input);
+    .query(async ({ input, ctx }) => {
+      return await ctx.videoQuery.videos.getVideo(input);
     }),
 
   getAll: publicProcedure
@@ -41,8 +31,8 @@ export const videoRouter = createTRPCRouter({
         limit: z.number().min(10).max(50).default(20),
       })
     )
-    .query(async ({ input }) => {
-      return await videoQuery.videos.getAllVideos(input);
+    .query(async ({ input, ctx }) => {
+      return await ctx.videoQuery.videos.getAllVideos(input);
     }),
 
   summary: publicProcedure
@@ -51,20 +41,46 @@ export const videoRouter = createTRPCRouter({
         id: z.string(),
       })
     )
-    .query(async ({ input }) => {
-      return await videoQuery.videos.summaryVideo(input);
+    .query(async ({ input, ctx }) => {
+      return await ctx.videoQuery.videos.summaryVideo(input);
     }),
 
   search: publicProcedure
     .input(
       z.object({
         query: z.string(),
+        videoId: z.string().optional(),
         author: z.string().optional(),
         skip: z.number().default(0),
         limit: z.number().min(10).max(50).default(20),
       })
     )
-    .query(async ({ input }) => {
-      return await videoQuery.search.searchAllVideos(input);
+    .query(async ({ input, ctx }) => {
+      const saveQuery = ctx.db.searchQuery.create({
+        data: {
+          query: input.query,
+          user_id: ctx.session?.user.id,
+          author: input.author,
+          video_id: input.videoId,
+        },
+      });
+
+      if (input.videoId) {
+        const [results] = await Promise.all([
+          ctx.videoQuery.search.searchVideo({
+            id: input.videoId,
+            query: input.query,
+          }),
+          saveQuery,
+        ]);
+        return results.slice(0, 20);
+      }
+
+      const [results] = await Promise.all([
+        ctx.videoQuery.search.searchAllVideos(input),
+        saveQuery,
+      ]);
+
+      return results.slice(0, 20);
     }),
 });

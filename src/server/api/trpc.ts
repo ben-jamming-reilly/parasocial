@@ -13,6 +13,15 @@ import { ZodError } from "zod";
 
 import { getServerAuthSession } from "~/server/auth";
 import { db } from "../db";
+import { VideoQuery } from "../video-query";
+import { env } from "~/env.mjs";
+
+const videoQuery = new VideoQuery({
+  BASE: env.VIDEO_QUERY_API_BASE_URL,
+  HEADERS: {
+    Authorization: env.VIDEO_QUERY_API_KEY,
+  },
+});
 
 /**
  * 1. CONTEXT
@@ -31,6 +40,7 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
 
   return {
     db,
+    videoQuery,
     session,
     ...opts,
   };

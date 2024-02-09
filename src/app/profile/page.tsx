@@ -13,12 +13,6 @@ import { SearchQueryList } from "./SearchQueries";
 import { ProfileImage } from "~/components/ProfileImage";
 import { UploadForm } from "./UploadForm";
 
-function searchQueryHref(search: SearchQuery) {
-  const url = new URL(`/p/${search.author}`, window.location.href);
-  url.searchParams.set("q", search.query);
-  return url.toString();
-}
-
 export default function ProfilePage() {
   const { data, status } = useSession();
   const router = useRouter();
@@ -43,7 +37,6 @@ export default function ProfilePage() {
       </Button>
       <UploadForm placeholder="" />
 
-      <form></form>
       {searchQueries && <SearchQueryList queries={searchQueries} />}
     </main>
   );

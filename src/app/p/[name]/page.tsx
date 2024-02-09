@@ -5,8 +5,9 @@ import { api } from "~/trpc/server";
 import { SearchPage, DummyPage } from "./SearchPage";
 import RecommendPage from "./RecommendPage";
 import { UploadList } from "./UploadList";
-import { ProfilePanel } from "./ProfilePanel";
-import { SearchBar } from "./SearchBar";
+// import { ProfilePanel } from "./ProfilePanel";
+import { SearchBar } from "../../../components/SearchBar";
+import { ProfilePanel } from "~/components/ProfilePanel";
 import { Player, MobilePlayer } from "./Player";
 
 type SearchParamType = string | string[] | undefined;
@@ -29,45 +30,47 @@ export default async function Page({ params, searchParams }: PageProps) {
   const start = parseSearchQuery(searchParams.start);
   const end = parseSearchQuery(searchParams.end);
 
-  const [documents, results, currDocument] = await Promise.all([
+  const [profile, documents] = await Promise.all([
+    api.profile.getYoutubeProfile.query({ author }),
     api.video.getAll.query({ author }),
-    query ? api.video.search.query({ author, query }) : undefined,
-    documentId ? api.video.get.query({ id: documentId }) : undefined,
   ]);
 
   return (
-    <main className="flex min-h-screen flex-row gap-3 pt-2">
-      <section className="flex w-full flex-col gap-2 pl-3 sm:w-fit sm:flex-col">
-        <ProfilePanel backHref={query ? `/p/${author}` : "/"} author={author} />
+    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <section className="mb-2 space-y-2">
+        <ProfilePanel
+          imageUrl={profile.channel_logo!}
+          backHref={query ? `/p/${author}` : "/"}
+          author={author}
+          name={author}
+        />
         <UploadList documents={documents} />
       </section>
 
-      <section className="flex min-h-screen flex-1 flex-col">
+      <section className="flex flex-col gap-4 md:col-span-2 lg:col-span-3">
         <SearchBar
-          className="mt-auto pr-4"
+          className="mt-auto"
           author={author}
           initQuery={query}
           placeholder={`find a moment from ${author}`}
-        >
-          <SignInBtn />
-        </SearchBar>
+        ></SearchBar>
         <div className="flex h-[93vh] flex-row">
           {query ? (
             <Suspense fallback={<DummyPage />}>
-              <SearchPage author={author} initResults={results || []} />
+              <SearchPage author={author} query={query} />
             </Suspense>
           ) : (
             <RecommendPage />
           )}
-          {currDocument && (
+          {/* {currDocument && (
             <Player
               video={currDocument}
               start={start ? parseInt(start) : undefined}
               end={end ? parseInt(end) : undefined}
             />
-          )}
+          )} */}
         </div>
       </section>
-    </main>
+    </div>
   );
 }

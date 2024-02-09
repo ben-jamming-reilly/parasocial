@@ -10,14 +10,6 @@ export default async function Home() {
 
   return (
     <main className="container mt-4 flex min-h-screen flex-col items-center">
-      <div className="mb-6 flex w-full flex-row justify-around">
-        <Link href="/">
-          <h1 className="outline-text-3 text-2xl tracking-widest">
-            parasocial
-          </h1>
-        </Link>
-        <SignInBtn />
-      </div>
       <div className="mb-12 grid grid-cols-1 justify-around gap-4 sm:grid-cols-2">
         <p className="col-span-1 text-justify font-semibold leading-6 tracking-normal text-black sm:col-span-2 sm:tracking-widest">
           find your favorite moments from...

@@ -15,8 +15,8 @@ export default function Profile({ author, url }: ProfileProps) {
       <Image
         src={url}
         className="z-10"
-        height={250}
-        width={250}
+        height={200}
+        width={300}
         alt={`Youtube profile pic for ${author}`}
       />
       <div className="absolute bottom-0 z-20 mb-4 ml-4">

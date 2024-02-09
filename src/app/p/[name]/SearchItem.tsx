@@ -45,15 +45,15 @@ export default function SearchItem({
       {/* Mobile */}
       <div
         onClick={() => setPlayMobile(!playMobile)}
-        className="flex w-full flex-row gap-2 sm:hidden"
+        className="relative flex w-full flex-row gap-2 sm:hidden"
       >
         <img
           src={thumbnailUrl(video.url, start_ms, video.length * 1000)}
-          className="border-4 border-black"
-          width="120"
+          className="w-full border-4 border-black"
+          height="150"
           alt={`A youtube thumbnail for ${video.title}`}
         />
-        <div className="my-2 flex flex-grow flex-col justify-center gap-2 text-sm text-white">
+        <div className="absolute my-2 flex flex-grow flex-col justify-center gap-2 text-sm text-white">
           <h3 className="line-clamp-3 hyphens-auto bg-black px-3 text-xs tracking-widest sm:text-justify">
             {video.title}
           </h3>
@@ -63,7 +63,6 @@ export default function SearchItem({
           <p className="w-fit bg-black px-3">
             [{timestamp(start_ms)} - {timestamp(end_ms)}]
           </p>
-          <p>{score}</p>
         </div>
         {playMobile && (
           <Player

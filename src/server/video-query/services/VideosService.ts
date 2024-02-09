@@ -64,14 +64,14 @@ export class VideosService {
 
   /**
    * Get Video
-   * @returns any Successful Response
+   * @returns YoutubeVideo Successful Response
    * @throws ApiError
    */
   public getVideo({
     id,
   }: {
     id: string,
-  }): CancelablePromise<any> {
+  }): CancelablePromise<YoutubeVideo> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/videos/{id}',
