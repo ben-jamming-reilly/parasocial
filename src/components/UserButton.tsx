@@ -84,9 +84,7 @@ export default function AuthBtn(props: AuthBtnProps) {
             <p className="my-auto line-clamp-1 h-fit">{user.name}</p>
           </>
         ) : status === "unauthenticated" ? (
-          <>
-            <p className="tracking-widest text-white">sign in</p>
-          </>
+          <p className="my-auto line-clamp-1 h-fit w-full">sign in</p>
         ) : (
           <div className="" />
         )}

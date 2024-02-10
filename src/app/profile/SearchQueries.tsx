@@ -4,7 +4,15 @@ import { ScrollArea } from "~/components/ui/scroll-area";
 import { SearchQuery } from "@prisma/client";
 
 function searchQueryHref(search: SearchQuery) {
-  const url = new URL(`/p/${search.author}`, window.location.href);
+  let path = "";
+
+  if (search.video_id) {
+    path = `/v/${search.video_id}`;
+  } else if (search.author) {
+    path = `/p/${search.author}`;
+  }
+
+  const url = new URL(path, window.location.href);
   url.searchParams.set("q", search.query);
   return url.toString();
 }

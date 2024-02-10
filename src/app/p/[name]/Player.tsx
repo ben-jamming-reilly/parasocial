@@ -74,7 +74,7 @@ export function Player({ video, start, end }: PlayerProps) {
       // this is jank and should be replaced lmao
       setTimeout(() => {
         event.target.seekTo(start, true);
-      }, 1000);
+      }, 1500);
     }
   };
 

@@ -43,36 +43,25 @@ export default function SearchItem({
   return (
     <>
       {/* Mobile */}
-      <div
-        onClick={() => setPlayMobile(!playMobile)}
-        className="relative flex w-full flex-row gap-2 sm:hidden"
-      >
+      <Link href={watchUrl} className="relative w-full  sm:hidden">
         <img
           src={thumbnailUrl(video.url, start_ms, video.length * 1000)}
           className="w-full border-4 border-black"
           height="150"
           alt={`A youtube thumbnail for ${video.title}`}
         />
-        <div className="absolute my-2 flex flex-grow flex-col justify-center gap-2 text-sm text-white">
-          <h3 className="line-clamp-3 hyphens-auto bg-black px-3 text-xs tracking-widest sm:text-justify">
+        <div className="absolute bottom-0 my-2 flex flex-grow flex-col justify-center gap-2 text-sm text-white">
+          {/* <h3 className="line-clamp-3 hyphens-auto bg-black px-3 text-xs tracking-widest sm:text-justify">
             {video.title}
-          </h3>
+          </h3> */}
+          <p className="ml-auto w-fit bg-black px-3">
+            [{timestamp(start_ms)} - {timestamp(end_ms)}]
+          </p>
           <p className="line-clamp-2 w-fit hyphens-auto bg-black px-3 text-xs italic">
             {text}
           </p>
-          <p className="w-fit bg-black px-3">
-            [{timestamp(start_ms)} - {timestamp(end_ms)}]
-          </p>
         </div>
-        {playMobile && (
-          <Player
-            close={() => setPlayMobile(false)}
-            url={video.url}
-            start_ms={start_ms}
-            isMobile={true}
-          />
-        )}
-      </div>
+      </Link>
 
       {/* Desktop */}
       <Link

@@ -49,13 +49,21 @@ export function ProfilePanel({
   name,
 }: ProfileHeaderProps) {
   return (
-    <div className="relative mx-auto w-fit">
-      <ProfileImage imageUrl={imageUrl} name={name} />
-      <div className="absolute bottom-4 left-4 z-20">
-        <h1 className="bg-black px-1 font-bold tracking-widest text-white">
-          {name}
-        </h1>
+    <div className="flex flex-col justify-center gap-2">
+      <div className="relative mx-auto w-fit">
+        <ProfileImage imageUrl={imageUrl} name={name} />
+        <div className="absolute bottom-4 left-4 z-20">
+          <h1 className="bg-black px-1 font-bold tracking-widest text-white">
+            {name}
+          </h1>
+        </div>
       </div>
+      <Link
+        href={backHref}
+        className="mx-auto font-bold text-black hover:underline"
+      >
+        Back
+      </Link>
     </div>
   );
 }

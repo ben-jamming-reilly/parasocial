@@ -8,7 +8,7 @@ import { UploadList } from "./UploadList";
 // import { ProfilePanel } from "./ProfilePanel";
 import { SearchBar } from "../../../components/SearchBar";
 import { ProfilePanel } from "~/components/ProfilePanel";
-import { Player, MobilePlayer } from "./Player";
+import { Player } from "~/components/Player";
 
 type SearchParamType = string | string[] | undefined;
 
@@ -62,13 +62,8 @@ export default async function Page({ params, searchParams }: PageProps) {
           ) : (
             <RecommendPage />
           )}
-          {/* {currDocument && (
-            <Player
-              video={currDocument}
-              start={start ? parseInt(start) : undefined}
-              end={end ? parseInt(end) : undefined}
-            />
-          )} */}
+
+          <Player />
         </div>
       </section>
     </div>

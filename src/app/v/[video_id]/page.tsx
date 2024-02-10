@@ -1,10 +1,8 @@
 import { Suspense } from "react";
-import SignInBtn from "~/components/UserButton";
 import { api } from "~/trpc/server";
 
 import { ProfilePanel } from "~/components/ProfilePanel";
 import SearchItem from "~/app/p/[name]/SearchItem";
-import { Separator } from "~/components/ui/separator";
 
 import {
   Carousel,
@@ -14,6 +12,8 @@ import {
   CarouselPrevious,
 } from "~/components/ui/carousel";
 import { SearchBar } from "~/components/SearchBar";
+import { Player } from "~/components/Player";
+// import { SectionList } from "./SectionList";
 
 type SearchParamType = string | string[] | undefined;
 
@@ -46,13 +46,10 @@ async function SummaryResults({ videoId }: SummaryProps) {
               {sum.results.map((result, index) => (
                 <CarouselItem
                   className=" pl-1 md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
-                  key={index}
+                  key={result.video.id + result.start_ms + result.end_ms}
                 >
                   <div className="p-1">
-                    <SearchItem
-                      key={result.video.id + result.start_ms + result.end_ms}
-                      result={result}
-                    />
+                    <SearchItem result={result} />
                   </div>
                 </CarouselItem>
               ))}
@@ -75,7 +72,7 @@ async function SearchResults({ videoId, query }: SearchResultsProps) {
   const results = await api.video.search.query({ query, videoId });
 
   return (
-    <div className="z-0 mx-auto flex h-full flex-1 flex-wrap justify-around gap-2 overflow-scroll pb-4 sm:min-w-[550px]">
+    <div className="z-0 mx-auto flex h-full flex-1 flex-wrap justify-around gap-2  pb-4 sm:min-w-[550px]">
       {results &&
         results.map((result) => (
           <SearchItem
@@ -117,13 +114,14 @@ export default async function Page({ params, searchParams }: PageProps) {
         <ProfilePanel
           name={video.title}
           imageUrl={video.thumbnail_url}
-          backHref={query ? `/p/${video.author}` : "/"}
+          backHref={query ? "/" : `/p/${video.author}`}
           author={video.author}
         />
+        {/* <SectionList videoId={video.id} sections={["asdf"]} /> */}
       </section>
       <section className="flex h-full flex-grow flex-col gap-4 md:col-span-2 lg:col-span-3">
         <SearchBar
-          className="mt-auto pr-4"
+          className=""
           author={video.author}
           initQuery={query}
           placeholder={`find a moment from ${video.title}`}
@@ -136,6 +134,7 @@ export default async function Page({ params, searchParams }: PageProps) {
           <SummaryResults videoId={video.id} />
         )}
       </section>
+      <Player />
     </div>
   );
 }
