@@ -84,7 +84,7 @@ async function SearchResults({ videoId, query }: SearchResultsProps) {
   );
 }
 
-export function DummyPage() {
+function DummyPage() {
   const dummies = [...Array(20).keys()];
   return (
     <div className="mx-auto flex min-w-[550px] flex-1 flex-wrap justify-around gap-2 overflow-scroll  pb-4">
