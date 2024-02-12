@@ -86,7 +86,7 @@ export function Player() {
 
   return (
     <>
-      <Sheet open={!!videoId}>
+      {/* <Sheet open={!!videoId}>
         <SheetClose />
         <SheetContent className="bg-black">
           <SheetHeader>
@@ -97,63 +97,63 @@ export function Player() {
             </SheetDescription>
           </SheetHeader>
         </SheetContent>
-      </Sheet>
-      {/* <Drawer onClose={onClose} open={!!videoId}>
-      <DrawerContent className="bg-black rounded-none h-[80vh]">
-        <div
-          ref={parentRef}
-          className="flex flex-col justify-center w-full mx-auto "
-        >
-          {video && (
-            <>
-              <YouTube
-                key={`${video.id}-${start}-${end}`}
-                className="sm:hidden flex mx-auto"
-                videoId={getYoutubeId(video.url)}
-                id={`${video.id}-${start}-${end}`}
-                loading="lazy"
-                onStateChange={onStateChange}
-                opts={{
-                  width: 380,
-                  height: hwRatio * 380,
-                  playerVars: {
-                    // https://developers.google.com/youtube/player_parameters#Parameters
-                    color: "white",
-                    rel: 0,
-                    autoplay: 0,
-                    start: Number(start),
-                    end: Number(end),
-                    controls: 1, // 0 - no controls
-                  },
-                }}
-              />
+      </Sheet> */}
+      <Drawer onClose={onClose} open={!!videoId}>
+        <DrawerContent className="bg-black rounded-none h-[80vh]">
+          <div
+            ref={parentRef}
+            className="flex flex-col justify-center w-full mx-auto "
+          >
+            {video && (
+              <>
+                <YouTube
+                  key={`${video.id}-${start}-${end}`}
+                  className="sm:hidden flex mx-auto"
+                  videoId={getYoutubeId(video.url)}
+                  id={`${video.id}-${start}-${end}`}
+                  loading="lazy"
+                  onStateChange={onStateChange}
+                  opts={{
+                    width: 380,
+                    height: hwRatio * 380,
+                    playerVars: {
+                      // https://developers.google.com/youtube/player_parameters#Parameters
+                      color: "white",
+                      rel: 0,
+                      autoplay: 0,
+                      start: Number(start),
+                      end: Number(end),
+                      controls: 1, // 0 - no controls
+                    },
+                  }}
+                />
 
-              <YouTube
-                key={`${video.id}-${start}-${end}`}
-                className="hidden sm:block mx-auto"
-                videoId={getYoutubeId(video.url)}
-                id={`${video.id}-${start}-${end}`}
-                loading="lazy"
-                onStateChange={onStateChange}
-                opts={{
-                  width: Math.min(width),
-                  height: Math.min(height),
-                  playerVars: {
-                    // https://developers.google.com/youtube/player_parameters#Parameters
-                    color: "white",
-                    rel: 0,
-                    autoplay: 0,
-                    start: Number(start),
-                    end: Number(end),
-                    controls: 1, // 0 - no controls
-                  },
-                }}
-              />
-            </>
-          )}
-        </div>
-      </DrawerContent>
-    </Drawer> */}
+                <YouTube
+                  key={`${video.id}-${start}-${end}`}
+                  className="hidden sm:block mx-auto"
+                  videoId={getYoutubeId(video.url)}
+                  id={`${video.id}-${start}-${end}`}
+                  loading="lazy"
+                  onStateChange={onStateChange}
+                  opts={{
+                    width: Math.min(width),
+                    height: Math.min(height),
+                    playerVars: {
+                      // https://developers.google.com/youtube/player_parameters#Parameters
+                      color: "white",
+                      rel: 0,
+                      autoplay: 0,
+                      start: Number(start),
+                      end: Number(end),
+                      controls: 1, // 0 - no controls
+                    },
+                  }}
+                />
+              </>
+            )}
+          </div>
+        </DrawerContent>
+      </Drawer>
     </>
   );
 }
