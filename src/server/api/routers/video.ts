@@ -4,6 +4,7 @@ import {
   publicProcedure,
   protectedProcedure,
 } from "~/server/api/trpc";
+import pRetry from "p-retry";
 
 export const videoRouter = createTRPCRouter({
   upload: protectedProcedure
@@ -20,7 +21,9 @@ export const videoRouter = createTRPCRouter({
       })
     )
     .query(async ({ input, ctx }) => {
-      return await ctx.videoQuery.videos.getVideo(input);
+      return await await pRetry(() => ctx.videoQuery.videos.getVideo(input), {
+        retries: 3,
+      });
     }),
 
   getAll: publicProcedure
@@ -32,7 +35,9 @@ export const videoRouter = createTRPCRouter({
       })
     )
     .query(async ({ input, ctx }) => {
-      return await ctx.videoQuery.videos.getAllVideos(input);
+      return await pRetry(() => ctx.videoQuery.videos.getAllVideos(input), {
+        retries: 3,
+      });
     }),
 
   summary: publicProcedure
@@ -42,7 +47,9 @@ export const videoRouter = createTRPCRouter({
       })
     )
     .query(async ({ input, ctx }) => {
-      return await ctx.videoQuery.videos.summaryVideo(input);
+      return await pRetry(() => ctx.videoQuery.videos.summaryVideo(input), {
+        retries: 3,
+      });
     }),
 
   search: publicProcedure
