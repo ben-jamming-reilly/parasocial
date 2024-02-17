@@ -29,7 +29,7 @@ function UploadItem({ doc, mobile }: UploadItemProps) {
       className="text flex flex-row gap-2 border-4 border-black bg-black px-3 hover:underline"
     >
       <div className="flex-1 flex-col-reverse">
-        <p className="line-clamp-2 flex-1 text-justify tracking-wider text-white">
+        <p className="line-clamp-2  text-justify tracking-wider text-white">
           {doc.query}
         </p>
         <p className="text-xs text-neutral-400">
@@ -46,21 +46,19 @@ interface UploadListProps {
 
 export function SearchQueryList({ queries: queries }: UploadListProps) {
   return (
-    <>
-      <div className="">
-        <div className="mb-3 px-3">
-          <h3 className="max-w-fit bg-black px-3 font-bold tracking-widest text-white">
-            previous queries
-          </h3>
-        </div>
-        <ScrollArea className="h-[50vh] w-[24rem] ">
-          <div className="flex flex-col gap-3  text-white">
-            {queries.map((search) => (
-              <UploadItem key={search.id} mobile={false} doc={search} />
-            ))}
-          </div>
-        </ScrollArea>
+    <div className="">
+      <div className="mb-3 px-3">
+        <h3 className="max-w-fit bg-black px-3 font-bold tracking-widest text-white">
+          previous queries
+        </h3>
       </div>
-    </>
+      <ScrollArea className="h-[50vh] w-[16] md:w-[20rem] ">
+        <div className="flex flex-col gap-3  text-white">
+          {queries.map((search) => (
+            <UploadItem key={search.id} mobile={false} doc={search} />
+          ))}
+        </div>
+      </ScrollArea>
+    </div>
   );
 }

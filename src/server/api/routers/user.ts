@@ -17,6 +17,13 @@ export const userRouter = createTRPCRouter({
       distinct: "query",
       take: 50,
     });
-    //
+  }),
+  uploads: protectedProcedure.query(async ({ ctx }) => {
+    const uploads = await ctx.db.videoUpload.findMany({
+      where: {
+        user_id: ctx.session.user.id,
+      },
+    });
+    return uploads;
   }),
 });

@@ -12,6 +12,7 @@ import { SearchQuery } from "@prisma/client";
 import { SearchQueryList } from "./SearchQueries";
 import { ProfileImage } from "~/components/ProfileImage";
 import { UploadForm } from "./UploadForm";
+import { UploadList } from "./UploadList";
 
 export default function ProfilePage() {
   const { data, status } = useSession();
@@ -23,21 +24,36 @@ export default function ProfilePage() {
 
   const { data: searchQueries } = api.user.searchHistory.useQuery();
 
+  const { data: uploads } = api.user.uploads.useQuery(undefined, {});
+
   return (
-    <main className="flex min-h-screen flex-col items-center gap-4 pt-4">
-      <ProfileImage
-        height={170}
-        width={170}
-        label={data?.user.name!}
-        src={data?.user.image!}
-      />
+    <main className="grid sm:grid-cols-2 gap-4 pt-4 max-w-6xl mx-auto">
+      <div className="flex flex-col gap-2 items-center">
+        <div className="relative">
+          <div className="-left-1/2 h-full absolute items-center flex justify-center my-auto">
+            <Button
+              className="text-black"
+              variant={"link"}
+              onClick={() => signOut()}
+            >
+              Sign out
+            </Button>
+          </div>
 
-      <Button className="text-black" variant={"link"} onClick={() => signOut()}>
-        Sign out
-      </Button>
-      <UploadForm placeholder="" />
+          <ProfileImage
+            height={150}
+            width={150}
+            label={data?.user.name!}
+            src={data?.user.image!}
+          />
+        </div>
 
-      {searchQueries && <SearchQueryList queries={searchQueries} />}
+        <UploadForm placeholder="" />
+        <UploadList documents={uploads || []} />
+      </div>
+      <div className="flex flex-col items-center">
+        {searchQueries && <SearchQueryList queries={searchQueries} />}
+      </div>
     </main>
   );
 }

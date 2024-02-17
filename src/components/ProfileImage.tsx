@@ -10,7 +10,7 @@ type ProfileImageProps = {
 
 export function ProfileImage({ src, height, width, label }: ProfileImageProps) {
   return (
-    <div className="relative">
+    <div className="relative h-fit w-fit">
       <Image
         src={src}
         height={height}

@@ -32,7 +32,7 @@ export async function SearchPage({ author, query }: SearchPageProps) {
   const results = await api.video.search.query({ author, query });
 
   return (
-    <div className="z-0 mx-auto flex h-full flex-1 flex-wrap justify-around gap-2 overflow-scroll pb-4 sm:min-w-[550px]">
+    <div className="z-0 mx-auto flex h-min-full flex-1 flex-wrap justify-around overflow-x-hidden gap-2  pb-4 sm:min-w-[550px]">
       {results &&
         results.map((result) => (
           <SearchItem

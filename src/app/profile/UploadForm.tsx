@@ -1,7 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { FormEvent } from "react";
 import Image from "next/image";
 import {
   Form,
@@ -12,10 +11,9 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/form";
-import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { cn } from "~/lib/utils";
-import useInput from "~/hooks/useInput";
+import { useToast } from "~/components/ui/use-toast";
 import { api } from "~/trpc/react";
 import * as z from "zod";
 
@@ -39,23 +37,34 @@ export function UploadForm({ placeholder, className }: UploadFormProps) {
     },
   });
 
-  const { data, mutate, isLoading } = api.video.upload.useMutation({
+  const { toast } = useToast();
+
+  const { mutate, isLoading } = api.video.upload.useMutation({
     onSuccess(data, variables, context) {
-      //
+      toast({
+        title: "success: you uploaded a video 🚀",
+        description: data.url,
+      });
+    },
+    onError(err) {
+      console.log("HERE", err);
+      toast({
+        title: "error",
+        description: err.message,
+      });
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
     mutate({ url: values.url });
   }
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className={cn("mb-4 w-full max-w-sm justify-start", className)}
+        className={cn("mb-4 w-full  justify-start", className)}
       >
-        <div className="flex flex-1 flex-row gap-2 text-sm font-bold">
+        <div className="flex flex-1 flex-row gap-2 text-xs font-bold">
           <Image
             src="/icons/youtube.svg"
             width="35"
@@ -71,7 +80,7 @@ export function UploadForm({ placeholder, className }: UploadFormProps) {
                 <FormLabel>Upload a youtube video</FormLabel>
                 <FormControl className="rounded-none border-0 border-b-2 border-black bg-transparent px-0 text-black focus-visible:ring-0">
                   <Input
-                    placeholder="ex. https://www.youtube.com/watch?v=2dQ4-VNaG3s"
+                    placeholder="ex. https://www.youtube.com/watch?v=dQw4w9WgXcQ"
                     {...field}
                   />
                 </FormControl>
@@ -84,9 +93,12 @@ export function UploadForm({ placeholder, className }: UploadFormProps) {
           />
         </div>
         <div className="flex flex-row-reverse">
-          <Button className=" bg-black" type="submit">
-            {isLoading ? "..." : "Upload"}
-          </Button>
+          <button
+            className="relative text-xs tracking-wider flex max-w-[10rem] items-center border-4 border-black bg-black font-bold shadow-[8px_8px_0_0_#000] transition hover:shadow-none focus:outline-none focus:ring"
+            type="submit"
+          >
+            {isLoading ? "..." : "upload"}
+          </button>
         </div>
       </form>
     </Form>

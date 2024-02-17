@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { YoutubeVideo } from "~/server/video-query";
+import type { VideoUpload } from "@prisma/client";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import {
   Accordion,
@@ -20,27 +21,21 @@ function displayDate(dateString: string) {
 
 interface UploadItemProps {
   mobile: boolean;
-  doc: YoutubeVideo;
+  doc: VideoUpload;
 }
 
 function UploadItem({ doc, mobile }: UploadItemProps) {
   return (
     <Link
-      href={`/v/${doc.id}`}
+      href={doc.url}
       className="text flex flex-row gap-2 border-4 border-black bg-black px-3 hover:underline"
     >
-      <Image
-        src={doc.thumbnail_url}
-        width={80}
-        height={80}
-        alt={`Thumbnail for ${doc.title}`}
-      />
       <div className="flex-1 flex-col-reverse">
         <p className="line-clamp-2 flex-1  tracking-wider text-white">
-          {doc.title}
+          {doc.url}
         </p>
         <p className="text-xs text-neutral-400">
-          {displayDate(doc.publish_date)}
+          {doc.create_date.toDateString()}
         </p>
       </div>
     </Link>
@@ -48,14 +43,14 @@ function UploadItem({ doc, mobile }: UploadItemProps) {
 }
 
 interface UploadListProps {
-  documents: YoutubeVideo[];
+  documents: VideoUpload[];
 }
 
 export function UploadList({ documents }: UploadListProps) {
   return (
     <>
       {/* Mobile View */}
-      <Accordion className="block sm:hidden" type="single" collapsible>
+      <Accordion className="block sm:hidden w-full" type="single" collapsible>
         <AccordionItem className="border-none" value="item-1">
           <AccordionTrigger className="flex flex-1 flex-row bg-black px-3 py-1 font-bold tracking-widest text-white">
             uploads

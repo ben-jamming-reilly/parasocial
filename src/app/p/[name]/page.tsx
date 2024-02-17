@@ -54,7 +54,7 @@ export default async function Page({ params, searchParams }: PageProps) {
           initQuery={query}
           placeholder={`find a moment from ${author}`}
         ></SearchBar>
-        <div className="flex h-[93vh] flex-row">
+        <div className="flex min-h-[93vh] flex-row">
           {query ? (
             <Suspense fallback={<DummyPage />}>
               <SearchPage author={author} query={query} />

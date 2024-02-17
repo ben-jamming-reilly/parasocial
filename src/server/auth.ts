@@ -45,6 +45,7 @@ export const authOptions: NextAuthOptions = {
   // session: {
   //   strategy: "jwt",
   // },
+
   providers: [
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
