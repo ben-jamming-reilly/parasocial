@@ -86,18 +86,6 @@ export function Player() {
 
   return (
     <>
-      {/* <Sheet open={!!videoId}>
-        <SheetClose />
-        <SheetContent className="bg-black">
-          <SheetHeader>
-            <SheetTitle>Are you absolutely sure?</SheetTitle>
-            <SheetDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </SheetDescription>
-          </SheetHeader>
-        </SheetContent>
-      </Sheet> */}
       <Drawer onClose={onClose} open={!!videoId}>
         <DrawerContent className="bg-black rounded-none h-[80vh]">
           <div
@@ -144,7 +132,6 @@ export function Player() {
                       rel: 0,
                       autoplay: 0,
                       start: Number(start),
-                      end: Number(end),
                       controls: 1, // 0 - no controls
                     },
                   }}

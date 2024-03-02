@@ -5,7 +5,6 @@ import {
   protectedProcedure,
 } from "~/server/api/trpc";
 import pRetry from "p-retry";
-import { nanoid } from "nanoid";
 import { TRPCError } from "@trpc/server";
 
 export const videoRouter = createTRPCRouter({
@@ -31,11 +30,11 @@ export const videoRouter = createTRPCRouter({
         });
       }
 
-      await ctx.videoQuery.videos.upload({ requestBody: input });
+      const upload = await ctx.videoQuery.videos.upload({ requestBody: input });
       const videoUpload = await ctx.db.videoUpload.create({
         data: {
-          id: nanoid(),
-          url: input.url,
+          id: upload.id,
+          url: upload.url,
           user_id: ctx.session.user.id,
         },
       });
@@ -50,7 +49,7 @@ export const videoRouter = createTRPCRouter({
       })
     )
     .query(async ({ input, ctx }) => {
-      return await await pRetry(() => ctx.videoQuery.videos.getVideo(input), {
+      return await pRetry(() => ctx.videoQuery.videos.getVideo(input), {
         retries: 3,
       });
     }),
@@ -109,7 +108,7 @@ export const videoRouter = createTRPCRouter({
           }),
           saveQuery,
         ]);
-        return results.slice(0, 20);
+        return results;
       }
 
       const [results] = await Promise.all([
@@ -117,6 +116,6 @@ export const videoRouter = createTRPCRouter({
         saveQuery,
       ]);
 
-      return results.slice(0, 20);
+      return results;
     }),
 });

@@ -3,6 +3,7 @@
 /* eslint-disable */
 
 export type YoutubeProfile = {
+  author: string;
   channel_id: string;
   channel_url: string;
   channel_name: string;

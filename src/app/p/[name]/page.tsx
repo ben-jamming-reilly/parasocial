@@ -1,11 +1,9 @@
 import { Suspense } from "react";
-import SignInBtn from "~/components/UserButton";
 import { api } from "~/trpc/server";
 
 import { SearchPage, DummyPage } from "./SearchPage";
 import RecommendPage from "./RecommendPage";
 import { UploadList } from "./UploadList";
-// import { ProfilePanel } from "./ProfilePanel";
 import { SearchBar } from "../../../components/SearchBar";
 import { ProfilePanel } from "~/components/ProfilePanel";
 import { Player } from "~/components/Player";
@@ -26,9 +24,6 @@ export default async function Page({ params, searchParams }: PageProps) {
   const author = decodeURI(params.name);
 
   const query = parseSearchQuery(searchParams.q);
-  const documentId = parseSearchQuery(searchParams.v);
-  const start = parseSearchQuery(searchParams.start);
-  const end = parseSearchQuery(searchParams.end);
 
   const [profile, documents] = await Promise.all([
     api.profile.getYoutubeProfile.query({ author }),

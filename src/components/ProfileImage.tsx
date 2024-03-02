@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Image from "next/image";
 
 type ProfileImageProps = {
@@ -19,7 +18,7 @@ export function ProfileImage({ src, height, width, label }: ProfileImageProps) {
         alt={`Profile picture for ${label}`}
       />
       <div className="absolute bottom-4 left-4 z-20">
-        <h1 className="line-clamp-2 bg-black px-1 text-sm font-bold tracking-widest text-white">
+        <h1 className="line-clamp-2 bg-black px-1 text-sm font-bold tracking-widest text-white w-fit">
           {label}
         </h1>
       </div>

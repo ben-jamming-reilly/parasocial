@@ -1,19 +1,12 @@
 import { Suspense } from "react";
-import { api } from "~/trpc/server";
 
+import { api } from "~/trpc/server";
 import { ProfilePanel } from "~/components/ProfilePanel";
 import SearchItem from "~/app/p/[name]/SearchItem";
-
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "~/components/ui/carousel";
 import { SearchBar } from "~/components/SearchBar";
 import { Player } from "~/components/Player";
-// import { SectionList } from "./SectionList";
+import { SummaryTab } from "./Summary";
+import { YoutubeVideo } from "~/server/video-query";
 
 type SearchParamType = string | string[] | undefined;
 
@@ -28,38 +21,23 @@ function parseSearchQuery(param: SearchParamType): string | undefined {
 }
 
 type SummaryProps = {
-  videoId: string;
+  video: YoutubeVideo;
 };
 
-async function SummaryResults({ videoId }: SummaryProps) {
-  const summary = await api.video.summary.query({ id: videoId });
+async function SummaryPage({ video }: SummaryProps) {
+  const summary = await api.video.summary.query({ id: video.id });
 
   return (
-    <>
-      {summary.map((sum) => (
-        <div id={sum.query} key={sum.query} className="space-y-2 ">
-          <span className="w-fit bg-black text-sm sm:text-base">
-            {sum.query}
-          </span>
-          <Carousel className="mx-16 max-w-full flex-1">
-            <CarouselContent className="mx-auto">
-              {sum.results.map((result, index) => (
-                <CarouselItem
-                  className=" pl-1 md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
-                  key={result.video.id + result.start_ms + result.end_ms}
-                >
-                  <div className="p-1">
-                    <SearchItem result={result} />
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </div>
+    <div className="flex flex-col space-y-2">
+      {summary.map((node) => (
+        <SummaryTab
+          video={video}
+          key={`${node.start_ms.toString()}-${node.end_ms.toString()}`}
+          node={node}
+          depth={2}
+        />
       ))}
-    </>
+    </div>
   );
 }
 
@@ -68,7 +46,7 @@ type SearchResultsProps = {
   query: string;
 };
 
-async function SearchResults({ videoId, query }: SearchResultsProps) {
+async function SearchPage({ videoId, query }: SearchResultsProps) {
   const results = await api.video.search.query({ query, videoId });
 
   return (
@@ -128,10 +106,10 @@ export default async function Page({ params, searchParams }: PageProps) {
         ></SearchBar>
         {query ? (
           <Suspense fallback={<DummyPage />}>
-            <SearchResults query={query} videoId={video.id} />
+            <SearchPage query={query} videoId={video.id} />
           </Suspense>
         ) : (
-          <SummaryResults videoId={video.id} />
+          <SummaryPage video={video} />
         )}
       </section>
       <Player />

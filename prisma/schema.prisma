@@ -8,13 +8,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model SocialProfile {
-  id               String  @id
-  userId           String? @unique
-  youtubeChannelId String
-  user             User?   @relation(fields: [userId], references: [id])
-}
-
 model Clip {
   id       String  @id @default(cuid())
   user_id  String?
@@ -73,16 +66,15 @@ model Session {
 }
 
 model User {
-  id            String         @id @default(cuid())
+  id            String        @id @default(cuid())
   name          String?
-  email         String?        @unique
+  email         String?       @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   clips         Clip[]
   queries       SearchQuery[]
   sessions      Session[]
-  profile       SocialProfile?
   uploads       VideoUpload[]
 }
 

@@ -3,7 +3,8 @@
 /* eslint-disable */
 import type { BaseVideo } from '../models/BaseVideo';
 import type { CreateVideo } from '../models/CreateVideo';
-import type { SummaryResult } from '../models/SummaryResult';
+import type { SummaryNode } from '../models/SummaryNode';
+import type { TranscriptTimestamp } from '../models/TranscriptTimestamp';
 import type { YoutubeVideo } from '../models/YoutubeVideo';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -42,7 +43,7 @@ export class VideosService {
   }
 
   /**
-   * Upload Video
+   * Upload Audio Video
    * @returns any Successful Response
    * @throws ApiError
    */
@@ -86,19 +87,49 @@ export class VideosService {
 
   /**
    * Summarize Video
-   * @returns SummaryResult Successful Response
+   * @returns SummaryNode Successful Response
    * @throws ApiError
    */
   public summaryVideo({
     id,
   }: {
     id: string,
-  }): CancelablePromise<Array<SummaryResult>> {
+  }): CancelablePromise<Array<SummaryNode>> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/videos/{id}/summary',
       path: {
         'id': id,
+      },
+      errors: {
+        422: `Validation Error`,
+      },
+    });
+  }
+
+  /**
+   * Video Transcript
+   * @returns TranscriptTimestamp Successful Response
+   * @throws ApiError
+   */
+  public videoTranscript({
+    id,
+    start,
+    limit = 20,
+  }: {
+    id: string,
+    start?: number,
+    limit?: number,
+  }): CancelablePromise<Array<TranscriptTimestamp>> {
+    return this.httpRequest.request({
+      method: 'GET',
+      url: '/videos/{id}/transcript',
+      path: {
+        'id': id,
+      },
+      query: {
+        'start': start,
+        'limit': limit,
       },
       errors: {
         422: `Validation Error`,

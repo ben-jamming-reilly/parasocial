@@ -24,7 +24,7 @@ export default function SearchItem({
 }: SearchItemProps) {
   const [playMobile, setPlayMobile] = useState(false);
 
-  const [watchUrl, setWatchUrl] = useState("");
+  const [watchUrl, setWatchUrl] = useState("#");
 
   useEffect(() => {
     if (window) {

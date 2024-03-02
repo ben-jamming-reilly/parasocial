@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { searchInstance } from "~/lib/search/instance";
+import pRetry from "p-retry";
 
 export const profileRouter = createTRPCRouter({
   getAll: publicProcedure
@@ -10,8 +11,10 @@ export const profileRouter = createTRPCRouter({
         limit: z.number().min(10).max(50).default(20),
       })
     )
-    .query(async ({ input }) => {
-      return await searchInstance.profile.getAllProfiles();
+    .query(async ({ input, ctx }) => {
+      return await pRetry(() => ctx.videoQuery.profile.getAllProfiles(), {
+        retries: 3,
+      });
     }),
   getYoutubeProfile: publicProcedure
     .input(
@@ -19,8 +22,10 @@ export const profileRouter = createTRPCRouter({
         author: z.string(),
       })
     )
-    .query(async ({ input }) => {
-      return await searchInstance.profile.getYoutube(input);
+    .query(async ({ input, ctx }) => {
+      return await pRetry(() => ctx.videoQuery.profile.getYoutube(input), {
+        retries: 3,
+      });
     }),
   getDocuments: publicProcedure
     .input(

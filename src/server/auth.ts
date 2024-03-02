@@ -62,15 +62,15 @@ export const authOptions: NextAuthOptions = {
         },
       },
     }),
-    RedditProvider({
-      clientId: env.REDDIT_CLIENT_ID,
-      clientSecret: env.REDDIT_CLIENT_SECRET,
-      authorization: {
-        params: {
-          duration: "permanent",
-        },
-      },
-    }),
+    // RedditProvider({
+    //   clientId: env.REDDIT_CLIENT_ID,
+    //   clientSecret: env.REDDIT_CLIENT_SECRET,
+    //   authorization: {
+    //     params: {
+    //       duration: "permanent",
+    //     },
+    //   },
+    // }),
 
     /**
      * ...add more providers here.

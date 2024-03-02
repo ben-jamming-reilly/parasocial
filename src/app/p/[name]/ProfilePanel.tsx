@@ -2,9 +2,7 @@ import {} from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { api } from "~/trpc/server";
-
-import { searchInstance } from "~/lib/search/instance";
-import { YoutubeProfile } from "~/lib/search";
+import { ProfileImage } from "~/components/ProfileImage";
 
 export function BackButton({ backHref }: { backHref: string }) {
   return (
@@ -23,31 +21,6 @@ export function BackButton({ backHref }: { backHref: string }) {
   );
 }
 
-type ProfileImageProps = {
-  profile: YoutubeProfile;
-};
-
-export async function ProfileImage({ profile }: ProfileImageProps) {
-  return (
-    <>
-      <Image
-        src={profile.channel_logo!}
-        height="200"
-        width="200"
-        className="mx-auto hidden border-4 border-black font-bold sm:block"
-        alt={`Youtube profile pic for ${profile.channel_name}`}
-      />
-      <Image
-        src={profile.channel_logo!}
-        height={155}
-        width={155}
-        className="mx-auto border-4 border-black font-bold sm:hidden"
-        alt={`Youtube profile pic for ${profile.channel_name}`}
-      />
-    </>
-  );
-}
-
 type ProfileHeaderProps = {
   author: string;
   backHref: string;
@@ -62,7 +35,12 @@ export async function ProfilePanel({ author, backHref }: ProfileHeaderProps) {
         <BackButton backHref={backHref} />
       </div>
       <div className="relative mx-auto w-fit">
-        <ProfileImage profile={profile} />
+        <ProfileImage
+          height={175}
+          width={175}
+          src={profile.channel_logo!}
+          label={profile.channel_name}
+        />
         <div className="absolute bottom-4 left-4 z-20">
           <h1 className="bg-black px-1 font-bold tracking-widest text-white">
             {profile.channel_name}

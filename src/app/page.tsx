@@ -1,12 +1,15 @@
 import Link from "next/link";
 import SignInBtn from "~/components/UserButton";
 
+import { api } from "~/trpc/server";
 import { searchInstance } from "~/lib/search/instance";
 
 import Profile from "./Profile";
 
 export default async function Home() {
-  const profiles = await searchInstance.profile.getAllProfiles();
+  // const profiles = await searchInstance.profile.getAllProfiles();
+
+  const profiles = await api.profile.getAll.query({});
 
   return (
     <main className="container mt-4 flex min-h-screen flex-col items-center">
