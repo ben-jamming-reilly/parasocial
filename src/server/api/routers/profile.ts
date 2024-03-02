@@ -27,23 +27,4 @@ export const profileRouter = createTRPCRouter({
         retries: 3,
       });
     }),
-  getDocuments: publicProcedure
-    .input(
-      z.object({
-        author: z.string(),
-        skip: z.number().default(0),
-        limit: z.number().min(10).max(50).default(20),
-      })
-    )
-    .query(async ({ input }) => {
-      const documents = await searchInstance.documents.allDocuments({
-        ...input,
-      });
-
-      return documents.sort(
-        (doc1, doc2) =>
-          new Date(doc2.publish_date).getTime() -
-          new Date(doc1.publish_date).getTime()
-      );
-    }),
 });
