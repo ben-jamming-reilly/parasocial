@@ -14,16 +14,19 @@ export const videoRouter = createTRPCRouter({
       const date = new Date();
       date.setDate(date.getDate() - 1);
 
-      const uploads = await ctx.db.videoUpload.count({
-        where: {
-          user_id: ctx.session.user.id,
-          create_date: {
-            gte: date,
+      const [uploads, user] = await Promise.all([
+        ctx.db.videoUpload.count({
+          where: {
+            user_id: ctx.session.user.id,
+            create_date: {
+              gte: date,
+            },
           },
-        },
-      });
+        }),
+        ctx.db.user.findUnique({ where: { id: ctx.session.user.id } }),
+      ]);
 
-      if (uploads >= 3) {
+      if (uploads >= 3 && !user?.infinite_upload) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "cannot upload more than 3 videos a day",
