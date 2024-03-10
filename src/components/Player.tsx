@@ -1,31 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Button } from "~/components/ui/button";
-import { useParentSizeObserver } from "~/hooks/useParentSize";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "~/components/ui/drawer";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "~/components/ui/sheet";
-
-import YouTube, { YouTubeProps } from "react-youtube";
-import { api } from "~/trpc/react";
-
 import { useRouter, useSearchParams } from "next/navigation";
+import YouTube, { YouTubeProps } from "react-youtube";
+
+import { useParentSizeObserver } from "~/hooks/useParentSize";
+import { Drawer, DrawerContent } from "~/components/ui/drawer";
+import { api } from "~/trpc/react";
 
 function getYoutubeId(url: string) {
   const ytURL = new URL(url);
@@ -42,45 +22,67 @@ export function Player() {
 
   const [start, setStart] = useState<number>();
   const [end, setEnd] = useState<number>();
+  const [query, setQuery] = useState<string>();
   const [videoId, setVideoId] = useState<string>();
 
-  const { parentRef, parentSize } = useParentSizeObserver();
+  const { parentRef } = useParentSizeObserver();
+  const { mutate, data: view, status } = api.video.view.useMutation({});
+
+  const { data: video } = api.video.get.useQuery(
+    { id: videoId! },
+    { enabled: !!videoId, queryHash: videoId }
+  );
 
   useEffect(() => {
     const videoParam = params.get("v") || undefined;
-    const startParam = params.get("start");
-    const endParam = params.get("end");
+    const queryParam = params.get("q") || undefined;
+    const startParam = params.get("start")
+      ? parseInt(params.get("start")!)
+      : undefined;
+    const endParam = params.get("end")
+      ? parseInt(params.get("end")!)
+      : undefined;
 
     setVideoId(videoParam);
-    setStart(startParam ? parseInt(startParam) : undefined);
-    setEnd(endParam ? parseInt(endParam) : undefined);
+    setQuery(queryParam);
+    setStart(startParam);
+    setEnd(endParam);
   }, [params]);
+
+  useEffect(() => {
+    const hasViewVideo = video && start && end;
+    const isNewVideo =
+      !view ||
+      video?.id !== view.video_id ||
+      query !== view.query ||
+      view.start_s !== start ||
+      view.end_s !== end;
+
+    if (hasViewVideo && isNewVideo) {
+      mutate({
+        video_id: video.id,
+        start: start,
+        end: end,
+        query: query,
+        author: video.author,
+      });
+    }
+  }, [start, end, query, video]);
 
   const onClose = () => {
     const url = new URL(window.location.href);
     url.searchParams.delete("v");
     url.searchParams.delete("start");
     url.searchParams.delete("end");
-    router.push(url.toString());
+    router.replace(url.toString());
   };
 
-  const { data: video, status } = api.video.get.useQuery(
-    {
-      id: videoId!,
-    },
-    {
-      enabled: !!videoId,
-      queryHash: videoId,
-    }
-  );
-
   const onStateChange: YouTubeProps["onStateChange"] = (event) => {
-    console.log(event.data);
     if (Number(event.data) === -1) {
       // this is jank and should be replaced lmao
       setTimeout(() => {
         event.target.seekTo(start, true);
-      }, 1500);
+      }, 1750);
     }
   };
 
@@ -98,7 +100,7 @@ export function Player() {
                   key={`${video.id}-${start}-${end}`}
                   className="sm:hidden flex mx-auto"
                   videoId={getYoutubeId(video.url)}
-                  id={`${video.id}-${start}-${end}`}
+                  id={`${video.id}-${start}-${end}-sm`}
                   loading="lazy"
                   onStateChange={onStateChange}
                   opts={{
@@ -120,7 +122,7 @@ export function Player() {
                   key={`${video.id}-${start}-${end}`}
                   className="hidden sm:block mx-auto"
                   videoId={getYoutubeId(video.url)}
-                  id={`${video.id}-${start}-${end}`}
+                  id={`${video.id}-${start}-${end}-lg`}
                   loading="lazy"
                   onStateChange={onStateChange}
                   opts={{

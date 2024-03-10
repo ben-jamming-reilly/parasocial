@@ -1,9 +1,5 @@
-"use client";
 import Link from "next/link";
-import Image from "next/image";
-import { useState } from "react";
 
-import { YoutubeVideo } from "~/server/video-query";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import {
   Accordion,
@@ -11,7 +7,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "~/components/ui/accordion";
-import Youtube from "~/components/Youtube";
 
 interface SectionListProps {
   videoId: string;

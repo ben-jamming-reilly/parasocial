@@ -53,7 +53,7 @@ export function ProfilePanel({
       <div className="relative mx-auto w-fit">
         <ProfileImage imageUrl={imageUrl} name={name} />
         <div className="absolute bottom-4 left-4 z-20">
-          <h1 className="bg-black px-1 font-bold tracking-widest line-clamp-2 text-white">
+          <h1 className="bg-black px-1 text-sm font-bold tracking-widest line-clamp-2 text-white">
             {name}
           </h1>
         </div>

@@ -8,16 +8,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Clip {
-  id       String  @id @default(cuid())
-  user_id  String?
-  url      String
-  query    String?
-  title    String
-  body     String?
-  start_ms Int
-  end_ms   Int
-  user     User?   @relation(fields: [user_id], references: [id])
+model View {
+  id          String   @id @default(cuid())
+  video_id    String
+  start_s     Int
+  end_s       Int
+  author      String?
+  query       String?
+  user_id     String?
+  create_date DateTime @default(now())
+  user        User?    @relation(fields: [user_id], references: [id])
 }
 
 /// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
@@ -73,10 +73,10 @@ model User {
   image           String?
   infinite_upload Boolean       @default(false)
   accounts        Account[]
-  clips           Clip[]
   queries         SearchQuery[]
   sessions        Session[]
   uploads         VideoUpload[]
+  views           View[]
 }
 
 model VerificationToken {

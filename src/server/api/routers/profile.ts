@@ -27,4 +27,16 @@ export const profileRouter = createTRPCRouter({
         retries: 3,
       });
     }),
+  trending: publicProcedure
+    .input(z.object({ author: z.string() }))
+    .query(async ({ ctx, input }) => {
+      // Sample
+      const views = await ctx.db.view.findMany({
+        where: { author: input.author },
+        orderBy: { create_date: "desc" },
+        take: 500,
+      });
+
+      ctx.videoQuery;
+    }),
 });

@@ -7,6 +7,7 @@ import { UploadList } from "./UploadList";
 import { SearchBar } from "../../../components/SearchBar";
 import { ProfilePanel } from "~/components/ProfilePanel";
 import { Player } from "~/components/Player";
+import { notFound } from "next/navigation";
 
 type SearchParamType = string | string[] | undefined;
 
@@ -25,10 +26,12 @@ export default async function Page({ params, searchParams }: PageProps) {
 
   const query = parseSearchQuery(searchParams.q);
 
-  const [profile, documents] = await Promise.all([
+  const [profile, videos] = await Promise.all([
     api.profile.getYoutubeProfile.query({ author }),
     api.video.getAll.query({ author }),
   ]);
+
+  if (!profile) return notFound();
 
   return (
     <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -39,7 +42,7 @@ export default async function Page({ params, searchParams }: PageProps) {
           author={author}
           name={author}
         />
-        <UploadList documents={documents} />
+        <UploadList documents={videos} />
       </section>
 
       <section className="flex flex-col gap-4 md:col-span-2 lg:col-span-3">

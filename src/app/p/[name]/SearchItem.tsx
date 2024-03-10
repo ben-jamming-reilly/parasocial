@@ -22,8 +22,6 @@ interface SearchItemProps {
 export default function SearchItem({
   result: { video: video, start_ms, end_ms, text, score },
 }: SearchItemProps) {
-  const [playMobile, setPlayMobile] = useState(false);
-
   const [watchUrl, setWatchUrl] = useState("#");
 
   useEffect(() => {

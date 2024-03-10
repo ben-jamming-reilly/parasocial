@@ -6,13 +6,6 @@ import { SummaryNode } from "~/server/video-query";
 
 import { timestamp } from "~/lib/utils";
 import { YoutubeVideo } from "~/server/video-query";
-import { ScrollArea } from "~/components/ui/scroll-area";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "~/components/ui/accordion";
 
 function thumbnailUrl(video_url: string, curr_ms: number, length_ms: number) {
   const pic_id = Math.ceil((curr_ms / length_ms) * 3);

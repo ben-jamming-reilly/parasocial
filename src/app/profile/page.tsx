@@ -24,7 +24,9 @@ export default function ProfilePage() {
 
   const { data: searchQueries } = api.user.searchHistory.useQuery();
 
-  const { data: uploads } = api.user.uploads.useQuery(undefined, {});
+  const { data: uploads } = api.user.uploads.useQuery(undefined, {
+    refetchInterval: 5000,
+  });
 
   return (
     <main className="grid sm:grid-cols-2 gap-4 pt-4 max-w-6xl mx-auto">

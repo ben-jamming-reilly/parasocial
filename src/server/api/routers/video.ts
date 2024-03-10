@@ -44,6 +44,53 @@ export const videoRouter = createTRPCRouter({
 
       return videoUpload;
     }),
+  //
+  view: publicProcedure
+    .input(
+      z.object({
+        video_id: z.string(),
+        start: z.number().int(),
+        end: z.number().int(),
+        author: z.string().optional(),
+        query: z.string().optional(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      // Don't double count
+      const viewWindow = new Date();
+      viewWindow.setMinutes(viewWindow.getMinutes() - 5);
+
+      const view = await ctx.db.view.findFirst({
+        where: {
+          AND: [
+            { video_id: input.video_id },
+            { start_s: input.start },
+            { end_s: input.end },
+            { author: input.author },
+            { query: input.query },
+            { user_id: ctx.session?.user.id },
+            {
+              create_date: {
+                gt: viewWindow,
+              },
+            },
+          ],
+        },
+      });
+
+      // if (view) return view;
+
+      return await ctx.db.view.create({
+        data: {
+          video_id: input.video_id,
+          start_s: input.start,
+          end_s: input.end,
+          user_id: ctx.session?.user.id,
+          author: input.author,
+          query: input.query,
+        },
+      });
+    }),
 
   get: publicProcedure
     .input(
@@ -52,9 +99,13 @@ export const videoRouter = createTRPCRouter({
       })
     )
     .query(async ({ input, ctx }) => {
-      return await pRetry(() => ctx.videoQuery.videos.getVideo(input), {
-        retries: 3,
-      });
+      try {
+        return await pRetry(() => ctx.videoQuery.videos.getVideo(input), {
+          retries: 3,
+        });
+      } catch (error) {
+        return undefined;
+      }
     }),
 
   getAll: publicProcedure
@@ -66,8 +117,19 @@ export const videoRouter = createTRPCRouter({
       })
     )
     .query(async ({ input, ctx }) => {
-      return await pRetry(() => ctx.videoQuery.videos.getAllVideos(input), {
-        retries: 3,
+      const videos = await pRetry(
+        () => ctx.videoQuery.videos.getAllVideos(input),
+        {
+          retries: 3,
+        }
+      );
+
+      if (!input.author) return videos;
+
+      return videos.sort((lh, rh) => {
+        const lhDate = new Date(lh.publish_date);
+        const rhDate = new Date(rh.publish_date);
+        return rhDate.getTime() - lhDate.getTime();
       });
     }),
 
@@ -104,18 +166,22 @@ export const videoRouter = createTRPCRouter({
       });
 
       if (input.videoId) {
-        const [results] = await Promise.all([
+        const search = () =>
           ctx.videoQuery.search.searchVideo({
-            id: input.videoId,
+            id: input.videoId!,
             query: input.query,
-          }),
+          });
+
+        const [results] = await Promise.all([
+          pRetry(search, { retries: 3 }),
           saveQuery,
         ]);
         return results;
       }
 
+      const search = () => ctx.videoQuery.search.searchAllVideos(input);
       const [results] = await Promise.all([
-        ctx.videoQuery.search.searchAllVideos(input),
+        pRetry(search, { retries: 3 }),
         saveQuery,
       ]);
 

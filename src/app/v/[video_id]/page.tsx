@@ -7,6 +7,7 @@ import { SearchBar } from "~/components/SearchBar";
 import { Player } from "~/components/Player";
 import { SummaryTab } from "./Summary";
 import { YoutubeVideo } from "~/server/video-query";
+import { notFound } from "next/navigation";
 
 type SearchParamType = string | string[] | undefined;
 
@@ -85,6 +86,8 @@ export default async function Page({ params, searchParams }: PageProps) {
   const video_id = decodeURI(params.video_id);
   const query = parseSearchQuery(searchParams.q);
   const video = await api.video.get.query({ id: video_id });
+
+  if (!video) return notFound();
 
   return (
     <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

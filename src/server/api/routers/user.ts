@@ -23,6 +23,9 @@ export const userRouter = createTRPCRouter({
       where: {
         user_id: ctx.session.user.id,
       },
+      orderBy: {
+        create_date: "desc",
+      },
     });
     return uploads;
   }),

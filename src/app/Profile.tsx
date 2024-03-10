@@ -19,9 +19,11 @@ export default function Profile({ author, url }: ProfileProps) {
         width={300}
         alt={`Youtube profile pic for ${author}`}
       />
-      <div className="absolute bottom-0 z-20 mb-4 ml-4">
-        <div className="bg-black px-3">
-          <p className="tracking-widest text-white">{author}</p>
+      <div className="absolute bottom-6 z-20  m-auto w-fit">
+        <div className=" m-full px-2 flex ">
+          <p className="tracking-wide bg-black px-3 text-sm  text-white mx-auto">
+            {author}
+          </p>
         </div>
       </div>
     </Link>

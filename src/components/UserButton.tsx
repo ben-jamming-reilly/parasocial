@@ -47,7 +47,10 @@ export default function AuthBtn(props: AuthBtnProps) {
               <Image src={user.image!} width="30" height="30" alt="" />
             ) : user ? (
               <Image
-                src={`https://avatar.vercel.sh/${user!.id}`}
+                src={`https://avatar.vercel.sh/${user!.id
+                  .split("")
+                  .reverse()
+                  .join("")}`}
                 width="30"
                 height="30"
                 alt=""
