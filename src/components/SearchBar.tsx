@@ -129,7 +129,7 @@ export function SearchBar({
         }}
       >
         <input
-          className="outline-text-3 mt-auto flex w-full flex-grow flex-row border-b-4 border-black bg-transparent px-1 text-base tracking-widest caret-white focus:outline-none "
+          className="mt-auto flex w-full text-slate-200 flex-grow flex-row border-b-4 border-black bg-transparent px-1  tracking-wide caret-slate-200 focus:outline-none "
           name="q"
           value={query}
           onChange={onQueryChange}

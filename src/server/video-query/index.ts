@@ -14,11 +14,12 @@ export type { CreateVideo } from './models/CreateVideo';
 export type { HTTPValidationError } from './models/HTTPValidationError';
 export type { SearchResult } from './models/SearchResult';
 export type { SummaryNode } from './models/SummaryNode';
-export type { TranscriptTimestamp } from './models/TranscriptTimestamp';
 export type { ValidationError } from './models/ValidationError';
+export type { VideoTimestamp } from './models/VideoTimestamp';
 export type { YoutubeProfile } from './models/YoutubeProfile';
 export type { YoutubeVideo } from './models/YoutubeVideo';
 
+export { ClusterService } from './services/ClusterService';
 export { ProfileService } from './services/ProfileService';
 export { SearchService } from './services/SearchService';
 export { VideosService } from './services/VideosService';

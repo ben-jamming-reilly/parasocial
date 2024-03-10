@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { searchInstance } from "~/lib/search/instance";
 import pRetry from "p-retry";
 
 export const profileRouter = createTRPCRouter({
@@ -37,6 +36,15 @@ export const profileRouter = createTRPCRouter({
         take: 500,
       });
 
-      ctx.videoQuery;
+      console.log(views);
+
+      return await ctx.videoQuery.cluster.clusterVideos({
+        requestBody: views.map((view) => ({
+          video_id: view.video_id,
+          text: view.query || "",
+          start: view.start_s,
+          end: view.end_s,
+        })),
+      });
     }),
 });

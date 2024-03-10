@@ -52,13 +52,20 @@ export default async function Page({ params, searchParams }: PageProps) {
           initQuery={query}
           placeholder={`find a moment from ${author}`}
         ></SearchBar>
+        {!query && (
+          <h3 className="px-4 outline-text-3 underline underline-offset-8">
+            Trending
+          </h3>
+        )}
         <div className="flex min-h-[93vh] flex-row">
           {query ? (
             <Suspense fallback={<DummyPage />}>
               <SearchPage author={author} query={query} />
             </Suspense>
           ) : (
-            <RecommendPage />
+            <Suspense fallback={<DummyPage />}>
+              <RecommendPage author={author} />
+            </Suspense>
           )}
 
           <Player />

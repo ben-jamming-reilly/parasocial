@@ -4,7 +4,7 @@
 import type { BaseVideo } from '../models/BaseVideo';
 import type { CreateVideo } from '../models/CreateVideo';
 import type { SummaryNode } from '../models/SummaryNode';
-import type { TranscriptTimestamp } from '../models/TranscriptTimestamp';
+import type { VideoTimestamp } from '../models/VideoTimestamp';
 import type { YoutubeVideo } from '../models/YoutubeVideo';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -109,7 +109,7 @@ export class VideosService {
 
   /**
    * Video Transcript
-   * @returns TranscriptTimestamp Successful Response
+   * @returns VideoTimestamp Successful Response
    * @throws ApiError
    */
   public videoTranscript({
@@ -120,7 +120,7 @@ export class VideosService {
     id: string,
     start?: number,
     limit?: number,
-  }): CancelablePromise<Array<TranscriptTimestamp>> {
+  }): CancelablePromise<Array<VideoTimestamp>> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/videos/{id}/transcript',

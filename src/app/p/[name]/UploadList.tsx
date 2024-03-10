@@ -60,13 +60,11 @@ export function UploadList({ documents }: UploadListProps) {
           <AccordionTrigger className="flex flex-1 flex-row bg-black px-3 py-1 font-bold tracking-widest text-white">
             uploads
           </AccordionTrigger>
-          <AccordionContent className="mt-2">
-            <ScrollArea className="max-h-[40vh] gap-3 ">
-              <div className="flex flex-col gap-3 text-white">
-                {documents.map((doc) => (
-                  <UploadItem key={doc.url} mobile={true} doc={doc} />
-                ))}
-              </div>
+          <AccordionContent className="mt-2 max-h-[40vh]">
+            <ScrollArea className=" gap-3 ">
+              {documents.map((doc) => (
+                <UploadItem key={doc.url} mobile={true} doc={doc} />
+              ))}
             </ScrollArea>
           </AccordionContent>
         </AccordionItem>

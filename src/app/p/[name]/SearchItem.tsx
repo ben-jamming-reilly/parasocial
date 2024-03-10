@@ -23,6 +23,7 @@ export default function SearchItem({
   result: { video: video, start_ms, end_ms, text, score },
 }: SearchItemProps) {
   const [watchUrl, setWatchUrl] = useState("#");
+  const [rank, setRank] = useState("");
 
   useEffect(() => {
     if (window) {
@@ -35,6 +36,10 @@ export default function SearchItem({
       url.searchParams.set("start", start.toString());
       url.searchParams.set("end", end.toString());
       setWatchUrl(url.toString());
+
+      if (url.hostname.includes("localhost")) {
+        setRank(score.toFixed(3) + " - ");
+      }
     }
   }, []);
 
@@ -64,7 +69,7 @@ export default function SearchItem({
       {/* Desktop */}
       <Link
         href={watchUrl}
-        className="hidden min-w-[190px] max-w-[250px] flex-col gap-2 border-4 border-black bg-black text-xs tracking-wider hover:underline sm:flex"
+        className="hidden min-w-[190px] max-w-[250px] h-fit flex-col gap-2 border-4 border-black bg-black text-xs tracking-wider hover:underline sm:flex"
       >
         <div className="relative mx-auto">
           <Image
@@ -84,7 +89,8 @@ export default function SearchItem({
           </div>
         </div>
         <p className="line-clamp-3 w-full px-2 text-xs italic">
-          <span>{score.toFixed(3)}</span> - "{text}"
+          <span>{rank}</span>
+          {text}
         </p>
       </Link>
     </>

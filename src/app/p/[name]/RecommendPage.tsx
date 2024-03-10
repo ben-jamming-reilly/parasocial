@@ -1,15 +1,23 @@
-import Image from "next/image";
+import { api } from "~/trpc/server";
 
-export default function RecommendPage() {
+import SearchItem from "./SearchItem";
+
+type RecommendPageProps = {
+  author: string;
+};
+
+export default async function RecommendPage({ author }: RecommendPageProps) {
+  const trending = await api.profile.trending.query({ author });
+
   return (
-    <div className="mx-auto flex h-full flex-col justify-center">
-      <Image
-        className="mx-auto "
-        src="/icons/rainbow-star.svg"
-        height="100"
-        width="100"
-        alt="rainbow star"
-      />
+    <div className="z-0 mx-auto flex justify-evenly flex-wrap overflow-x-hidden gap-2 h-fit pb-4 sm:min-w-[550px] w-full">
+      {trending &&
+        trending.map((result) => (
+          <SearchItem
+            key={result.video.id + result.start_ms + result.end_ms}
+            result={result}
+          />
+        ))}
     </div>
   );
 }
