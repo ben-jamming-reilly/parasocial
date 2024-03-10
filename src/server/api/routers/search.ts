@@ -5,9 +5,7 @@ import {
   publicProcedure,
   // protectedProcedure,
 } from "~/server/api/trpc";
-import { searchInstance } from "~/lib/search/instance";
 import { db } from "~/server/db";
-import { getServerAuthSession } from "~/server/auth";
 
 export const searchRouter = createTRPCRouter({
   previousQueries: publicProcedure
