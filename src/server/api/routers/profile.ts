@@ -29,14 +29,12 @@ export const profileRouter = createTRPCRouter({
   trending: publicProcedure
     .input(z.object({ author: z.string() }))
     .query(async ({ ctx, input }) => {
-      // Sample
+      // Get a sample of the latest views of someone
       const views = await ctx.db.view.findMany({
         where: { author: input.author },
         orderBy: { create_date: "desc" },
         take: 500,
       });
-
-      console.log(views);
 
       return await ctx.videoQuery.cluster.clusterVideos({
         requestBody: views.map((view) => ({
