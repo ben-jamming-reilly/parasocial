@@ -9,6 +9,7 @@ export interface ProfileProps {
 export default function Profile({ author, url }: ProfileProps) {
   return (
     <Link
+      prefetch
       href={`p/${author}`}
       className="relative border-4 border-black bg-black font-bold shadow-[8px_8px_0_0_#000] transition hover:shadow-none focus:outline-none focus:ring "
     >
