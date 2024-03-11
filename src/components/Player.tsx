@@ -74,7 +74,7 @@ export function Player() {
     url.searchParams.delete("v");
     url.searchParams.delete("start");
     url.searchParams.delete("end");
-    router.replace(url.toString());
+    router.push(url.toString());
   };
 
   const onStateChange: YouTubeProps["onStateChange"] = (event) => {

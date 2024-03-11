@@ -54,7 +54,7 @@ export default async function Page({ params, searchParams }: PageProps) {
         ></SearchBar>
         {!query && (
           <h3 className="px-4 outline-text-3 underline underline-offset-8">
-            Trending
+            trending
           </h3>
         )}
         <div className="flex min-h-[93vh] flex-row">
