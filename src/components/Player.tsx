@@ -20,6 +20,7 @@ export function Player() {
   const height = 480;
   const hwRatio = height / width;
 
+  const [isOpen, setIsOpen] = useState(false);
   const [start, setStart] = useState<number>();
   const [end, setEnd] = useState<number>();
   const [query, setQuery] = useState<string>();
@@ -30,7 +31,7 @@ export function Player() {
 
   const { data: video } = api.video.get.useQuery(
     { id: videoId! },
-    { enabled: !!videoId, queryHash: videoId }
+    { enabled: !!videoId, queryHash: "v-" + videoId }
   );
 
   useEffect(() => {
@@ -47,6 +48,12 @@ export function Player() {
     setQuery(queryParam);
     setStart(startParam);
     setEnd(endParam);
+
+    if (videoParam && startParam && endParam) {
+      setIsOpen(true);
+    } else {
+      setIsOpen(false);
+    }
   }, [params]);
 
   useEffect(() => {
@@ -70,6 +77,7 @@ export function Player() {
   }, [start, end, query, video]);
 
   const onClose = () => {
+    setIsOpen(false);
     const url = new URL(window.location.href);
     url.searchParams.delete("v");
     url.searchParams.delete("start");
@@ -88,7 +96,7 @@ export function Player() {
 
   return (
     <>
-      <Drawer onClose={onClose} open={!!videoId}>
+      <Drawer onClose={onClose} open={isOpen}>
         <DrawerContent className="bg-black rounded-none h-[80vh]">
           <div
             ref={parentRef}

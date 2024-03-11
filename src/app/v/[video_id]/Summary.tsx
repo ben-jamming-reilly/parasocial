@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { SummaryNode } from "~/server/video-query";
+import { useRouter, usePathname } from "next/navigation";
 
 import { timestamp } from "~/lib/utils";
 import { YoutubeVideo } from "~/server/video-query";
@@ -22,6 +23,7 @@ type SummaryPointProps = {
 
 export function SummaryTab({ node, video, depth }: SummaryPointProps) {
   const [watchUrl, setWatchUrl] = useState("#");
+  const router = useRouter();
 
   useEffect(() => {
     if (window) {
@@ -37,13 +39,33 @@ export function SummaryTab({ node, video, depth }: SummaryPointProps) {
     }
   }, []);
 
+  const onClick = () => {
+    const url = new URL(window.location.href);
+    const start = Math.round(node.start_ms / 1000);
+    const end = Math.round(node.end_ms / 1000);
+    url.searchParams.set("v", video.id);
+    url.searchParams.set("start", start.toString());
+    url.searchParams.set("end", end.toString());
+
+    router.push(url.toString());
+  };
+
   if (depth === 0) return null;
 
   if (depth === 1)
     return (
       <div className="col-span-1 mx-auto w-full h-full">
         <Link
-          href={watchUrl}
+          prefetch
+          href={{
+            pathname: `/v/${video.id}`,
+            query: {
+              v: video.id,
+              start: Math.round(node.start_ms / 1000),
+              end: Math.round(node.end_ms / 1000),
+            },
+          }}
+          onClick={onClick}
           className="text-xs tracking-wider hover:underline "
         >
           <div className="bg-black m-auto w-fit h-fit p-1">
@@ -77,7 +99,16 @@ export function SummaryTab({ node, video, depth }: SummaryPointProps) {
     <div className="flex flex-col gap-2">
       <div className="">
         <Link
-          href={watchUrl}
+          prefetch
+          href={{
+            pathname: `/v/${video.id}`,
+            query: {
+              v: video.id,
+              start: Math.round(node.start_ms / 1000),
+              end: Math.round(node.end_ms / 1000),
+            },
+          }}
+          onClick={onClick}
           className="gap-2 text-xs tracking-wider hover:underline flex"
         >
           <div className="bg-black m-auto w-fit h-fit p-1">
