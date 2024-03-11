@@ -6,6 +6,7 @@ import AuthProvider from "./AuthProvider";
 import { TRPCReactProvider } from "~/trpc/react";
 import { Toaster } from "~/components/ui/toaster";
 import { Navbar } from "~/components/Navbar";
+import { CSPostHogProvider } from "./providers";
 
 const description =
   "Discover and relive memorable moments from your favorite content creators";
@@ -30,19 +31,22 @@ export default function RootLayout({
         <title>parasocial</title>
         <meta name="twitter:card" content={description} />
       </head>
-      <body className="relative flex min-h-screen h-fit flex-1 flex-col bg-rose-900 text-zinc-100">
-        <AuthProvider>
-          <TRPCReactProvider cookies={cookies().toString()}>
-            <main className="flex flex-1 flex-col space-y-4 p-4">
-              <Navbar />
-              {children}
-              <Toaster />
-            </main>
-          </TRPCReactProvider>
-        </AuthProvider>
-        <Footer />
-        <Analytics />
-      </body>
+
+      <CSPostHogProvider>
+        <body className="relative flex min-h-screen h-fit flex-1 flex-col bg-rose-900 text-zinc-100">
+          <AuthProvider>
+            <TRPCReactProvider cookies={cookies().toString()}>
+              <main className="flex flex-1 flex-col space-y-4 p-4">
+                <Navbar />
+                {children}
+                <Toaster />
+              </main>
+            </TRPCReactProvider>
+          </AuthProvider>
+          <Footer />
+          <Analytics />
+        </body>
+      </CSPostHogProvider>
     </html>
   );
 }
