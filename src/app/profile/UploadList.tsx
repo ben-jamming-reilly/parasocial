@@ -1,9 +1,5 @@
 "use client";
 import Link from "next/link";
-import Image from "next/image";
-import { useState } from "react";
-
-import { YoutubeVideo } from "~/server/video-query";
 import type { VideoUpload } from "@prisma/client";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import {
@@ -12,27 +8,21 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "~/components/ui/accordion";
-import Youtube from "~/components/Youtube";
-
-function displayDate(dateString: string) {
-  const date = new Date(dateString);
-  return date.toLocaleDateString();
-}
 
 interface UploadItemProps {
-  mobile: boolean;
   doc: VideoUpload;
 }
 
-function UploadItem({ doc, mobile }: UploadItemProps) {
+function UploadItem({ doc }: UploadItemProps) {
+  const siteUrl = new URL(`v/${doc.id}`, location.href);
   return (
     <Link
-      href={doc.url}
+      href={siteUrl.toString()}
       className="text flex flex-row gap-2 border-4 border-black bg-black px-3 hover:underline"
     >
       <div className="flex-1 flex-col-reverse">
         <p className="line-clamp-2 flex-1  tracking-wider text-white">
-          {doc.url}
+          {siteUrl.toString()}
         </p>
         <p className="text-xs text-neutral-400">
           {doc.create_date.toDateString()}
@@ -59,7 +49,7 @@ export function UploadList({ documents }: UploadListProps) {
             <ScrollArea className="max-h-[40vh] gap-3 ">
               <div className="flex flex-col gap-3 text-white">
                 {documents.map((doc) => (
-                  <UploadItem key={doc.url} mobile={true} doc={doc} />
+                  <UploadItem key={doc.url} doc={doc} />
                 ))}
               </div>
             </ScrollArea>
@@ -77,7 +67,7 @@ export function UploadList({ documents }: UploadListProps) {
         <ScrollArea className="h-[50vh] ">
           <div className="flex flex-col gap-3 text-sm text-white  lg:text-base">
             {documents.map((doc) => (
-              <UploadItem key={doc.url} mobile={false} doc={doc} />
+              <UploadItem key={doc.url} doc={doc} />
             ))}
           </div>
         </ScrollArea>

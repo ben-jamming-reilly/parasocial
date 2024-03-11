@@ -41,13 +41,13 @@ export function UploadForm({ placeholder, className }: UploadFormProps) {
 
   const { mutate, isLoading } = api.video.upload.useMutation({
     onSuccess(data, variables, context) {
+      form.resetField("url");
       toast({
         title: "success: you uploaded a video 🚀",
         description: data.url,
       });
     },
     onError(err) {
-      console.log("HERE", err);
       toast({
         title: "error",
         description: err.message,
