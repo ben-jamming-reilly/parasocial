@@ -33,7 +33,12 @@ export const videoRouter = createTRPCRouter({
         });
       }
 
-      const upload = await ctx.videoQuery.videos.upload({ requestBody: input });
+      const maxLength = user?.infinite_upload ? 60 * 60 * 12 : undefined;
+
+      const upload = await ctx.videoQuery.videos.upload({
+        maxLength,
+        requestBody: input,
+      });
       const videoUpload = await ctx.db.videoUpload.create({
         data: {
           id: upload.id,

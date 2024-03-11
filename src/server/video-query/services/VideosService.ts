@@ -49,12 +49,17 @@ export class VideosService {
    */
   public upload({
     requestBody,
+    maxLength,
   }: {
     requestBody: CreateVideo,
+    maxLength?: any,
   }): CancelablePromise<(BaseVideo | YoutubeVideo)> {
     return this.httpRequest.request({
       method: 'POST',
       url: '/videos',
+      query: {
+        'max_length': maxLength,
+      },
       body: requestBody,
       mediaType: 'application/json',
       errors: {
