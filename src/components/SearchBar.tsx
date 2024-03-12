@@ -1,7 +1,7 @@
 "use client";
-import { FormEvent, ReactNode, useRef, useState, useEffect } from "react";
+import { ReactNode, useRef, useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 
 import { cn } from "~/lib/utils";
@@ -10,8 +10,6 @@ import { useClickOutside } from "~/hooks/useClickOutside";
 
 import { useDebounce } from "~/hooks/useDebounce";
 import { api as trpcClient } from "~/trpc/react";
-// import { trpcClient } from "~/lib/trpc-client";
-import { getBaseUrl } from "~/lib/utils";
 
 type QuerySuggestionProps = {
   author: string;

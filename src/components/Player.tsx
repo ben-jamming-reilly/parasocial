@@ -120,7 +120,6 @@ export function Player() {
                       rel: 0,
                       autoplay: 0,
                       start: Number(start),
-                      end: Number(end),
                       controls: 1, // 0 - no controls
                     },
                   }}
