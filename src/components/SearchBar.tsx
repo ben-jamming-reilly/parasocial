@@ -63,19 +63,7 @@ export function SearchBar({
   const params = useSearchParams();
   const ref = useRef<HTMLDivElement>(null);
 
-  const router = useRouter();
-
-  const onSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
-    const url = new URL(window.location.href);
-    url.searchParams.delete("v");
-    url.searchParams.delete("start");
-    url.searchParams.delete("end");
-    url.searchParams.set("q", query);
-
-    router.push(url.toString());
-  };
+  // const router = useRouter();
 
   const { data } = trpcClient.search.previousQueries.useQuery(
     {
@@ -104,7 +92,6 @@ export function SearchBar({
 
   return (
     <form
-      onSubmit={onSubmit}
       className={cn(
         "mb-4 flex w-full flex-row justify-between gap-3 sm:mx-0",
         className
