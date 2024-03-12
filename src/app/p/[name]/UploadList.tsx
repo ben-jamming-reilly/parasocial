@@ -27,7 +27,7 @@ function UploadItem({ doc, mobile }: UploadItemProps) {
   return (
     <Link
       href={`/v/${doc.id}`}
-      className="text flex flex-row gap-2 border-4 border-black bg-black px-3 hover:underline"
+      className="text flex flex-row gap-2 border-4 border-black bg-black px-3 hover:underline text-xs md:text-sm"
     >
       <Image
         src={doc.thumbnail_url}
@@ -36,7 +36,7 @@ function UploadItem({ doc, mobile }: UploadItemProps) {
         alt={`Thumbnail for ${doc.title}`}
       />
       <div className="flex-1 flex-col-reverse">
-        <p className="line-clamp-2 flex-1  tracking-wider text-white">
+        <p className="line-clamp-2 flex-1 tracking-wider text-white">
           {doc.title}
         </p>
         <p className="text-xs text-neutral-400">
@@ -56,15 +56,17 @@ export function UploadList({ documents }: UploadListProps) {
     <>
       {/* Mobile View */}
       <Accordion className="block sm:hidden" type="single" collapsible>
-        <AccordionItem className="border-none" value="item-1">
-          <AccordionTrigger className="flex flex-1 flex-row bg-black px-3 py-1 font-bold tracking-widest text-white">
+        <AccordionItem className="border-none space-y-2" value="item-1">
+          <AccordionTrigger className=" bg-black px-3 py-1 font-bold tracking-widest text-white">
             uploads
           </AccordionTrigger>
-          <AccordionContent className="mt-2 max-h-[40vh]">
-            <ScrollArea className=" gap-3 ">
-              {documents.map((doc) => (
-                <UploadItem key={doc.url} mobile={true} doc={doc} />
-              ))}
+          <AccordionContent>
+            <ScrollArea className="">
+              <div className="space-y-2 max-h-[40vh]">
+                {documents.map((doc) => (
+                  <UploadItem key={doc.url} mobile={true} doc={doc} />
+                ))}
+              </div>
             </ScrollArea>
           </AccordionContent>
         </AccordionItem>

@@ -5,7 +5,7 @@ import { Banner } from "./Banner";
 export function Navbar() {
   return (
     <div className="flex w-full flex-row justify-between items-center">
-      <Link href="/">
+      <Link className="hover:scale-95 transition" href="/">
         <h1 className="outline-text-3 text-2xl tracking-widest">parasocial</h1>
       </Link>
       <Banner

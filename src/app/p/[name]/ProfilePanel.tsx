@@ -36,8 +36,8 @@ export async function ProfilePanel({ author, backHref }: ProfileHeaderProps) {
       </div>
       <div className="relative mx-auto w-fit">
         <ProfileImage
-          height={175}
-          width={175}
+          height={170}
+          width={170}
           src={profile.channel_logo!}
           label={profile.channel_name}
         />

@@ -95,7 +95,7 @@ export default async function Page({ params, searchParams }: PageProps) {
         <ProfilePanel
           name={video.title}
           imageUrl={video.thumbnail_url}
-          backHref={query ? "/" : `/p/${video.author}`}
+          backHref={query ? `/v/${video.id}` : `/p/${video.author}`}
           author={video.author}
         />
         {/* <SectionList videoId={video.id} sections={["asdf"]} /> */}

@@ -91,15 +91,15 @@ export function SearchBar({
   return (
     <form
       className={cn(
-        "mb-4 flex w-full flex-row justify-between gap-3 sm:mx-0",
+        "mb-4 flex w-full flex-row justify-between gap-2 sm:mx-0",
         className
       )}
     >
       <button className="mt-auto">
         <Image
           src="/icons/search.svg"
-          width="35"
-          height="35"
+          width="30"
+          height="30"
           alt="Magnifying Glass"
         />
       </button>
