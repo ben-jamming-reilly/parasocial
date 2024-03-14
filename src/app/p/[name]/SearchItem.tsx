@@ -2,11 +2,9 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams, useRouter } from "next/navigation";
 
 import { SearchResult } from "~/server/video-query";
 import { timestamp } from "~/lib/utils";
-import Player from "~/components/Youtube";
 
 function thumbnailUrl(video_url: string, curr_ms: number, length_ms: number) {
   const pic_id = Math.ceil((curr_ms / length_ms) * 3);

@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, cache } from "react";
 import { api } from "~/trpc/server";
 
 import { SearchPage, DummyPage } from "./SearchPage";
@@ -21,14 +21,19 @@ function parseSearchQuery(param: SearchParamType): string | undefined {
   else return param;
 }
 
+const getProfile = cache((author: string) =>
+  api.profile.getYoutubeProfile.query({ author })
+);
+
+const getVideos = cache((author: string) => api.video.getAll.query({ author }));
+
 export default async function Page({ params, searchParams }: PageProps) {
   const author = decodeURI(params.name);
-
   const query = parseSearchQuery(searchParams.q);
 
   const [profile, videos] = await Promise.all([
-    api.profile.getYoutubeProfile.query({ author }),
-    api.video.getAll.query({ author }),
+    getProfile(author),
+    getVideos(author),
   ]);
 
   if (!profile) return notFound();
