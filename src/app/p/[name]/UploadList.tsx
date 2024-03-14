@@ -14,8 +14,26 @@ import {
 import Youtube from "~/components/Youtube";
 
 function displayDate(dateString: string) {
-  const date = new Date(dateString);
-  return date.toLocaleDateString();
+  try {
+    // Not just using date contructor because this is weird on IOS.
+    const [dateOnly, timeOnly] = dateString.split(" ");
+    const [year, month, day] = dateOnly!.split("-");
+    const [hours, minutes, seconds] = timeOnly!.split(":");
+
+    const date = new Date(
+      parseInt(year!),
+      parseInt(month!) - 1, // Month is zero-based
+      parseInt(day!),
+      parseInt(hours!),
+      parseInt(minutes!),
+      parseInt(seconds!)
+    );
+
+    return date.toLocaleDateString();
+  } catch (e) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+  }
 }
 
 interface UploadItemProps {
