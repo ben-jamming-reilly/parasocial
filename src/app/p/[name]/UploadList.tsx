@@ -37,11 +37,10 @@ function displayDate(dateString: string) {
 }
 
 interface UploadItemProps {
-  mobile: boolean;
   doc: YoutubeVideo;
 }
 
-function UploadItem({ doc, mobile }: UploadItemProps) {
+function UploadItem({ doc }: UploadItemProps) {
   return (
     <Link
       href={`/v/${doc.id}`}
@@ -82,7 +81,7 @@ export function UploadList({ documents }: UploadListProps) {
             <ScrollArea className="">
               <div className="space-y-2 max-h-[40vh]">
                 {documents.map((doc) => (
-                  <UploadItem key={doc.url} mobile={true} doc={doc} />
+                  <UploadItem key={doc.url} doc={doc} />
                 ))}
               </div>
             </ScrollArea>
@@ -100,7 +99,7 @@ export function UploadList({ documents }: UploadListProps) {
         <ScrollArea className="h-[50vh] ">
           <div className="flex flex-col gap-3 text-sm text-white  lg:text-base">
             {documents.map((doc) => (
-              <UploadItem key={doc.url} mobile={false} doc={doc} />
+              <UploadItem key={doc.url} doc={doc} />
             ))}
           </div>
         </ScrollArea>

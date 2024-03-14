@@ -117,7 +117,7 @@ export const videoRouter = createTRPCRouter({
       z.object({
         author: z.string().optional(),
         skip: z.number().default(0),
-        limit: z.number().min(10).max(100).default(100),
+        limit: z.number().min(10).max(200).default(200),
       })
     )
     .query(async ({ input, ctx }) => {
