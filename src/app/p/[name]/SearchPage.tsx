@@ -1,6 +1,3 @@
-// "use client";
-
-import { SearchResult } from "~/server/video-query";
 import SearchItem from "./SearchItem";
 import { api } from "~/trpc/server";
 

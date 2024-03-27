@@ -33,7 +33,7 @@ export default async function Page({ params, searchParams }: PageProps) {
 
   const [profile, videos] = await Promise.all([
     getProfile(author),
-    getVideos(author),
+    api.video.getAll.query({ author }),
   ]);
 
   if (!profile) return notFound();
