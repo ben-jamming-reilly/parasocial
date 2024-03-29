@@ -22,7 +22,7 @@ export class VideosService {
   public getAllVideos({
     author,
     skip,
-    limit = 100,
+    limit = 1000,
   }: {
     author?: string,
     skip?: number,
@@ -135,36 +135,6 @@ export class VideosService {
       query: {
         'start': start,
         'limit': limit,
-      },
-      errors: {
-        422: `Validation Error`,
-      },
-    });
-  }
-
-  /**
-   * Get Similar Videos
-   * @returns any Successful Response
-   * @throws ApiError
-   */
-  public getSimilarVideosVideosIdSimilarGet({
-    id,
-    start,
-    end,
-  }: {
-    id: string,
-    start: number,
-    end: number,
-  }): CancelablePromise<any> {
-    return this.httpRequest.request({
-      method: 'GET',
-      url: '/videos/{id}/similar',
-      path: {
-        'id': id,
-      },
-      query: {
-        'start': start,
-        'end': end,
       },
       errors: {
         422: `Validation Error`,

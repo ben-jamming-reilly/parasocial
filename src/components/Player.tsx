@@ -5,12 +5,45 @@ import YouTube, { YouTubeProps } from "react-youtube";
 
 import { useParentSizeObserver } from "~/hooks/useParentSize";
 import { Drawer, DrawerContent } from "~/components/ui/drawer";
+import { ScrollArea } from "~/components/ui/scroll-area";
 import { useIsMobile } from "~/hooks/useIsMobile";
 import { api } from "~/trpc/react";
+import SearchItem from "~/app/p/[name]/SearchItem";
 
 function getYoutubeId(url: string) {
   const ytURL = new URL(url);
   return ytURL.searchParams.get("v")!;
+}
+
+type SimilarVideosProps = {
+  videoId: string;
+  width: number;
+  start: number;
+  end: number;
+};
+
+function SimilarVideos({ videoId, start, end, width }: SimilarVideosProps) {
+  const { data } = api.video.similar.useQuery({
+    id: videoId,
+    start: start,
+    end: end,
+  });
+
+  console.log(data);
+
+  return (
+    <div
+      className={` z-0 mx-auto flex justify-evenly flex-wrap overflow-x-hidden gap-2 h-96  `}
+    >
+      {data &&
+        data.map((s) => (
+          <SearchItem
+            result={s}
+            key={`${s.video.id}-${s.start_ms}-${s.end_ms}`}
+          />
+        ))}
+    </div>
+  );
 }
 
 export function Player() {
@@ -100,7 +133,7 @@ export function Player() {
   return (
     <>
       <Drawer onClose={onClose} open={isOpen}>
-        <DrawerContent className="bg-black rounded-none min-h-[80vh]">
+        <DrawerContent className="bg-black rounded-none min-h-[95vh]">
           <div
             ref={parentRef}
             className="flex flex-col justify-center items-center w-full mx-auto  pt-4"
@@ -127,7 +160,19 @@ export function Player() {
                 }}
               />
             )}
-            <div>asdf</div>
+            {start && end && video && (
+              <div
+                style={{ width: isMobile ? 380 : width }}
+                className="  mx-auto"
+              >
+                <SimilarVideos
+                  start={start}
+                  end={end}
+                  videoId={video.id}
+                  width={isMobile ? 380 : width}
+                />
+              </div>
+            )}
           </div>
         </DrawerContent>
       </Drawer>
