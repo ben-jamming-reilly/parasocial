@@ -180,7 +180,7 @@ export function Player() {
       <Drawer onClose={onClose} open={isOpen}>
         <DrawerContent
           ref={parentRef}
-          className="bg-rose-900 border-black rounded-none h-[95vh]"
+          className="bg-rose-900 border-black rounded-none h-[90vh]"
         >
           <div className="flex flex-1 flex-col justify-center items-center w-full  pt-4">
             {video && (
