@@ -214,7 +214,7 @@ export function Player() {
                 className=" flex-1 flex my-4"
               >
                 <SimilarVideos
-                  className={isMobile ? " h-[50vh] py-3" : `py-3 h-[38vh]`}
+                  className={isMobile ? " h-[47vh] py-3" : `py-3 h-[38vh]`}
                   author={video.author}
                   start={start}
                   end={end}
