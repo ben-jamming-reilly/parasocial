@@ -36,7 +36,7 @@ export const profileRouter = createTRPCRouter({
         take: 500,
       });
 
-      return await ctx.videoQuery.cluster.clusterVideos({
+      const trendingVideos = await ctx.videoQuery.cluster.clusterVideos({
         requestBody: views.map((view) => ({
           video_id: view.video_id,
           text: view.query || "",
@@ -44,5 +44,7 @@ export const profileRouter = createTRPCRouter({
           end: view.end_s,
         })),
       });
+
+      return trendingVideos.slice(0, 60);
     }),
 });
