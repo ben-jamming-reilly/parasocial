@@ -156,12 +156,31 @@ export const videoRouter = createTRPCRouter({
         start: z.number().int().min(0),
         end: z.number().int().min(0),
         author: z.string().optional(),
+        explore: z.boolean().default(false),
       })
     )
     .query(async ({ ctx, input }) => {
-      return await pRetry(() => ctx.videoQuery.similar.similarVideo(input), {
-        retries: 3,
-      });
+      if (input.explore) {
+        const getSimilarVideos = () =>
+          ctx.videoQuery.similar.similarVideo({
+            id: input.id,
+            start: input.start,
+            end: input.end,
+          });
+
+        const searchVideos = await pRetry(getSimilarVideos, { retries: 3 });
+        return searchVideos.filter((v) => v.video.author !== input.author);
+      } else {
+        const getSimilarVideos = () =>
+          ctx.videoQuery.similar.similarVideo({
+            id: input.id,
+            start: input.start,
+            end: input.end,
+            author: input.author,
+          });
+
+        return await pRetry(getSimilarVideos, { retries: 3 });
+      }
     }),
 
   search: publicProcedure

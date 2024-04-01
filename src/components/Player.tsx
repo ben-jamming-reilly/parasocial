@@ -32,11 +32,19 @@ function SimilarVideos({
   end,
   className,
 }: SimilarVideosProps) {
-  const { data } = api.video.similar.useQuery({
+  const { data: authorVideos } = api.video.similar.useQuery({
     id: videoId,
     start: start,
     end: end,
     author,
+  });
+
+  const { data } = api.video.similar.useQuery({
+    id: videoId,
+    start: start,
+    end: end,
+    author: author,
+    explore: true,
   });
 
   return (
@@ -48,8 +56,8 @@ function SimilarVideos({
       <TabsContent value="from-author">
         <ScrollArea className={cn("h-[37vh]", className)}>
           <div className="z-0 flex flex-wrap justify-evenly overflow-x-hidden gap-2">
-            {data ? (
-              data.map((s) => (
+            {authorVideos ? (
+              authorVideos.map((s) => (
                 <SearchItem
                   result={s}
                   key={`${s.video.id}-${s.start_ms}-${s.end_ms}`}
@@ -64,7 +72,16 @@ function SimilarVideos({
       <TabsContent value="from-others">
         <ScrollArea className={cn("h-[37vh]", className)}>
           <div className="z-0 flex flex-wrap justify-evenly overflow-x-hidden gap-2">
-            <DummySearchItemList />
+            {data ? (
+              data.map((s) => (
+                <SearchItem
+                  result={s}
+                  key={`${s.video.id}-${s.start_ms}-${s.end_ms}`}
+                />
+              ))
+            ) : (
+              <DummySearchItemList />
+            )}
           </div>
         </ScrollArea>
       </TabsContent>
@@ -86,8 +103,8 @@ export function Player() {
   const [query, setQuery] = useState<string>();
   const [videoId, setVideoId] = useState<string>();
 
-  const { parentRef, parentSize } = useParentSizeObserver();
-  const { mutate, data: view, status } = api.video.view.useMutation({});
+  const { parentRef } = useParentSizeObserver();
+  const { mutate, data: view } = api.video.view.useMutation({});
 
   const { data: video } = api.video.get.useQuery(
     { id: videoId! },

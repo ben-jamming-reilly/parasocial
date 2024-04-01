@@ -11,7 +11,7 @@ export class SimilarService {
   constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
-   * Similar
+   * Get Similar Videos
    * @returns SearchResult Successful Response
    * @throws ApiError
    */
