@@ -17,7 +17,7 @@ interface SearchItemProps {
   result: SearchResult;
 }
 
-export default function SearchItem({
+export function SearchItem({
   result: { video: video, start_ms, end_ms, text, score },
 }: SearchItemProps) {
   const [watchUrl, setWatchUrl] = useState("#");
@@ -92,5 +92,43 @@ export default function SearchItem({
         </p>
       </Link>
     </>
+  );
+}
+
+export function DummySearchItem() {
+  return (
+    <div className="min-w-[200px] max-w-[300px] animate-pulse flex-col gap-2 bg-black text-xs tracking-wider hover:underline sm:flex">
+      <div className=" mx-auto h-[250px] w-[250px] border-4 border-black bg-black" />
+      <div className="w-full bg-slate-900">
+        <p className="line-clamp-3 w-full bg-black px-2 text-xs italic"></p>
+      </div>
+    </div>
+  );
+}
+
+type DummySearchItemListProps = {
+  size?: number;
+};
+
+export function DummySearchItemList({ size = 24 }: DummySearchItemListProps) {
+  const dummies = [...Array(size).keys()];
+
+  return (
+    <>
+      {dummies.map((dummy) => (
+        <DummySearchItem key={dummy} />
+      ))}
+    </>
+  );
+}
+
+export function DummyPage() {
+  const dummies = [...Array(20).keys()];
+  return (
+    <div className="mx-auto flex flex-1 flex-wrap justify-around gap-2 overflow-scroll pb-4  sm:min-w-[550px]">
+      {dummies.map((dummy) => (
+        <DummySearchItem key={dummy} />
+      ))}
+    </div>
   );
 }

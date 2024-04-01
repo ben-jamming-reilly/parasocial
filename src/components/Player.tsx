@@ -8,7 +8,9 @@ import { Drawer, DrawerContent } from "~/components/ui/drawer";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { useIsMobile } from "~/hooks/useIsMobile";
 import { api } from "~/trpc/react";
-import SearchItem from "~/app/p/[name]/SearchItem";
+import { cn } from "~/lib/utils";
+import { SearchItem, DummySearchItemList } from "~/components/SearchItem";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 
 function getYoutubeId(url: string) {
   const ytURL = new URL(url);
@@ -17,32 +19,56 @@ function getYoutubeId(url: string) {
 
 type SimilarVideosProps = {
   videoId: string;
-  width: number;
+  author: string;
   start: number;
   end: number;
+  className?: string;
 };
 
-function SimilarVideos({ videoId, start, end, width }: SimilarVideosProps) {
+function SimilarVideos({
+  videoId,
+  author,
+  start,
+  end,
+  className,
+}: SimilarVideosProps) {
   const { data } = api.video.similar.useQuery({
     id: videoId,
     start: start,
     end: end,
+    author,
   });
 
-  console.log(data);
-
   return (
-    <div
-      className={` z-0 mx-auto flex justify-evenly flex-wrap overflow-x-hidden gap-2 h-96  `}
-    >
-      {data &&
-        data.map((s) => (
-          <SearchItem
-            result={s}
-            key={`${s.video.id}-${s.start_ms}-${s.end_ms}`}
-          />
-        ))}
-    </div>
+    <Tabs defaultValue="from-author">
+      <TabsList className="">
+        <TabsTrigger value="from-author">more from {author}</TabsTrigger>
+        <TabsTrigger value="from-others">more from others</TabsTrigger>
+      </TabsList>
+      <TabsContent value="from-author">
+        <ScrollArea className={cn("h-[37vh]", className)}>
+          <div className="z-0 flex flex-wrap justify-evenly overflow-x-hidden gap-2">
+            {data ? (
+              data.map((s) => (
+                <SearchItem
+                  result={s}
+                  key={`${s.video.id}-${s.start_ms}-${s.end_ms}`}
+                />
+              ))
+            ) : (
+              <DummySearchItemList />
+            )}
+          </div>
+        </ScrollArea>
+      </TabsContent>
+      <TabsContent value="from-others">
+        <ScrollArea className={cn("h-[37vh]", className)}>
+          <div className="z-0 flex flex-wrap justify-evenly overflow-x-hidden gap-2">
+            <DummySearchItemList />
+          </div>
+        </ScrollArea>
+      </TabsContent>
+    </Tabs>
   );
 }
 
@@ -60,7 +86,7 @@ export function Player() {
   const [query, setQuery] = useState<string>();
   const [videoId, setVideoId] = useState<string>();
 
-  const { parentRef } = useParentSizeObserver();
+  const { parentRef, parentSize } = useParentSizeObserver();
   const { mutate, data: view, status } = api.video.view.useMutation({});
 
   const { data: video } = api.video.get.useQuery(
@@ -122,6 +148,8 @@ export function Player() {
   const onStateChange: YouTubeProps["onStateChange"] = (event) => {
     if (Number(event.data) === -1) {
       // this is jank and should be replaced lmao
+      // it fixes an error when youtube tries to adjust your
+      // postion in the video to where you previously were
       setTimeout(() => {
         event.target.seekTo(start, true);
       }, 1750);
@@ -133,15 +161,15 @@ export function Player() {
   return (
     <>
       <Drawer onClose={onClose} open={isOpen}>
-        <DrawerContent className="bg-black rounded-none min-h-[95vh]">
-          <div
-            ref={parentRef}
-            className="flex flex-col justify-center items-center w-full mx-auto  pt-4"
-          >
+        <DrawerContent
+          ref={parentRef}
+          className="bg-rose-900 border-black rounded-none h-[95vh]"
+        >
+          <div className="flex flex-1 flex-col justify-center items-center w-full  pt-4">
             {video && (
               <YouTube
                 key={`${video.id}-${start}-${end}`}
-                className=" flex mx-auto"
+                className="border-2 border-black bg-black"
                 videoId={getYoutubeId(video.url)}
                 id={`${video.id}-${start}-${end}-sm`}
                 loading="lazy"
@@ -163,13 +191,14 @@ export function Player() {
             {start && end && video && (
               <div
                 style={{ width: isMobile ? 380 : width }}
-                className="  mx-auto"
+                className=" flex-1 flex my-4"
               >
                 <SimilarVideos
+                  className={isMobile ? " h-[55vh] py-3" : `py-3 h-[38vh]`}
+                  author={video.author}
                   start={start}
                   end={end}
                   videoId={video.id}
-                  width={isMobile ? 380 : width}
                 />
               </div>
             )}

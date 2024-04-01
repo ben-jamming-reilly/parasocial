@@ -2,7 +2,7 @@ import { Suspense } from "react";
 
 import { api } from "~/trpc/server";
 import { ProfilePanel } from "~/components/ProfilePanel";
-import SearchItem from "~/app/p/[name]/SearchItem";
+import { SearchItem } from "~/components/SearchItem";
 import { SearchBar } from "~/components/SearchBar";
 import { Player } from "~/components/Player";
 import { SummaryTab } from "./Summary";

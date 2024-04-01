@@ -1,4 +1,4 @@
-import SearchItem from "./SearchItem";
+import { SearchItem } from "~/components/SearchItem";
 import { api } from "~/trpc/server";
 
 export function DummyPage() {

@@ -1,6 +1,5 @@
 import { api } from "~/trpc/server";
-
-import SearchItem from "./SearchItem";
+import { SearchItem } from "~/components/SearchItem";
 
 type RecommendPageProps = {
   author: string;

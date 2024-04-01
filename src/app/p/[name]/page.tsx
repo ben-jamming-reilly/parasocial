@@ -72,7 +72,6 @@ export default async function Page({ params, searchParams }: PageProps) {
               <RecommendPage author={author} />
             </Suspense>
           )}
-
           <Player />
         </div>
       </section>
