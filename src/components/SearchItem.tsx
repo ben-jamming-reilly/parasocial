@@ -17,6 +17,10 @@ interface SearchItemProps {
   result: SearchResult;
 }
 
+function cleanText(text: string) {
+  return text.replace(/^\s*-/, "");
+}
+
 export function SearchItem({
   result: { video: video, start_ms, end_ms, text, score },
 }: SearchItemProps) {
@@ -52,14 +56,11 @@ export function SearchItem({
           alt={`A youtube thumbnail for ${video.title}`}
         />
         <div className="absolute bottom-0 my-2 flex flex-grow flex-col justify-center gap-2 text-sm text-white">
-          {/* <h3 className="line-clamp-3 hyphens-auto bg-black px-3 text-xs tracking-widest sm:text-justify">
-            {video.title}
-          </h3> */}
           <p className="ml-auto w-fit bg-black px-3">
             [{timestamp(start_ms)} - {timestamp(end_ms)}]
           </p>
           <p className="line-clamp-2 w-fit hyphens-auto bg-black px-3 text-xs italic">
-            {text}
+            {cleanText(text)}
           </p>
         </div>
       </Link>
@@ -88,7 +89,7 @@ export function SearchItem({
         </div>
         <p className="line-clamp-3 w-full px-2 text-xs italic">
           <span>{rank}</span>
-          {text}
+          {cleanText(text)}
         </p>
       </Link>
     </>
