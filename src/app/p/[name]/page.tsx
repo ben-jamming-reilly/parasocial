@@ -28,7 +28,7 @@ const getProfile = cache((author: string) =>
 const getVideos = cache((author: string) => api.video.getAll.query({ author }));
 
 export default async function Page({ params, searchParams }: PageProps) {
-  const author = decodeURI(params.name);
+  const author = decodeURIComponent(decodeURI(params.name));
   const query = parseSearchQuery(searchParams.q);
 
   const [profile, videos] = await Promise.all([

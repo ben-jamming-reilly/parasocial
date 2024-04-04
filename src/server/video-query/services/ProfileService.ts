@@ -56,8 +56,8 @@ export class ProfileService {
   }): CancelablePromise<YoutubeProfile> {
     return this.httpRequest.request({
       method: 'GET',
-      url: '/youtube/{channel}',
-      query: {
+      url: '/youtube/{author}',
+      path: {
         'author': author,
       },
       errors: {
