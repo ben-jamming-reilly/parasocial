@@ -32,19 +32,11 @@ function SimilarVideos({
   end,
   className,
 }: SimilarVideosProps) {
-  const { data: authorVideos } = api.video.similar.useQuery({
-    id: videoId,
-    start: start,
-    end: end,
-    author,
-  });
-
   const { data } = api.video.similar.useQuery({
     id: videoId,
     start: start,
     end: end,
-    author: author,
-    explore: true,
+    author,
   });
 
   return (
@@ -54,10 +46,10 @@ function SimilarVideos({
         <TabsTrigger value="from-others">more from others</TabsTrigger>
       </TabsList>
       <TabsContent value="from-author">
-        <ScrollArea className={cn("h-[37vh]", className)}>
+        <ScrollArea className={className}>
           <div className="z-0 flex flex-wrap justify-evenly overflow-x-hidden gap-2">
-            {authorVideos ? (
-              authorVideos.map((s) => (
+            {data ? (
+              data.map((s) => (
                 <SearchItem
                   result={s}
                   key={`${s.video.id}-${s.start_ms}-${s.end_ms}`}
@@ -70,18 +62,9 @@ function SimilarVideos({
         </ScrollArea>
       </TabsContent>
       <TabsContent value="from-others">
-        <ScrollArea className={cn("h-[37vh]", className)}>
+        <ScrollArea className={className}>
           <div className="z-0 flex flex-wrap justify-evenly overflow-x-hidden gap-2">
-            {data ? (
-              data.map((s) => (
-                <SearchItem
-                  result={s}
-                  key={`${s.video.id}-${s.start_ms}-${s.end_ms}`}
-                />
-              ))
-            ) : (
-              <DummySearchItemList />
-            )}
+            <DummySearchItemList />
           </div>
         </ScrollArea>
       </TabsContent>
@@ -103,8 +86,8 @@ export function Player() {
   const [query, setQuery] = useState<string>();
   const [videoId, setVideoId] = useState<string>();
 
-  const { parentRef } = useParentSizeObserver();
-  const { mutate, data: view } = api.video.view.useMutation({});
+  const { parentRef, parentSize } = useParentSizeObserver();
+  const { mutate, data: view, status } = api.video.view.useMutation({});
 
   const { data: video } = api.video.get.useQuery(
     { id: videoId! },
@@ -176,55 +159,49 @@ export function Player() {
   const isMobile = useIsMobile();
 
   return (
-    <>
-      <Drawer onClose={onClose} open={isOpen}>
-        <DrawerContent
-          ref={parentRef}
-          className={cn(
-            "bg-rose-900 border-black rounded-none ",
-            isMobile ? "h-[85vh]" : "h-[95vh]"
+    <Drawer onClose={onClose} open={isOpen}>
+      <DrawerContent
+        ref={parentRef}
+        className="bg-rose-900 border-black rounded-none h-[96vh]"
+      >
+        <ScrollArea className="h-full overflow-auto mx-auto">
+          {video && (
+            <YouTube
+              key={`${video.id}-${start}-${end}`}
+              className="border-2 border-black bg-black"
+              videoId={getYoutubeId(video.url)}
+              id={`${video.id}-${start}-${end}-sm`}
+              loading="lazy"
+              onStateChange={onStateChange}
+              opts={{
+                width: isMobile ? 380 : width,
+                height: isMobile ? hwRatio * 380 : height,
+                playerVars: {
+                  // https://developers.google.com/youtube/player_parameters#Parameters
+                  color: "white",
+                  rel: 0,
+                  autoplay: 0,
+                  start: Number(start),
+                  controls: 1, // 0 - no controls
+                },
+              }}
+            />
           )}
-        >
-          <div className="flex flex-1 flex-col justify-center items-center w-full  pt-4">
-            {video && (
-              <YouTube
-                key={`${video.id}-${start}-${end}`}
-                className="border-2 border-black bg-black"
-                videoId={getYoutubeId(video.url)}
-                id={`${video.id}-${start}-${end}-sm`}
-                loading="lazy"
-                onStateChange={onStateChange}
-                opts={{
-                  width: isMobile ? 380 : width,
-                  height: isMobile ? hwRatio * 380 : height,
-                  playerVars: {
-                    // https://developers.google.com/youtube/player_parameters#Parameters
-                    color: "white",
-                    rel: 0,
-                    autoplay: 0,
-                    start: Number(start),
-                    controls: 1, // 0 - no controls
-                  },
-                }}
+          {start && end && video && (
+            <div
+              style={{ width: isMobile ? 380 : width }}
+              className=" flex-1 flex my-4"
+            >
+              <SimilarVideos
+                author={video.author}
+                start={start}
+                end={end}
+                videoId={video.id}
               />
-            )}
-            {start && end && video && (
-              <div
-                style={{ width: isMobile ? 380 : width }}
-                className=" flex-1 flex my-4"
-              >
-                <SimilarVideos
-                  className={isMobile ? " h-[47vh] py-3" : `py-3 h-[38vh]`}
-                  author={video.author}
-                  start={start}
-                  end={end}
-                  videoId={video.id}
-                />
-              </div>
-            )}
-          </div>
-        </DrawerContent>
-      </Drawer>
-    </>
+            </div>
+          )}
+        </ScrollArea>
+      </DrawerContent>
+    </Drawer>
   );
 }

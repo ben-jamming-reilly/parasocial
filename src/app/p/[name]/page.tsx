@@ -25,7 +25,7 @@ const getProfile = cache((author: string) =>
   api.profile.getYoutubeProfile.query({ author })
 );
 
-const getVideos = cache((author: string) => api.video.getAll.query({ author }));
+// const getVideos = cache((author: string) => api.video.getAll.query({ author }));
 
 export default async function Page({ params, searchParams }: PageProps) {
   const author = decodeURIComponent(decodeURI(params.name));
@@ -56,7 +56,7 @@ export default async function Page({ params, searchParams }: PageProps) {
           author={author}
           initQuery={query}
           placeholder={`find a moment from ${author}`}
-        ></SearchBar>
+        />
         {!query && (
           <h3 className="px-4 outline-text-3 underline underline-offset-8">
             trending
