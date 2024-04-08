@@ -163,8 +163,8 @@ export function Player() {
       <DrawerContent
         ref={parentRef}
         className={cn(
-          "bg-rose-900 border-black rounded-none ",
-          isMobile ? `h-[95dvh]` : "h-[96vh]"
+          "bg-rose-900 border-black rounded-none",
+          isMobile ? `h-[96dvh]` : "h-[96vh]"
         )}
       >
         <ScrollArea className="h-full overflow-auto">
