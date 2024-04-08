@@ -62,7 +62,7 @@ export function ProfilePanel({
         href={backHref}
         className="mx-auto tracking-wider text-gray-400 hover:underline"
       >
-        Back
+        back
       </Link>
     </div>
   );
