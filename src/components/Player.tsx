@@ -162,9 +162,12 @@ export function Player() {
     <Drawer onClose={onClose} open={isOpen}>
       <DrawerContent
         ref={parentRef}
-        className="bg-rose-900 border-black rounded-none h-[96vh]"
+        className={cn(
+          "bg-rose-900 border-black rounded-none h-[96vh]",
+          isMobile && "h-[93vh]"
+        )}
       >
-        <ScrollArea className="h-full overflow-auto ">
+        <ScrollArea className="h-full overflow-auto">
           <div className="mx-auto w-fit">
             {video && (
               <YouTube
