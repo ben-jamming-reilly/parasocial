@@ -98,7 +98,6 @@ export default async function Page({ params, searchParams }: PageProps) {
           backHref={`/p/${video.author}`}
           author={video.author}
         />
-        {/* <SectionList videoId={video.id} sections={["asdf"]} /> */}
       </section>
       <section className="flex h-full flex-grow flex-col gap-4 md:col-span-2 lg:col-span-3">
         <SearchBar
