@@ -32,11 +32,18 @@ function SimilarVideos({
   end,
   className,
 }: SimilarVideosProps) {
-  const { data } = api.video.similar.useQuery({
+  const similarFromAuthor = api.video.similar.useQuery({
     id: videoId,
     start: start,
     end: end,
     author,
+  });
+
+  const similarFromOthers = api.video.similar.useQuery({
+    id: videoId,
+    start: start,
+    end: end,
+    explore: true,
   });
 
   return (
@@ -48,8 +55,8 @@ function SimilarVideos({
       <TabsContent value="from-author">
         <ScrollArea className={className}>
           <div className="z-0 flex flex-wrap justify-evenly overflow-x-hidden gap-2">
-            {data ? (
-              data.map((s) => (
+            {similarFromAuthor.data ? (
+              similarFromAuthor.data.map((s) => (
                 <SearchItem
                   result={s}
                   key={`${s.video.id}-${s.start_ms}-${s.end_ms}`}
@@ -64,7 +71,16 @@ function SimilarVideos({
       <TabsContent value="from-others">
         <ScrollArea className={className}>
           <div className="z-0 flex flex-wrap justify-evenly overflow-x-hidden gap-2">
-            <DummySearchItemList />
+            {similarFromOthers.data ? (
+              similarFromOthers.data.map((s) => (
+                <SearchItem
+                  result={s}
+                  key={`${s.video.id}-${s.start_ms}-${s.end_ms}`}
+                />
+              ))
+            ) : (
+              <DummySearchItemList />
+            )}
           </div>
         </ScrollArea>
       </TabsContent>
