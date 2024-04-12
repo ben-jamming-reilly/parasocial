@@ -11,9 +11,11 @@ export const profileRouter = createTRPCRouter({
       })
     )
     .query(async ({ input, ctx }) => {
-      return await pRetry(() => ctx.videoQuery.profile.getAllProfiles(), {
-        retries: 3,
-      });
+      const profiles = await pRetry(
+        () => ctx.videoQuery.profile.getAllProfiles(),
+        { retries: 3 }
+      );
+      return profiles.filter((profile) => profile.author !== "YouTube Viewers");
     }),
   getYoutubeProfile: publicProcedure
     .input(

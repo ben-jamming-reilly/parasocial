@@ -11,7 +11,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "~/components/ui/accordion";
-import Youtube from "~/components/Youtube";
 
 function displayDate(dateString: string) {
   try {
