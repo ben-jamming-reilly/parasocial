@@ -19,7 +19,11 @@ If you are not familiar with the different technologies used in this project, pl
 
 ## contribute?
 
-interested in contributing? pls, reach out to me via:
+interested in contributing?
+
+- join the [discord](https://discord.gg/uW7rqs6Q)
+
+or reach out to me via:
 
 - email: benreilly0809@gmail.com
 - twitter: [@benjamin_really](https://twitter.com/benjamin_really)
