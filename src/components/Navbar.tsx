@@ -9,7 +9,10 @@ export function Navbar() {
         <h1 className="outline-text-3 text-2xl tracking-widest">parasocial</h1>
       </Link>
       <Banner
-        messages={["btw, you can upload up to 3 videos a day when you sign in"]}
+        messages={[
+          "i'm working on some things rn, stuff might poop itself",
+          "btw, you can upload up to 3 videos a day when you sign in",
+        ]}
       />
       <SignInBtn />
     </div>
