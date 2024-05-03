@@ -12,7 +12,7 @@ export class ClusterService {
   constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
-   * Cluster
+   * Cluster Videos
    * @returns SearchResult Successful Response
    * @throws ApiError
    */

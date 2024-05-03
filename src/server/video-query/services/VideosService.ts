@@ -25,7 +25,7 @@ export class VideosService {
     skip,
     limit = 1000,
   }: {
-    author?: string,
+    author?: any,
     skip?: number,
     limit?: number,
   }): CancelablePromise<Array<YoutubeVideo>> {
@@ -153,11 +153,15 @@ export class VideosService {
     start,
     end,
     author = '',
+    excludeAuthor = '',
+    excludeVideoId = '',
   }: {
     id: string,
     start: number,
     end: number,
     author?: string,
+    excludeAuthor?: string,
+    excludeVideoId?: string,
   }): CancelablePromise<Array<SearchResult>> {
     return this.httpRequest.request({
       method: 'GET',
@@ -169,6 +173,8 @@ export class VideosService {
         'start': start,
         'end': end,
         'author': author,
+        'exclude_author': excludeAuthor,
+        'exclude_video_id': excludeVideoId,
       },
       errors: {
         422: `Validation Error`,

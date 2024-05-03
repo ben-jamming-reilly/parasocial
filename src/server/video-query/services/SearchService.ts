@@ -20,7 +20,7 @@ export class SearchService {
     author,
   }: {
     query: string,
-    author?: string,
+    author?: any,
   }): CancelablePromise<Array<SearchResult>> {
     return this.httpRequest.request({
       method: 'GET',

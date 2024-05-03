@@ -44,6 +44,7 @@ function SimilarVideos({
     start: start,
     end: end,
     explore: true,
+    author,
   });
 
   return (

@@ -160,17 +160,17 @@ export const videoRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       if (input.explore) {
         const getSimilarVideos = () =>
-          ctx.videoQuery.similar.similarVideo({
+          ctx.videoQuery.videos.similarVideo({
             id: input.id,
             start: input.start,
             end: input.end,
+            excludeAuthor: input.author,
           });
 
-        const searchVideos = await pRetry(getSimilarVideos, { retries: 3 });
-        return searchVideos;
+        return await pRetry(getSimilarVideos, { retries: 3 });
       } else {
         const getSimilarVideos = () =>
-          ctx.videoQuery.similar.similarVideo({
+          ctx.videoQuery.videos.similarVideo({
             id: input.id,
             start: input.start,
             end: input.end,

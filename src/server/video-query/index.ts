@@ -22,5 +22,4 @@ export type { YoutubeVideo } from './models/YoutubeVideo';
 export { ClusterService } from './services/ClusterService';
 export { ProfileService } from './services/ProfileService';
 export { SearchService } from './services/SearchService';
-export { SimilarService } from './services/SimilarService';
 export { VideosService } from './services/VideosService';

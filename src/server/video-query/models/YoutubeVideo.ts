@@ -15,6 +15,5 @@ export type YoutubeVideo = {
   rating?: number;
   thumbnail_url: string;
   title: string;
-  views: number;
 };
 
