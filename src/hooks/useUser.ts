@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
+import posthog from "posthog-js";
 
 const USER_SESSION_KEY = "user-session-cache";
 
@@ -60,6 +61,12 @@ export function useUser() {
         break;
     }
   }, [data, status]);
+
+  useEffect(() => {
+    if (user) {
+      posthog.identify(user.id, { email: user.email, name: user.name });
+    }
+  }, [user]);
 
   return { user, status };
 }
