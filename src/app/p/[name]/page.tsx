@@ -9,6 +9,9 @@ import { ProfilePanel } from "~/components/ProfilePanel";
 import { Player } from "~/components/Player";
 import { notFound } from "next/navigation";
 
+export const revalidate = 60; // revalidate the data at most every hour
+export const maxDuration = 60;
+
 type SearchParamType = string | string[] | undefined;
 
 interface PageProps {
@@ -24,8 +27,6 @@ function parseSearchQuery(param: SearchParamType): string | undefined {
 const getProfile = cache((author: string) =>
   api.profile.getYoutubeProfile.query({ author })
 );
-
-// const getVideos = cache((author: string) => api.video.getAll.query({ author }));
 
 export default async function Page({ params, searchParams }: PageProps) {
   const author = decodeURIComponent(decodeURI(params.name));

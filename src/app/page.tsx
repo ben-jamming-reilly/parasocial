@@ -3,7 +3,7 @@ import { cache } from "react";
 
 import Profile from "./Profile";
 
-// export const revalidate = 360; // revalidate the data at most every hour
+export const revalidate = 60; // revalidate the data at most every hour
 
 export default async function Home() {
   // const profiles = await searchInstance.profile.getAllProfiles();
