@@ -6,7 +6,7 @@ import YouTube, { YouTubeProps } from "react-youtube";
 import { useParentSizeObserver } from "~/hooks/useParentSize";
 import { Drawer, DrawerContent } from "~/components/ui/drawer";
 import { ScrollArea } from "~/components/ui/scroll-area";
-import { useIsMobile } from "~/hooks/useIsMobile";
+import { useScreenDimensions } from "~/hooks/useIsMobile";
 import { api } from "~/trpc/react";
 import { cn } from "~/lib/utils";
 import { SearchItem, DummySearchItemList } from "~/components/SearchItem";
@@ -37,6 +37,7 @@ function SimilarVideos({
     start: start,
     end: end,
     author,
+    explore: false,
   });
 
   const similarFromOthers = api.video.similar.useQuery({
@@ -173,7 +174,8 @@ export function Player() {
     }
   };
 
-  const isMobile = useIsMobile();
+  const dimensions = useScreenDimensions();
+  const isMobile = dimensions.isMobile;
 
   return (
     <Drawer onClose={onClose} open={isOpen}>
@@ -185,7 +187,7 @@ export function Player() {
         )}
       >
         <ScrollArea className="h-full overflow-auto">
-          <div className="mx-auto w-fit">
+          <div className="justify-center mx-auto w-fit">
             {video && (
               <YouTube
                 key={`${video.id}-${start}-${end}`}
@@ -195,8 +197,8 @@ export function Player() {
                 loading="lazy"
                 onStateChange={onStateChange}
                 opts={{
-                  width: isMobile ? 380 : width,
-                  height: isMobile ? hwRatio * 380 : height,
+                  width: isMobile ? dimensions.width - 12 : width,
+                  height: isMobile ? hwRatio * (dimensions.width - 12) : height,
                   playerVars: {
                     // https://developers.google.com/youtube/player_parameters#Parameters
                     color: "white",
@@ -210,8 +212,8 @@ export function Player() {
             )}
             {start && end && video && (
               <div
-                style={{ width: isMobile ? 380 : width }}
-                className=" flex-1 flex my-4"
+                style={{ width: isMobile ? dimensions.width - 10 : width }}
+                className=" flex-1 flex my-4 "
               >
                 <SimilarVideos
                   author={video.author}

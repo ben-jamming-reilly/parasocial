@@ -21,7 +21,7 @@ If you are not familiar with the different technologies used in this project, pl
 
 interested in contributing?
 
-- join the [discord](https://discord.gg/uW7rqs6Q)
+- join the [discord](https://discord.gg/ykXpmAb7kU)
 
 or reach out to me via:
 
