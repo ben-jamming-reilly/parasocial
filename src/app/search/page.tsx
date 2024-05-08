@@ -21,12 +21,7 @@ function parseSearchQuery(param: SearchParamType): string | undefined {
   else return param;
 }
 
-const getProfile = cache((author: string) =>
-  api.profile.getYoutubeProfile.query({ author })
-);
-
-export default async function Page({ params, searchParams }: PageProps) {
-  const author = decodeURIComponent(decodeURI(params.name));
+export default async function Page({ searchParams }: PageProps) {
   const query = parseSearchQuery(searchParams.q);
 
   return (
@@ -34,9 +29,9 @@ export default async function Page({ params, searchParams }: PageProps) {
       <section className="flex flex-col gap-4 md:col-span-2 lg:col-span-3">
         <SearchBar
           className="mt-auto"
-          author={author}
+          author={""}
           initQuery={query}
-          placeholder={`find a moment from ${author}`}
+          placeholder={`find a moment`}
         />
         <div className="flex min-h-[93vh] flex-row">
           {query && (

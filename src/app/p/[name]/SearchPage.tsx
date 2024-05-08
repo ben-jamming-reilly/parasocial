@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { SearchItem } from "~/components/SearchItem";
 import { api } from "~/trpc/server";
 
@@ -25,8 +26,12 @@ type SearchPageProps = {
   query: string;
 };
 
+const search = cache((author: string, query: string) =>
+  api.video.search.query({ author, query })
+);
+
 export async function SearchPage({ author, query }: SearchPageProps) {
-  const results = await api.video.search.query({ author, query });
+  const results = await search(author, query);
 
   return (
     <div className="z-0 mx-auto flex h-min-full flex-1 flex-wrap justify-around overflow-x-hidden gap-2  pb-4 sm:min-w-[550px]">
