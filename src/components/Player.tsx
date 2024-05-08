@@ -189,26 +189,30 @@ export function Player() {
         <ScrollArea className="h-full overflow-auto">
           <div className="justify-center mx-auto w-fit">
             {video && (
-              <YouTube
-                key={`${video.id}-${start}-${end}`}
-                className="border-2 border-black bg-black"
-                videoId={getYoutubeId(video.url)}
-                id={`${video.id}-${start}-${end}-sm`}
-                loading="lazy"
-                onStateChange={onStateChange}
-                opts={{
-                  width: isMobile ? dimensions.width - 12 : width,
-                  height: isMobile ? hwRatio * (dimensions.width - 12) : height,
-                  playerVars: {
-                    // https://developers.google.com/youtube/player_parameters#Parameters
-                    color: "white",
-                    rel: 0,
-                    autoplay: 0,
-                    start: Number(start),
-                    controls: 1, // 0 - no controls
-                  },
-                }}
-              />
+              <div>
+                <YouTube
+                  key={`${video.id}-${start}-${end}`}
+                  className="border-2 border-black bg-black"
+                  videoId={getYoutubeId(video.url)}
+                  id={`${video.id}-${start}-${end}-sm`}
+                  loading="lazy"
+                  onStateChange={onStateChange}
+                  opts={{
+                    width: isMobile ? dimensions.width - 12 : width,
+                    height: isMobile
+                      ? hwRatio * (dimensions.width - 12)
+                      : height,
+                    playerVars: {
+                      // https://developers.google.com/youtube/player_parameters#Parameters
+                      color: "white",
+                      rel: 0,
+                      autoplay: 0,
+                      start: Number(start),
+                      controls: 1, // 0 - no controls
+                    },
+                  }}
+                />
+              </div>
             )}
             {start && end && video && (
               <div
