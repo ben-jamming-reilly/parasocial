@@ -61,8 +61,6 @@ export function SearchBar({
   const params = useSearchParams();
   const ref = useRef<HTMLDivElement>(null);
 
-  // const router = useRouter();
-
   const { data } = trpcClient.search.previousQueries.useQuery(
     {
       author: author,

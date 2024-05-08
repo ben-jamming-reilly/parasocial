@@ -1,11 +1,8 @@
 import { Suspense, cache } from "react";
 import { api } from "~/trpc/server";
 
+import { SearchBar } from "~/components/SearchBar";
 import { SearchPage, DummyPage } from "./SearchPage";
-import RecommendPage from "./RecommendPage";
-import { UploadList } from "./UploadList";
-import { SearchBar } from "../../../components/SearchBar";
-import { ProfilePanel } from "~/components/ProfilePanel";
 import { Player } from "~/components/Player";
 import { notFound } from "next/navigation";
 
@@ -32,25 +29,8 @@ export default async function Page({ params, searchParams }: PageProps) {
   const author = decodeURIComponent(decodeURI(params.name));
   const query = parseSearchQuery(searchParams.q);
 
-  const [profile, videos] = await Promise.all([
-    getProfile(author),
-    api.video.getAll.query({ author }),
-  ]);
-
-  if (!profile) return notFound();
-
   return (
-    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      <section className="mb-2 space-y-2">
-        <ProfilePanel
-          imageUrl={profile.channel_logo!}
-          backHref={query ? `/p/${author}` : "/"}
-          author={author}
-          name={author}
-        />
-        <UploadList documents={videos} />
-      </section>
-
+    <div className="flex flex-col">
       <section className="flex flex-col gap-4 md:col-span-2 lg:col-span-3">
         <SearchBar
           className="mt-auto"
@@ -58,19 +38,10 @@ export default async function Page({ params, searchParams }: PageProps) {
           initQuery={query}
           placeholder={`find a moment from ${author}`}
         />
-        {!query && (
-          <h3 className="px-4 outline-text-3 underline underline-offset-8">
-            trending
-          </h3>
-        )}
         <div className="flex min-h-[93vh] flex-row">
-          {query ? (
+          {query && (
             <Suspense fallback={<DummyPage />}>
-              <SearchPage author={author} query={query} />
-            </Suspense>
-          ) : (
-            <Suspense fallback={<DummyPage />}>
-              <RecommendPage author={author} />
+              <SearchPage query={query} />
             </Suspense>
           )}
           <Player />
