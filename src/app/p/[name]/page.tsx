@@ -10,7 +10,7 @@ import { Player } from "~/components/Player";
 import { notFound } from "next/navigation";
 
 export const revalidate = 600; // revalidate the data every 10 min
-export const maxDuration = 600;
+export const maxDuration = 300;
 
 type SearchParamType = string | string[] | undefined;
 
