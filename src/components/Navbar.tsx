@@ -18,11 +18,12 @@ export function Navbar() {
       <Link
         className="hover:scale-95 transition"
         href="https://discord.gg/ykXpmAb7kU"
+        target="_blank"
       >
         <div className="flex flex-row gap-1 p-1 tracking-wider">
           <Image src="/icons/discord.svg" height={30} width={30} alt="" />
           <h3 className="justify-center h-fit outline-text-3 text-sm sm:text-xl  my-auto">
-            Feedback
+            feedback
           </h3>
         </div>
       </Link>
