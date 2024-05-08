@@ -36,7 +36,7 @@ export default function RootLayout({
         <body className="relative flex min-h-screen h-fit flex-1 flex-col bg-rose-900 text-zinc-100">
           <AuthProvider>
             <TRPCReactProvider cookies={cookies().toString()}>
-              <main className="flex flex-1 flex-col space-y-4 p-4">
+              <main className="flex flex-1 flex-col space-y-4 p-3">
                 <Navbar />
                 {children}
                 <Toaster />
