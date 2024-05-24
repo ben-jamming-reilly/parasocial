@@ -127,7 +127,7 @@ export function Player() {
     setStart(startParam);
     setEnd(endParam);
 
-    if (videoParam && startParam && endParam) {
+    if (videoParam && startParam !== undefined && endParam !== undefined) {
       setIsOpen(true);
     } else {
       setIsOpen(false);
