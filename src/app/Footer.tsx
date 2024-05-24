@@ -15,7 +15,7 @@ export default function Footer() {
           </div>
           <div className="px-5 py-2">
             <a
-              href="mailto:benreilly0809@gmail.com"
+              href="mailto:ben@reallylabs.net"
               className="text-base leading-6 text-white underline-offset-4 hover:underline"
             >
               contact

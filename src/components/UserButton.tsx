@@ -34,32 +34,34 @@ export default function AuthBtn(props: AuthBtnProps) {
 
   if (status === "authenticated") {
     return (
-      <Link
-        href="/profile"
-        className={cn(
-          "relative flex max-w-[10rem] items-center border-4 border-black bg-black font-bold shadow-[8px_8px_0_0_#000] transition hover:shadow-none focus:outline-none focus:ring",
-          props.className
-        )}
-      >
-        <div className="flex flex-row gap-1 bg-black text-xs tracking-wider">
+      <Link href="/profile" className="hover:scale-95 transition">
+        <div className="flex flex-row gap-1 text-xs tracking-wider">
           <>
             {user && user.image ? (
-              <Image src={user.image!} width="30" height="30" alt="" />
+              <Image
+                src={user.image!}
+                className="border-2 border-black"
+                width="30"
+                height="30"
+                alt=""
+              />
             ) : user ? (
               <Image
                 src={`https://avatar.vercel.sh/${user!.id
                   .split("")
                   .reverse()
                   .join("")}`}
+                className="border-2 border-black"
                 width="30"
                 height="30"
                 alt=""
               />
-            ) : null}
-
-            {user && user.name && (
-              <p className="my-auto line-clamp-1 h-fit">{user.name}</p>
+            ) : (
+              <div className="border-2 border-black animate-pulse" />
             )}
+            <p className="outline-text-3 my-auto text-sm  tracking-wide line-clamp-1 h-fit max-w-24 ">
+              {user && user.name ? user.name : "profile"}
+            </p>
           </>
         </div>
       </Link>
@@ -67,30 +69,18 @@ export default function AuthBtn(props: AuthBtnProps) {
   }
 
   return (
-    <button
-      onClick={onClick}
-      {...props}
-      className={cn(
-        "relative flex max-w-[10rem] items-center border-4 border-black bg-black font-bold shadow-[8px_8px_0_0_#000] transition hover:shadow-none focus:outline-none focus:ring",
-        props.className
-      )}
-    >
-      <div className="flex h-[30px] w-[6rem] flex-row gap-1 bg-black px-1 text-xs tracking-wider">
-        {user && isClient ? (
-          <>
-            {user.image ? (
-              <Image src={user.image!} width="30" height="30" alt="" />
-            ) : (
-              <div className="h-[30px] w-[30px] bg-neutral-400" />
-            )}
-
-            <p className="my-auto line-clamp-1 h-fit">{user.name}</p>
-          </>
-        ) : status === "unauthenticated" ? (
-          <p className="my-auto line-clamp-1 h-fit w-full">sign in</p>
-        ) : (
-          <div className="" />
-        )}
+    <button onClick={onClick} {...props} className="hover:scale-95 transition">
+      <div className="flex flex-row gap-1 p-1">
+        <Image
+          src="/icons/login.svg"
+          className=""
+          width="30"
+          height="30"
+          alt=""
+        />
+        <p className="my-auto h-fit outline-text-3 text-sm sm:text-base">
+          sign in
+        </p>
       </div>
     </button>
   );
