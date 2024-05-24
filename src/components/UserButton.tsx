@@ -79,8 +79,6 @@ export default function AuthBtn(props: AuthBtnProps) {
             height="30"
             alt=""
           />
-        ) : status === "loading" ? (
-          <div className="border-2 border-black bg-black animate-pulse w-[30px] h-[30px]" />
         ) : (
           <Image
             src="/icons/login.svg"
@@ -91,13 +89,7 @@ export default function AuthBtn(props: AuthBtnProps) {
           />
         )}
         <p className="outline-text-3 my-auto text-sm  tracking-wide line-clamp-1 h-fit max-w-24 ">
-          {user && user.name ? (
-            user.name
-          ) : status === "loading" ? (
-            <span className="animate-pulse bg-black min-w-full"></span>
-          ) : (
-            "sign in"
-          )}
+          {user && user.name ? user.name : "sign in"}
         </p>
       </div>
     </button>
