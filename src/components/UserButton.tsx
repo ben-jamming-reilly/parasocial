@@ -71,15 +71,33 @@ export default function AuthBtn(props: AuthBtnProps) {
   return (
     <button onClick={onClick} {...props} className="hover:scale-95 transition">
       <div className="flex flex-row gap-1 p-1">
-        <Image
-          src="/icons/login.svg"
-          className=""
-          width="30"
-          height="30"
-          alt=""
-        />
-        <p className="my-auto h-fit outline-text-3 text-sm sm:text-base">
-          sign in
+        {user && user.image ? (
+          <Image
+            src={user.image!}
+            className="border-2 border-black"
+            width="30"
+            height="30"
+            alt=""
+          />
+        ) : status === "loading" ? (
+          <div className="border-2 border-black bg-black animate-pulse w-[30px] h-[30px]" />
+        ) : (
+          <Image
+            src="/icons/login.svg"
+            className=""
+            width="30"
+            height="30"
+            alt=""
+          />
+        )}
+        <p className="outline-text-3 my-auto text-sm  tracking-wide line-clamp-1 h-fit max-w-24 ">
+          {user && user.name ? (
+            user.name
+          ) : status === "loading" ? (
+            <span className="animate-pulse bg-black min-w-full"></span>
+          ) : (
+            "sign in"
+          )}
         </p>
       </div>
     </button>
