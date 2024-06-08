@@ -46,53 +46,36 @@ export function SearchItem({
   }, []);
 
   return (
-    <>
-      {/* Mobile */}
-      <Link href={watchUrl} className="relative w-full  sm:hidden">
-        <img
-          src={thumbnailUrl(video.url, start_ms, video.length * 1000)}
-          className="w-full border-4 border-black"
-          height="150"
-          alt={`A youtube thumbnail for ${video.title}`}
+    <Link
+      href={watchUrl}
+      className="max-w-[300px] sm:max-w-[250px] h-fit flex-col space-y-2 border-4 border-black bg-black text-xs font-light tracking-wider hover:underline underline-offset-2 sm:flex "
+    >
+      <div className="relative mx-auto">
+        <Image
+          src={video.thumbnail_url}
+          className=" mx-auto "
+          height="275"
+          width="300"
+          alt={`A youtube thumbnail wor ${video.title}`}
         />
-        <div className="absolute bottom-0 my-2 flex flex-grow flex-col justify-center gap-2 text-sm text-white">
-          <p className="ml-auto w-fit bg-black px-3">
-            [{timestamp(start_ms)} - {timestamp(end_ms)}]
-          </p>
-          <p className="line-clamp-2 w-fit hyphens-auto bg-black px-3 text-xs italic">
-            {cleanText(text)}
-          </p>
-        </div>
-      </Link>
-
-      {/* Desktop */}
-      <Link
-        href={watchUrl}
-        className="hidden min-w-[190px] max-w-[250px] h-fit flex-col gap-2 border-4 border-black bg-black text-xs tracking-wider hover:underline sm:flex"
-      >
-        <div className="relative mx-auto">
-          <Image
+        <div className="absolute bottom-0 right-0 overflow-clip">
+          <img
             src={thumbnailUrl(video.url, start_ms, video.length * 1000)}
-            className=" mx-auto "
-            height="250"
-            width="250"
-            alt={`A youtube thumbnail wor ${video.title}`}
+            width={100}
+            height={60}
+            className="object-none border-t-4 border-l-4 border-black object-center"
           />
-          <div className="absolute bottom-0 right-0 mb-4 ml-4 flex flex-col justify-end tracking-widest">
-            <p className="ml-auto bg-black px-2">
-              {new Date(video.publish_date).toLocaleDateString()}
-            </p>
-            <p className="w-fit min-w-min bg-black px-2 ">
-              [{timestamp(start_ms)} - {timestamp(end_ms)}]
-            </p>
-          </div>
         </div>
-        <p className="line-clamp-3 w-full px-2 text-xs italic">
-          <span>{rank}</span>
-          {cleanText(text)}
-        </p>
-      </Link>
-    </>
+
+        <div className="absolute bottom-0 right-0 mb-4 ml-4 flex flex-col justify-end tracking-widest"></div>
+      </div>
+      <p className="line-clamp-3 w-full px-2 text-xs italic font-extralight text-slate-200">
+        <span className="not-italic pr-2 tracking-wider font-normal text-white">
+          [{timestamp(start_ms)} - {timestamp(end_ms)}]
+        </span>
+        {cleanText(text)}
+      </p>
+    </Link>
   );
 }
 
