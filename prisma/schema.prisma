@@ -8,6 +8,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model VideoTag {
+  id          String            @id @default(cuid())
+  user_id     String
+  name        String
+  author      String?
+  create_date DateTime          @default(now())
+  user        User              @relation(fields: [user_id], references: [id])
+  segments    VideoTagSegment[]
+}
+
+model VideoTagSegment {
+  id       String   @id @default(cuid())
+  user_id  String
+  tag_id   String
+  video_id String
+  start_s  Int
+  end_s    Int
+  order    Int
+  tag      VideoTag @relation(fields: [tag_id], references: [id])
+  user     User     @relation(fields: [user_id], references: [id])
+}
+
 model View {
   id          String   @id @default(cuid())
   video_id    String
@@ -66,17 +88,19 @@ model Session {
 }
 
 model User {
-  id              String        @id @default(cuid())
-  name            String?
-  email           String?       @unique
-  emailVerified   DateTime?
-  image           String?
-  infinite_upload Boolean       @default(false)
-  accounts        Account[]
-  queries         SearchQuery[]
-  sessions        Session[]
-  uploads         VideoUpload[]
-  views           View[]
+  id                 String            @id @default(cuid())
+  name               String?
+  email              String?           @unique
+  emailVerified      DateTime?
+  image              String?
+  infinite_upload    Boolean           @default(false)
+  accounts           Account[]
+  queries            SearchQuery[]
+  sessions           Session[]
+  uploads            VideoUpload[]
+  views              View[]
+  video_tag_segments VideoTagSegment[]
+  video_tags         VideoTag[]
 }
 
 model VerificationToken {

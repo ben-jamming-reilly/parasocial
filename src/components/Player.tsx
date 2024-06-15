@@ -1,8 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import YouTube, { YouTubeProps } from "react-youtube";
+import Image from "next/image";
 
+import { useClickOutside } from "~/hooks/useClickOutside";
+import { useKeyDown } from "~/hooks/useKeyDown";
 import { useParentSizeObserver } from "~/hooks/useParentSize";
 import { Drawer, DrawerContent } from "~/components/ui/drawer";
 import { ScrollArea } from "~/components/ui/scroll-area";
@@ -174,8 +177,15 @@ export function Player() {
     }
   };
 
+  useClickOutside(parentRef, onClose);
+  useKeyDown("Escape", onClose);
+
   const dimensions = useScreenDimensions();
   const isMobile = dimensions.isMobile;
+  const player = {
+    width: isMobile ? dimensions.width - 12 : width,
+    height: isMobile ? hwRatio * (dimensions.width - 12) : height,
+  };
 
   return (
     <Drawer onClose={onClose} open={isOpen}>
@@ -186,6 +196,7 @@ export function Player() {
           isMobile ? `h-[96dvh]` : "h-[96vh]"
         )}
       >
+        {/* <Image src="/icons/x-outline.svg" width={30} height={30} alt="" /> */}
         <ScrollArea className="h-full overflow-auto">
           <div className="justify-center mx-auto w-fit">
             {video && (
@@ -198,10 +209,8 @@ export function Player() {
                   loading="lazy"
                   onStateChange={onStateChange}
                   opts={{
-                    width: isMobile ? dimensions.width - 12 : width,
-                    height: isMobile
-                      ? hwRatio * (dimensions.width - 12)
-                      : height,
+                    width: player.width,
+                    height: player.height,
                     playerVars: {
                       // https://developers.google.com/youtube/player_parameters#Parameters
                       color: "white",
