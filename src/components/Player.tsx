@@ -163,7 +163,7 @@ export function Player() {
     url.searchParams.delete("v");
     url.searchParams.delete("start");
     url.searchParams.delete("end");
-    router.push(url.toString());
+    router.replace(url.toString(), { scroll: false });
   };
 
   const onStateChange: YouTubeProps["onStateChange"] = (event) => {
