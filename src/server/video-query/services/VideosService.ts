@@ -4,7 +4,6 @@
 import type { BaseVideo } from '../models/BaseVideo';
 import type { CreateVideo } from '../models/CreateVideo';
 import type { SearchResult } from '../models/SearchResult';
-import type { SummaryNode } from '../models/SummaryNode';
 import type { VideoTimestamp } from '../models/VideoTimestamp';
 import type { YoutubeVideo } from '../models/YoutubeVideo';
 
@@ -93,14 +92,14 @@ export class VideosService {
 
   /**
    * Summarize Video
-   * @returns SummaryNode Successful Response
+   * @returns SearchResult Successful Response
    * @throws ApiError
    */
   public summaryVideo({
     id,
   }: {
     id: string,
-  }): CancelablePromise<Array<SummaryNode>> {
+  }): CancelablePromise<Array<SearchResult>> {
     return this.httpRequest.request({
       method: 'GET',
       url: '/videos/{id}/summary',

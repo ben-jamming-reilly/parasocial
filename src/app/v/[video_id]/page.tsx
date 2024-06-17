@@ -5,7 +5,6 @@ import { ProfilePanel } from "~/components/ProfilePanel";
 import { SearchItem } from "~/components/SearchItem";
 import { SearchBar } from "~/components/SearchBar";
 import { Player } from "~/components/Player";
-import { SummaryTab } from "./Summary";
 import { YoutubeVideo } from "~/server/video-query";
 import { notFound } from "next/navigation";
 
@@ -26,18 +25,17 @@ type SummaryProps = {
 };
 
 async function SummaryPage({ video }: SummaryProps) {
-  const summary = await api.video.summary.query({ id: video.id });
+  const results = await api.video.summary.query({ id: video.id });
 
   return (
-    <div className="flex flex-col space-y-2">
-      {summary.map((node) => (
-        <SummaryTab
-          video={video}
-          key={`${node.start_ms.toString()}-${node.end_ms.toString()}`}
-          node={node}
-          depth={2}
-        />
-      ))}
+    <div className="z-0 mx-auto flex h-full flex-1 flex-wrap justify-around gap-2  pb-4 sm:min-w-[550px]">
+      {results &&
+        results.map((result) => (
+          <SearchItem
+            key={result.video.id + result.start_ms + result.end_ms}
+            result={result}
+          />
+        ))}
     </div>
   );
 }
