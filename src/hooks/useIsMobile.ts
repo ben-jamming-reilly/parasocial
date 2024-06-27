@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 
 export function useScreenDimensions() {
-  const [width, setWidth] = useState<number>(window.innerWidth);
-  const [height, setHeight] = useState<number>(window.innerHeight);
+  const [width, setWidth] = useState<number>(
+    typeof window === "undefined" ? 0 : window.innerWidth
+  );
+  const [height, setHeight] = useState<number>(
+    typeof window === "undefined" ? 0 : window.innerHeight
+  );
   const isMobile = width <= 768;
 
   function handleWindowSizeChange() {
