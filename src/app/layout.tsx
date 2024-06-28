@@ -31,6 +31,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <title>parasocial</title>
         <meta name="twitter:card" content={description} />
+        <meta property="og:image" content="/favicon.svg" />
       </head>
 
       <CSPostHogProvider>
