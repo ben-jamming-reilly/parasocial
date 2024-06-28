@@ -37,7 +37,7 @@ export default function RootLayout({
         <body className="relative flex min-h-screen h-fit flex-1 flex-col bg-rose-900 text-zinc-100">
           <AuthProvider>
             <TRPCReactProvider cookies={cookies().toString()}>
-              <Banner>
+              {/* <Banner>
                 <div className="flex flex-row gap-12 px-6">
                   <Link
                     className="underline"
@@ -50,7 +50,7 @@ export default function RootLayout({
                     btw, you can upload youtube videos too when you sign in
                   </div>
                 </div>
-              </Banner>
+              </Banner> */}
               <main className="flex flex-1 flex-col space-y-4 p-3">
                 <Navbar />
                 {children}
